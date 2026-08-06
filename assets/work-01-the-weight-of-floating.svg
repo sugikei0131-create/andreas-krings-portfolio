@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A wooden chair floating weightless above a dusk sea, a single red apple on its seat, a long shadow falling on the water">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#22356e"/>
+      <stop offset="0.45" stop-color="#4a5f9e"/>
+      <stop offset="0.78" stop-color="#c98f5e"/>
+      <stop offset="1" stop-color="#e8b06b"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d5a74"/>
+      <stop offset="1" stop-color="#1b2c42"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ffd98f"/>
+      <stop offset="0.55" stop-color="#f2a94f" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#f2a94f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6b4226"/>
+      <stop offset="0.5" stop-color="#8a5a33"/>
+      <stop offset="1" stop-color="#5e3a1e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+  <circle cx="400" cy="470" r="220" fill="url(#sun)" filter="url(#soft)"/>
+  <circle cx="400" cy="470" r="64" fill="#ffe3a1"/>
+  <circle cx="400" cy="470" r="64" fill="none" stroke="#ffd98f" stroke-width="10" opacity="0.6"/>
+
+  <rect y="500" width="800" height="300" fill="url(#sea)"/>
+  <rect x="356" y="500" width="88" height="300" fill="#ffd98f" opacity="0.28" filter="url(#soft2)"/>
+  <g stroke="#ffd98f" stroke-linecap="round" opacity="0.5">
+    <line x1="380" y1="540" x2="420" y2="540" stroke-width="3"/>
+    <line x1="368" y1="566" x2="432" y2="566" stroke-width="2"/>
+    <line x1="386" y1="590" x2="414" y2="590" stroke-width="2"/>
+    <line x1="374" y1="612" x2="426" y2="612" stroke-width="1.6"/>
+    <line x1="392" y1="634" x2="408" y2="634" stroke-width="1.4"/>
+  </g>
+  <line x1="0" y1="500" x2="800" y2="500" stroke="#ffd98f" stroke-width="2" opacity="0.55"/>
+
+  <!-- long shadow of the floating chair on the water -->
+  <ellipse cx="400" cy="556" rx="150" ry="14" fill="#0d1830" opacity="0.4" filter="url(#soft)"/>
+  <ellipse cx="400" cy="556" rx="90" ry="7" fill="#0d1830" opacity="0.5"/>
+
+  <!-- distant floating rocks -->
+  <g fill="#3d3a55" opacity="0.75">
+    <path d="M150 330 L166 324 L176 332 L168 344 L152 342 Z"/>
+    <path d="M640 290 L654 283 L664 292 L656 302 L642 300 Z"/>
+    <path d="M602 348 L612 343 L620 350 L613 358 L604 356 Z"/>
+  </g>
+
+  <!-- chair, floating -->
+  <g transform="translate(400 268) rotate(-4)" stroke-linejoin="round">
+    <g stroke="#3c2414" stroke-width="4" fill="none">
+      <!-- back -->
+      <path d="M-58 -98 L58 -98"/>
+      <path d="M-54 -98 L-54 8"/>
+      <path d="M54 -98 L54 8"/>
+      <line x1="-26" y1="-98" x2="-26" y2="8"/>
+      <line x1="0" y1="-98" x2="0" y2="8"/>
+      <line x1="26" y1="-98" x2="26" y2="8"/>
+      <path d="M-64 -8 L-58 -8 M64 -8 L58 -8"/>
+      <!-- seat -->
+      <rect x="-62" y="8" width="124" height="24" rx="5" fill="url(#wood)"/>
+      <!-- legs -->
+      <path d="M-50 32 L-58 108"/>
+      <path d="M50 32 L58 108"/>
+      <path d="M-46 32 L-36 104"/>
+      <path d="M46 32 L36 104"/>
+    </g>
+    <rect x="-62" y="-116" width="124" height="20" rx="6" fill="url(#wood)"/>
+    <rect x="-50" y="-92" width="8" height="100" fill="url(#wood)"/>
+    <rect x="-4" y="-92" width="8" height="100" fill="url(#wood)"/>
+    <rect x="42" y="-92" width="8" height="100" fill="url(#wood)"/>
+  </g>
+
+  <!-- red apple on the seat -->
+  <g transform="translate(408 264)">
+    <ellipse cx="0" cy="10" rx="16" ry="4" fill="#3c2414" opacity="0.35"/>
+    <circle cx="0" cy="-2" r="17" fill="#c0392b"/>
+    <circle cx="0" cy="-2" r="17" fill="none" stroke="#8e2218" stroke-width="2"/>
+    <path d="M-7 -14 A 9 9 0 0 1 0 -19" stroke="#ffb3a0" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+    <path d="M0 -19 C 2 -26, -3 -29, 0 -34" stroke="#4a2c18" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <ellipse cx="4" cy="-6" rx="4" ry="3" fill="#5e241c" opacity="0.55"/>
+  </g>
+
+  <!-- birds -->
+  <g stroke="#1f2a4a" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8">
+    <path d="M210 210 Q218 202 226 210 Q234 202 242 210"/>
+    <path d="M560 240 Q566 234 572 240 Q578 234 584 240"/>
+  </g>
+
+  <rect width="800" height="800" filter="url(#grain)"/>
+</svg>

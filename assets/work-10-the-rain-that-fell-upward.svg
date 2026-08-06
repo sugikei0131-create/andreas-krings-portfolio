@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Rain falling upward from a desert plain into a giant open umbrella floating in the sky, a small man in a bowler hat watching">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9d9a6"/>
+      <stop offset="0.5" stop-color="#eec79b"/>
+      <stop offset="1" stop-color="#d8a284"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c98f5e"/>
+      <stop offset="1" stop-color="#8a5a33"/>
+    </linearGradient>
+    <linearGradient id="canopy" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#232c6e"/>
+      <stop offset="1" stop-color="#10173f"/>
+    </linearGradient>
+    <linearGradient id="sunDisc" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3c8"/>
+      <stop offset="1" stop-color="#f2c470"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+
+  <!-- sun -->
+  <circle cx="400" cy="330" r="150" fill="#f7d98a" opacity="0.5" filter="url(#soft)"/>
+  <circle cx="400" cy="330" r="84" fill="url(#sunDisc)"/>
+
+  <!-- desert ground -->
+  <path d="M0 560 Q200 540 400 556 T800 552 L800 800 L0 800 Z" fill="url(#ground)"/>
+  <path d="M0 596 Q220 578 430 592 T800 588 L800 800 L0 800 Z" fill="#7a4a28" opacity="0.55"/>
+  <!-- long shadows -->
+  <ellipse cx="340" cy="620" rx="190" ry="16" fill="#5e3a1e" opacity="0.35" filter="url(#soft)"/>
+  <ellipse cx="340" cy="620" rx="120" ry="8" fill="#5e3a1e" opacity="0.4"/>
+
+  <!-- puddles reflecting the sky -->
+  <ellipse cx="300" cy="640" rx="70" ry="8" fill="#eec79b" opacity="0.5"/>
+  <ellipse cx="520" cy="660" rx="54" ry="6" fill="#eec79b" opacity="0.42"/>
+
+  <!-- giant umbrella -->
+  <g>
+    <!-- canopy -->
+    <path d="M168 250 Q400 96 632 250 Q400 210 168 250 Z" fill="url(#canopy)"/>
+    <path d="M168 250 Q400 96 632 250 Q400 210 168 250 Z" fill="none" stroke="#0c1130" stroke-width="3"/>
+    <!-- ribs -->
+    <g stroke="#b98a3e" stroke-width="3" opacity="0.9">
+      <path d="M400 128 L400 252"/>
+      <path d="M400 138 L258 248"/>
+      <path d="M400 138 L542 248"/>
+      <path d="M400 152 L212 250"/>
+      <path d="M400 152 L588 250"/>
+    </g>
+    <!-- pole -->
+    <rect x="396" y="250" width="8" height="300" fill="#4a2f1c"/>
+    <circle cx="400" cy="250" r="10" fill="#b98a3e"/>
+    <!-- scalloped rim -->
+    <g fill="url(#canopy)" stroke="#0c1130" stroke-width="2.5">
+      <path d="M168 250 Q210 276 252 252"/>
+      <path d="M252 252 Q294 278 336 254"/>
+      <path d="M336 254 Q378 280 420 256"/>
+      <path d="M420 256 Q462 282 504 258"/>
+      <path d="M504 258 Q546 284 588 260"/>
+      <path d="M588 260 Q630 284 632 250"/>
+    </g>
+  </g>
+
+  <!-- rain rising into the umbrella -->
+  <g stroke="#ffffff" opacity="0.75">
+    <line x1="300" y1="640" x2="330" y2="330" stroke-width="2.4"/>
+    <line x1="360" y1="660" x2="380" y2="320" stroke-width="2"/>
+    <line x1="440" y1="650" x2="430" y2="330" stroke-width="2.2"/>
+    <line x1="505" y1="630" x2="470" y2="330" stroke-width="2"/>
+    <line x1="260" y1="620" x2="280" y2="360" stroke-width="1.8" opacity="0.6"/>
+    <line x1="545" y1="610" x2="520" y2="360" stroke-width="1.8" opacity="0.6"/>
+    <line x1="400" y1="680" x2="400" y2="330" stroke-width="2.6"/>
+    <line x1="322" y1="600" x2="345" y2="380" stroke-width="1.6" opacity="0.55"/>
+    <line x1="478" y1="600" x2="455" y2="380" stroke-width="1.6" opacity="0.55"/>
+  </g>
+  <!-- droplets catching the sun -->
+  <g fill="#fff3c8" opacity="0.85">
+    <circle cx="316" cy="420" r="3.4"/>
+    <circle cx="436" cy="470" r="3"/>
+    <circle cx="380" cy="520" r="2.6"/>
+    <circle cx="470" cy="400" r="2.8"/>
+    <circle cx="270" cy="500" r="2.4"/>
+  </g>
+
+  <!-- bowler-hatted man watching -->
+  <g>
+    <ellipse cx="120" cy="676" rx="26" ry="5" fill="#4a2f1c" opacity="0.5"/>
+    <!-- legs -->
+    <rect x="112" y="620" width="6" height="52" fill="#1c1410"/>
+    <rect x="126" y="620" width="6" height="52" fill="#1c1410"/>
+    <!-- body -->
+    <rect x="106" y="584" width="32" height="40" rx="4" fill="#232c6e"/>
+    <!-- head -->
+    <circle cx="122" cy="574" r="13" fill="#d9a87c"/>
+    <!-- bowler hat -->
+    <ellipse cx="122" cy="562" rx="20" ry="6" fill="#10173f"/>
+    <path d="M108 562 Q108 538 122 536 Q136 538 136 562 Z" fill="#10173f"/>
+    <!-- arm raised -->
+    <path d="M138 596 Q160 580 168 566" stroke="#232c6e" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="170" cy="562" r="6" fill="#d9a87c"/>
+  </g>
+
+  <rect width="800" height="800" fill="url(#grain)" pointer-events="none"/>
+</svg>

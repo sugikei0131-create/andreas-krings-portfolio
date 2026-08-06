@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Works — Andreas Krings</title>
+<meta name="description" content="Selected works by Andreas Krings — surrealist painter based in Berlin. Browse the paintings — arrows on desktop, swipe on mobile.">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  :root{
+    --bg:      oklch(98% 0.004 95);
+    --surface: oklch(100% 0.002 95);
+    --fg:      oklch(20% 0.018 70);
+    --muted:   oklch(48% 0.012 70);
+    --border:  oklch(90% 0.006 95);
+    --accent:  oklch(52% 0.10 28);
+    --font-display: 'Iowan Old Style','Charter',Georgia,serif;
+    --font-body:    -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-mono:    ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;
+    --measure: 1280px;
+    --pad: clamp(20px, 5vw, 64px);
+    --header-h: 72px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent); color:var(--surface)}
+  img{display:block; max-width:100%}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+  /* ---------- Shared ---------- */
+  .shell{max-width:var(--measure); margin-inline:auto; padding-inline:var(--pad)}
+  .kicker{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .kicker::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  .js .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js .reveal.in{opacity:1; transform:none}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky; top:0; z-index:40;
+    height:var(--header-h);
+    background:color-mix(in oklch, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .site-header .shell{height:100%; display:flex; align-items:center; justify-content:space-between; gap:24px}
+  .brand{font-family:var(--font-display); font-size:19px; letter-spacing:-.01em}
+  .brand em{font-style:italic}
+  .nav{display:flex; align-items:center; gap:clamp(20px,3vw,40px)}
+  .nav-link{
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    position:relative; padding:6px 2px;
+  }
+  .nav-link::after{
+    content:""; position:absolute; left:2px; right:2px; bottom:0; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .35s var(--ease);
+  }
+  .nav-link:hover{color:var(--accent)}
+  .nav-link:hover::after,.nav-link:focus-visible::after{transform:scaleX(1)}
+  .nav-link[aria-current="page"]{color:var(--accent)}
+  .nav-link[aria-current="page"]::after{transform:scaleX(1)}
+  .lang-toggle{display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:6px 2px; cursor:pointer; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; white-space:nowrap}
+  .lang-toggle__cur{color:var(--fg); font-weight:600}
+  .lang-toggle:hover{color:var(--accent)}
+  .lang-toggle:hover .lang-toggle__cur{color:var(--accent)}
+  .lang-toggle:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .menu .lang-toggle{margin-top:clamp(20px,4vh,40px)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .nav-toggle{display:none; background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .nav-toggle:hover{background:var(--fg); color:var(--bg)}
+
+  .menu{
+    position:fixed; inset:0; z-index:50; background:var(--bg);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:var(--pad);
+    transform:translateY(-102%); visibility:hidden;
+    transition:transform .5s var(--ease), visibility .5s;
+  }
+  .menu.open{transform:none; visibility:visible}
+  .menu-close{position:absolute; top:18px; right:var(--pad); background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .menu-close:hover{background:var(--fg); color:var(--bg)}
+  .menu-link{font-family:var(--font-display); font-size:clamp(40px,10vw,64px); line-height:1.15; padding:6px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline}
+  .menu-link small{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; color:var(--muted)}
+  .menu-link:hover{color:var(--accent)}
+  .menu-foot{margin-top:clamp(32px,6vh,64px); font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .menu-foot a{border-bottom:1px solid var(--border); padding-bottom:1px; transition:color .3s, border-color .3s}
+  .menu-foot a:hover{color:var(--accent); border-color:var(--accent)}
+
+  /* ---------- Work viewer ---------- */
+  .w-view{border-top:none; padding-top:clamp(48px,6vh,72px); padding-bottom:clamp(80px,10vw,120px)}
+  .w-head{display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:clamp(28px,4vw,48px)}
+  .w-back{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); position:relative; padding:6px 2px; white-space:nowrap;
+  }
+  .w-back::after{
+    content:""; position:absolute; left:2px; right:2px; bottom:0; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .35s var(--ease);
+  }
+  .w-back:hover{color:var(--accent)}
+  .w-back:hover::after,.w-back:focus-visible::after{transform:scaleX(1)}
+
+  .w-stage{
+    position:relative;
+    border:1px solid var(--border);
+    background:var(--surface);
+    padding:clamp(14px,2.2vw,34px);
+    display:grid; place-items:center;
+  }
+  .w-stage{ touch-action:pan-y }
+  .w-stage img{
+    max-height:min(72vh, 780px);
+    width:auto; max-width:100%;
+    margin-inline:auto;
+    transition:opacity .28s var(--ease), transform .28s var(--ease);
+  }
+  .w-stage img.fade{opacity:0; transform:translateY(12px)}
+
+  .nav-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:56px; height:56px; min-height:44px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:color-mix(in oklch, var(--surface) 88%, transparent);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    color:var(--fg);
+    display:grid; place-items:center;
+    cursor:pointer;
+    box-shadow:0 12px 26px -14px oklch(20% 0.018 70 / .4);
+    transition:color .3s, border-color .3s, box-shadow .3s, transform .3s var(--ease);
+  }
+  .nav-arrow svg{width:20px; height:20px; display:block}
+  .nav-arrow:hover{color:var(--accent); border-color:var(--accent); transform:translateY(-50%) scale(1.06); box-shadow:0 16px 30px -14px oklch(52% 0.10 28 / .45)}
+  .nav-arrow:active{transform:translateY(-50%) scale(.96)}
+  .nav-arrow--prev{left:clamp(10px,2vw,28px)}
+  .nav-arrow--next{right:clamp(10px,2vw,28px)}
+
+  .w-caption{margin-top:clamp(26px,3.6vw,46px)}
+  .w-title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(40px,6.4vw,76px);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    margin:16px 0 0;
+    text-wrap:balance;
+  }
+  .w-desc{
+    font-size:clamp(16px,1.5vw,18px);
+    line-height:1.85;
+    color:var(--muted);
+    margin:clamp(18px,2.6vw,30px) 0 0;
+    max-width:56ch;
+  }
+  .w-year{display:block; font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; margin-top:14px}
+
+  .w-nav{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--border); border:1px solid var(--border);
+    margin-top:clamp(30px,4.4vw,52px);
+  }
+  .w-nav a{
+    background:var(--surface);
+    padding:clamp(18px,2.6vw,26px) clamp(16px,2.4vw,30px);
+    display:flex; flex-direction:column; gap:8px;
+    transition:background .3s, color .3s;
+  }
+  .w-nav a:last-child{text-align:right; align-items:flex-end}
+  .wn-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); transition:color .3s}
+  .wn-title{font-family:var(--font-display); font-size:clamp(17px,2.2vw,22px); line-height:1.25}
+  .w-nav a:hover{background:var(--fg); color:var(--bg)}
+  .w-nav a:hover .wn-label{color:color-mix(in oklch, var(--bg) 72%, transparent)}
+
+  /* ---------- Floating eye (back to top) ---------- */
+  .orb{
+    position:fixed;
+    bottom:clamp(20px,4vh,44px);
+    right:clamp(10px,1.2vw,22px);
+    width:clamp(54px,6.8vw,84px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    animation:bob 7s ease-in-out infinite;
+    filter:drop-shadow(0 14px 24px rgba(27,21,13,.18));
+  }
+  .orb svg{display:block; width:100%; height:auto; transition:transform .35s var(--ease)}
+  .orb .eye-blink{transform-box:fill-box; transform-origin:center; animation:blink 8s ease-in-out infinite}
+  @keyframes blink{0%,90%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%,100%{transform:scaleY(1)}}
+  .orb:hover svg{transform:scale(1.07)}
+  .orb:focus-visible{outline:2px solid var(--accent); outline-offset:6px; border-radius:50%}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+  /* ---------- Footer ---------- */
+  .site-footer{border-top:1px solid var(--border); padding-block:30px}
+  .site-footer .shell{display:flex; align-items:center; justify-content:space-between; gap:20px; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .to-top{padding:6px 2px; color:var(--muted); transition:color .3s}
+  .to-top:hover{color:var(--accent)}
+  .to-top-eye{display:none; width:17px; height:auto}
+  .to-top-eye svg{display:block; width:100%; height:auto}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1120px){
+    .orb{right:clamp(10px,1.2vw,22px)}
+  }
+  @media (max-width:900px){
+    .orb{display:none}
+    .to-top-eye{display:inline-block; margin-right:9px; vertical-align:-3px}
+    .to-top-arrow{display:none}
+    .nav-arrow{display:none}
+    .w-stage{cursor:grab}
+  }
+  @media (max-width:760px){
+    .nav{display:none}
+    .site-header .lang-toggle{display:none}
+    .nav-toggle{display:inline-block}
+    .site-footer .shell{flex-wrap:wrap; row-gap:10px; justify-content:center}
+    .nav-arrow{width:48px; height:48px}
+    .w-nav{grid-template-columns:1fr}
+    .w-nav a:last-child{text-align:left; align-items:flex-start; border-top:1px solid var(--border)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important; transition:none!important}
+    html{scroll-behavior:auto}
+    .js .reveal{opacity:1; transform:none}
+  }
+</style>
+</head>
+<body id="top">
+
+  <header class="site-header" data-od-id="site-header">
+    <div class="shell">
+      <a class="brand" href="andreas-krings-portfolio.html" data-od-id="brand" style="font-size: 24px;">Andreas <em>Krings</em></a>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="andreas-krings-portfolio.html#works" aria-current="page" data-od-id="nav-works" data-i18n="nav.works">Works</a>
+        <a class="nav-link" href="about.html" data-od-id="nav-about" data-i18n="nav.about">About</a>
+        <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language" data-od-id="lang-toggle"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-od-id="menu-open">Menu</button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-od-id="menu" aria-hidden="true">
+    <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
+    <nav aria-label="Menu">
+      <a class="menu-link" href="andreas-krings-portfolio.html#works" aria-current="page" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
+      <a class="menu-link" href="about.html" data-od-id="menu-about" data-i18n="menu.about">About <small>02</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>03</small></a>
+    </nav>
+    <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+    <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="mailto:hello@andreaskrings.com" data-od-id="menu-email">hello@andreaskrings.com</a></p>
+  </div>
+
+  <main>
+    <section class="w-view" data-od-id="work-viewer" aria-label="Work viewer">
+      <div class="shell">
+        <div class="w-head">
+          <p class="kicker" id="w-kicker" data-od-id="work-kicker">All Works — No. 01 / 12</p>
+          <a class="w-back" href="all-works.html" data-od-id="all-works" data-i18n="works.all">All works →</a>
+        </div>
+
+        <div class="w-stage reveal in" data-od-id="work-stage">
+          <button class="nav-arrow nav-arrow--prev" type="button" id="btn-prev" data-od-id="work-prev" aria-label="Previous work" data-i18n-aria="work.prev.aria">←</button>
+          <img id="w-img" src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water" width="800" height="800">
+          <button class="nav-arrow nav-arrow--next" type="button" id="btn-next" data-od-id="work-next" aria-label="Next work" data-i18n-aria="work.next.aria">→</button>
+        </div>
+
+        <div class="w-caption reveal in" data-od-id="work-caption" aria-live="polite">
+          <h1 class="w-title" id="w-title" data-od-id="work-title" style="font-size: 45px;">The Weight of Floating</h1>
+          <p class="w-desc" id="w-desc" data-od-id="work-desc">A wooden chair floats weightless above a dusk sea, its long shadow stretched across the water.</p>
+          <span class="w-year" id="w-year" data-od-id="work-year">2025</span>
+        </div>
+
+        <nav class="w-nav" aria-label="Adjacent works" data-od-id="work-nav">
+          <a class="w-nav-prev" id="nav-prev" href="work.html?n=8" data-od-id="work-nav-prev">
+            <span class="wn-label" data-i18n="work.prev">← Previous</span>
+            <span class="wn-title" id="nav-prev-title">The Clock That Sheds Its Hours</span>
+          </a>
+          <a class="w-nav-next" id="nav-next" href="work.html?n=2" data-od-id="work-nav-next">
+            <span class="wn-label" data-i18n="work.next">Next →</span>
+            <span class="wn-title" id="nav-next-title">A Door for Winter</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <div class="orb" role="button" tabindex="0" aria-label="View all works" data-od-id="hero-orb" data-i18n-aria="orb.aria">
+            <svg class="dali-eye" viewBox="0 0 176 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 26 C 54 12, 112 12, 138 26" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"></path>
+          <g class="eye-blink">
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M24 52 C 22 40, 28 32, 40 30"></path>
+            <path d="M38 48 C 38 36, 48 30, 60 31"></path>
+            <path d="M54 45 C 56 34, 68 30, 80 33"></path>
+            <path d="M70 44 C 74 32, 88 32, 98 38"></path>
+            <path d="M86 45 C 92 34, 106 36, 114 42"></path>
+            <path d="M102 50 C 108 40, 120 42, 128 50"></path>
+          </g>
+          <path d="M16 68 C 38 34, 118 34, 142 68 C 118 102, 38 102, 16 68 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="3.5"></path>
+          <circle cx="79" cy="68" r="27" fill="oklch(86% 0.004 95)" stroke="var(--fg)" stroke-width="2.5"></circle>
+          <g fill="none" stroke="var(--fg)" stroke-linecap="round">
+            <circle cx="79" cy="68" r="22" stroke-width="1" opacity=".5"></circle>
+            <circle cx="79" cy="68" r="17" stroke-width="1" opacity=".32"></circle>
+            <circle cx="79" cy="68" r="13" stroke-width="1" opacity=".2"></circle>
+          </g>
+          <circle cx="79" cy="68" r="11" fill="var(--fg)"></circle>
+          <path d="M64 54 A 14 14 0 0 1 74 49" stroke="#fff" stroke-width="3" opacity=".6" stroke-linecap="round"></path>
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M36 94 C 38 104, 44 108, 54 108"></path>
+            <path d="M52 94 C 54 103, 62 106, 68 103"></path>
+            <path d="M92 94 C 96 103, 104 104, 110 98"></path>
+            <path d="M104 94 C 108 102, 116 102, 122 96"></path>
+          </g>
+        </g>
+        </svg>
+  </div>
+
+  <footer class="site-footer" data-od-id="site-footer">
+    <div class="shell">
+      <span>© 2026 Andreas Krings</span>
+      <span data-i18n="footer.meta">Berlin · Germany</span>
+      <a class="to-top" href="#top" data-od-id="to-top" data-i18n="footer.top">
+        <svg class="to-top-eye" viewBox="0 0 48 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M5 15 C 13 4.5, 35 4.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M5 15 C 13 25.5, 35 25.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M15 8.5 C 16.5 5.5, 19 4, 22 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M26 8.5 C 28 5.5, 30 4.2, 33 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <circle cx="24" cy="15" r="7.5" stroke="currentColor" stroke-width="2"></circle>
+          <circle cx="24" cy="15" r="3" fill="currentColor"></circle>
+        </svg>
+        Back to top<span class="to-top-arrow"> ↑</span>
+      </a>
+    </div>
+  </footer>
+
+<script>
+  const WORKS = [
+    { n: 1, file: 'assets/work-01-the-weight-of-floating.svg', title: 'The Weight of Floating', year: '2025', alt: 'The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water', desc: 'A wooden chair floats weightless above a dusk sea, its long shadow stretched across the water.', titleDe: 'Das Gewicht des Schwebens', descDe: 'Ein hölzerner Stuhl schwebt schwerelos über einem Abendmeer, sein langer Schatten liegt auf dem Wasser.' },
+    { n: 2, file: 'assets/work-02-a-door-for-winter.svg', title: 'A Door for Winter', year: '2024', alt: 'A Door for Winter — a door propped by a crutch in a blue-hour snow field, light glowing through its keyhole', desc: 'A door propped by a crutch stands in a blue-hour snow field, light glowing through its keyhole.', titleDe: 'Eine Tür für den Winter', descDe: 'Eine Tür, von einer Krücke gestützt, steht im Schneefeld der blauen Stunde; Licht glüht durch ihr Schlüsselloch.' },
+    { n: 3, file: 'assets/work-03-memory-of-a-blue-hour.svg', title: 'Memory of a Blue Hour', year: '2023', alt: 'Memory of a Blue Hour — a towering hourglass at dusk, sand frozen mid-fall, ants on the pedestal', desc: 'A towering hourglass rises at dusk, its sand frozen mid-fall, ants climbing the pedestal.', titleDe: 'Erinnerung an eine blaue Stunde', descDe: 'Eine mächtige Sanduhr ragt in die Dämmerung, ihr Sand ist mitten im Fall erstarrt; Ameisen klettern am Sockel.' },
+    { n: 4, file: 'assets/work-04-the-garden-that-moved-away.svg', title: 'The Garden That Moved Away', year: '2022', alt: 'The Garden That Moved Away — an open suitcase holding a miniature garden on a desert plain, a long-legged elephant in the distance', desc: 'An open suitcase holds a miniature garden on a desert plain, a long-legged elephant crossing the distance.', titleDe: 'Der Garten, der fortzog', descDe: 'Ein offener Koffer hält einen Miniaturgarten auf einer Wüstenebene; ein Elefant mit langen Beinen durchquert die Ferne.' },
+    { n: 5, file: 'assets/work-05-portrait-of-an-hour.svg', title: 'Portrait of an Hour', year: '2021', alt: 'Portrait of an Hour — a classical profile dissolving into clouds, a drifting clock, a red rose at the collarbone', desc: 'A classical profile dissolves into clouds and drifting clocks, a red rose at the collarbone.', titleDe: 'Porträt einer Stunde', descDe: 'Ein klassisches Profil löst sich in Wolken und treibende Uhren auf; eine rote Rose liegt am Schlüsselbein.' },
+    { n: 6, file: 'assets/work-06-things-the-moon-forgot.svg', title: 'Things the Moon Forgot', year: '2020', alt: 'Things the Moon Forgot — everyday objects resting on a cratered moon with the Earth in the sky, a red balloon floating above', desc: 'Everyday objects rest on a cratered moon with the Earth in the sky, a red balloon floating above.', titleDe: 'Was der Mond vergaß', descDe: 'Alltagsgegenstände ruhen auf einem Kratermond, darüber die Erde am Himmel; ein roter Ballon schwebt empor.' },
+    { n: 7, file: 'assets/work-07-a-room-without-corners.svg', title: 'A Room Without Corners', year: '2024', alt: 'A Room Without Corners — a round room with a single round window and a rug floating in mid-air', desc: 'A round room with a single round window, a rug floating in mid-air.', titleDe: 'Ein Raum ohne Ecken', descDe: 'Ein runder Raum mit einem einzigen runden Fenster; ein Teppich schwebt in der Luft.' },
+    { n: 8, file: 'assets/work-08-the-clock-that-sheds-its-hours.svg', title: 'The Clock That Sheds Its Hours', year: '2019', alt: 'The Clock That Sheds Its Hours — a golden clock melting over a rock, its hours unspooling into numerals and fragments', desc: 'A golden clock melts over a rock, its hours unspooling into numerals and fragments.', titleDe: 'Die Uhr, die ihre Stunden verliert', descDe: 'Eine goldene Uhr schmilzt über einem Felsen; ihre Stunden lösen sich in Zahlen und Bruchstücke auf.' },
+    { n: 9, file: 'assets/work-09-the-drawer-of-the-lighthouse.svg', title: 'The Drawer of the Lighthouse', year: '2018', alt: 'The Drawer of the Lighthouse — a giant wooden drawer floating in a night sky, a miniature lighthouse glowing inside it, ants on the brass handles', desc: 'A drawer pulled from the night sky holds a working lighthouse, its beam sweeping over the dark; ants file across the brass handles.', titleDe: 'Die Schublade des Leuchtturms', descDe: 'Eine aus dem Nachthimmel gezogene Schublade birgt einen leuchtenden Leuchtturm; Ameisen ziehen über die Messinggriffe.' },
+    { n: 10, file: 'assets/work-10-the-rain-that-fell-upward.svg', title: 'The Rain That Fell Upward', year: '2026', alt: 'The Rain That Fell Upward — rain rising from a desert plain into a giant floating umbrella, a small man in a bowler hat watching', desc: 'Rain rises from the desert into a floating umbrella; a man in a bowler hat watches the weather undo itself.', titleDe: 'Der Regen, der nach oben fiel', descDe: 'Regen steigt von der Wüstenebene in einen schwebenden Riesenschirm; ein kleiner Mann mit Melone schaut zu.' },
+    { n: 11, file: 'assets/work-11-the-staircase-of-the-sea.svg', title: 'The Staircase of the Sea', year: '2017', alt: 'The Staircase of the Sea — a marble staircase descending into a calm sea, its lower steps dissolving into waves, a fish in the morning air', desc: 'A marble staircase descends into the sea, its lower steps dissolving into waves; a fish swims through the morning air.', titleDe: 'Die Treppe des Meeres', descDe: 'Eine Marmortreppe steigt ins ruhige Meer hinab; ihre unteren Stufen lösen sich in Wellen auf, ein Fisch durchschwimmt die Morgenluft.' },
+    { n: 12, file: 'assets/work-12-the-mirror-of-the-ocean.svg',       title: 'The Mirror of the Ocean',        year: '2019', alt: 'The Mirror of the Ocean — a standing mirror with a melting golden frame reflecting a stormy sea, while the real sea behind is calm, a red rose on the sand', desc: 'A mirror with a melting frame reflects a storm the sea has forgotten how to have; a rose lies on the wet sand.', titleDe: 'Der Spiegel des Ozeans', descDe: 'Ein Spiegel mit schmelzendem Rahmen spiegelt einen Sturm, den das Meer vergessen hat; eine Rose liegt im nassen Sand.' }
+  ];
+  const COUNT = WORKS.length;
+  const KEY = 'andreas-krings-work';
+
+  const img = document.getElementById('w-img');
+  const kicker = document.getElementById('w-kicker');
+  const titleEl = document.getElementById('w-title');
+  const descEl = document.getElementById('w-desc');
+  const yearEl = document.getElementById('w-year');
+  const prevLink = document.getElementById('nav-prev');
+  const nextLink = document.getElementById('nav-next');
+  const prevTitle = document.getElementById('nav-prev-title');
+  const nextTitle = document.getElementById('nav-next-title');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  function clampN(n) { return ((n - 1 + COUNT) % COUNT) + 1; }
+
+  let current = (() => {
+    const p = new URLSearchParams(window.location.search).get('n');
+    const n = p ? parseInt(p, 10) : NaN;
+    if (!Number.isNaN(n) && n >= 1 && n <= COUNT) return n;
+    const stored = parseInt(localStorage.getItem(KEY), 10);
+    return (!Number.isNaN(stored) && stored >= 1 && stored <= COUNT) ? stored : 1;
+  })();
+
+  function render(work, withFade) {
+    if (withFade) img.classList.add('fade');
+    setTimeout(() => {
+      const de = window.AK_I18N_CURRENT ? window.AK_I18N_CURRENT() === 'de' : false;
+      const title = de && work.titleDe ? work.titleDe : work.title;
+      const desc = de && work.descDe ? work.descDe : work.desc;
+      img.src = work.file;
+      img.alt = work.alt;
+      kicker.textContent = (de ? 'Alle Arbeiten — Nr. ' : 'All Works — No. ') + String(work.n).padStart(2, '0') + ' / ' + COUNT;
+      titleEl.textContent = title;
+      descEl.textContent = desc;
+      yearEl.textContent = work.year;
+      document.title = title + ' — Andreas Krings';
+      const prev = WORKS[clampN(work.n - 1) - 1];
+      const next = WORKS[clampN(work.n + 1) - 1];
+      prevLink.href = 'work.html?n=' + prev.n;
+      nextLink.href = 'work.html?n=' + next.n;
+      prevTitle.textContent = de && prev.titleDe ? prev.titleDe : prev.title;
+      nextTitle.textContent = de && next.titleDe ? next.titleDe : next.title;
+      btnPrev.setAttribute('aria-label', 'Previous work — ' + (de && prev.titleDe ? prev.titleDe : prev.title));
+      btnNext.setAttribute('aria-label', 'Next work — ' + (de && next.titleDe ? next.titleDe : next.title));
+      if (withFade) img.classList.remove('fade');
+    }, withFade ? 160 : 0);
+  }
+
+  function go(n, updateUrl) {
+    const work = WORKS[clampN(n) - 1];
+    current = work.n;
+    render(work, true);
+    try {
+      localStorage.setItem(KEY, String(work.n));
+      if (updateUrl) history.pushState({ n: work.n }, '', 'work.html?n=' + work.n);
+    } catch (e) { /* embedded preview may block storage/history */ }
+  }
+
+  btnPrev.addEventListener('click', () => go(current - 1, true));
+  btnNext.addEventListener('click', () => go(current + 1, true));
+
+  // Swipe on touch devices — horizontal flick switches works without blocking vertical scroll
+  const stage = document.querySelector('.w-stage');
+  let touchX = null, touchY = null;
+  stage.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    touchX = t.clientX; touchY = t.clientY;
+  }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchX;
+    const dy = t.clientY - touchY;
+    touchX = null; touchY = null;
+    if (Math.abs(dx) < 48) return;            // too short to be a swipe
+    if (Math.abs(dy) > Math.abs(dx)) return;  // vertical scroll — let the page scroll
+    if (dx < 0) go(current + 1, true);        // flick left → next
+    else go(current - 1, true);               // flick right → previous
+  }, { passive: true });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') go(current - 1, true);
+    if (e.key === 'ArrowRight') go(current + 1, true);
+  });
+  document.querySelectorAll('.w-nav a').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const n = parseInt(new URL(a.href, window.location.href).searchParams.get('n'), 10);
+      go(n, true);
+    });
+  });
+  window.addEventListener('popstate', () => {
+    const p = new URLSearchParams(window.location.search).get('n');
+    const n = p ? parseInt(p, 10) : NaN;
+    if (!Number.isNaN(n) && n >= 1 && n <= COUNT) render(WORKS[n - 1], false);
+  });
+
+  // Preload the two adjacent works for instant switching
+  [WORKS[clampN(current - 1) - 1].file, WORKS[clampN(current + 1) - 1].file].forEach((src) => {
+    const im = new Image(); im.src = src;
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  const orb = document.querySelector('.orb');
+  const toTop = () => window.scrollTo({ top: 0 });
+  const goAllWorks = () => { window.location.href = 'all-works.html'; };
+  orb.addEventListener('click', goAllWorks);
+  orb.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goAllWorks(); }
+  });
+
+  document.querySelectorAll('a[href="#top"]').forEach((a) => {
+    a.addEventListener('click', (e) => { e.preventDefault(); toTop(); });
+  });
+
+  const menu = document.getElementById('menu');
+  const openBtn = document.querySelector('.nav-toggle');
+  const closeBtn = document.querySelector('.menu-close');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    openBtn.setAttribute('aria-expanded', String(open));
+    openBtn.setAttribute('aria-controls', 'menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  openBtn.addEventListener('click', () => setMenu(true));
+  closeBtn.addEventListener('click', () => setMenu(false));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  render(WORKS[current - 1], false);
+
+  // Re-render the viewer when the language changes (EN/DE toggle)
+  document.addEventListener('ak:langchange', () => {
+    render(WORKS[current - 1], false);
+  });
+</script>
+
+<script>
+  window.AK_I18N = {
+    de: {
+      'work.prev': '← Zurück',
+      'work.next': 'Weiter →',
+      'work.prev.aria': 'Vorheriges Werk',
+      'work.next.aria': 'Nächstes Werk'
+    }
+  };
+</script>
+
+  <script src="assets/i18n.js"></script>
+</body></html>

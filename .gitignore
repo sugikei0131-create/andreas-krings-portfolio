@@ -1,0 +1,11 @@
+# Open Design history snapshots & logs
+.file-versions/
+server.log
+*.artifact.json
+
+# macOS
+.DS_Store
+
+# Source reference images (not used by the site)
+スクリーンショット-*.png
+drawing-*.png

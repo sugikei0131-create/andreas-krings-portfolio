@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A classical profile dissolving into swirling clouds, a single red rose at the collarbone, tiny shards and a clock drifting in the haze">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2a55"/>
+      <stop offset="0.5" stop-color="#4a5f9e"/>
+      <stop offset="1" stop-color="#b3896a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="30%" r="70%">
+      <stop offset="0" stop-color="#e8c89a" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e8c89a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9a06b"/>
+      <stop offset="1" stop-color="#c0865a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+  <circle cx="300" cy="300" r="380" fill="url(#glow)" filter="url(#soft)"/>
+
+  <!-- swirling clouds -->
+  <g fill="#dfe6f2" opacity="0.5">
+    <ellipse cx="560" cy="150" rx="110" ry="34"/>
+    <ellipse cx="640" cy="210" rx="80" ry="26"/>
+    <ellipse cx="540" cy="280" rx="95" ry="30"/>
+    <ellipse cx="660" cy="360" rx="70" ry="24"/>
+    <ellipse cx="580" cy="450" rx="120" ry="36"/>
+    <ellipse cx="690" cy="520" rx="75" ry="26"/>
+    <ellipse cx="600" cy="610" rx="100" ry="30"/>
+    <ellipse cx="520" cy="700" rx="120" ry="34"/>
+    <ellipse cx="700" cy="90" rx="60" ry="20"/>
+  </g>
+  <g fill="#ffffff" opacity="0.28">
+    <ellipse cx="600" cy="320" rx="60" ry="16"/>
+    <ellipse cx="640" cy="470" rx="70" ry="20"/>
+    <ellipse cx="560" cy="560" rx="55" ry="16"/>
+  </g>
+
+  <!-- profile head, facing left, dissolving on the right -->
+  <g>
+    <path d="M300 640
+             C 300 560 288 520 262 470
+             C 246 438 232 410 228 382
+             C 224 358 224 330 234 306
+             C 240 290 242 278 240 268
+             C 236 252 226 246 214 246
+             L 214 236
+             C 234 232 250 238 256 252
+             C 266 240 282 234 296 236
+             C 322 238 336 252 340 272
+             C 344 292 340 310 330 326
+             C 352 320 368 316 380 318
+             L 380 328
+             C 362 328 344 334 328 344
+             C 320 380 318 420 324 460
+             C 330 500 334 540 334 580
+             C 334 600 330 620 322 640 Z"
+          fill="url(#skin)" stroke="#5e3a24" stroke-width="4"/>
+    <!-- nose -->
+    <path d="M214 246 C 196 258 190 280 198 300 C 204 314 214 320 226 322" fill="none" stroke="#7a4a2e" stroke-width="4" stroke-linecap="round"/>
+    <!-- closed eye -->
+    <path d="M252 292 C 264 300 278 300 290 292" fill="none" stroke="#5e3a24" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- brow -->
+    <path d="M248 276 C 262 270 278 270 290 276" fill="none" stroke="#5e3a24" stroke-width="3" stroke-linecap="round"/>
+    <!-- lip -->
+    <path d="M224 348 C 236 354 250 354 262 350" fill="none" stroke="#7a4a2e" stroke-width="3" stroke-linecap="round"/>
+    <!-- chin shadow -->
+    <path d="M300 600 C 292 616 290 628 292 638" fill="none" stroke="#8a5a3a" stroke-width="3" opacity="0.6" stroke-linecap="round"/>
+  </g>
+
+  <!-- dissolving shards behind the head -->
+  <g fill="#c0865a" opacity="0.8">
+    <rect x="384" y="300" width="26" height="10" rx="2" transform="rotate(12 397 305)"/>
+    <rect x="404" y="340" width="20" height="8" rx="2" transform="rotate(-8 414 344)"/>
+    <rect x="388" y="382" width="30" height="10" rx="2" transform="rotate(16 403 387)"/>
+    <rect x="398" y="424" width="22" height="8" rx="2" transform="rotate(-14 409 428)"/>
+  </g>
+  <g fill="#e8c89a" opacity="0.7">
+    <rect x="408" y="310" width="14" height="6" rx="1.5" transform="rotate(20 415 313)"/>
+    <rect x="396" y="356" width="16" height="6" rx="1.5" transform="rotate(-18 404 359)"/>
+    <rect x="410" y="400" width="18" height="7" rx="1.5" transform="rotate(10 419 403)"/>
+  </g>
+
+  <!-- drifting soft clock (Dali) -->
+  <g transform="translate(470 190) rotate(-14)" opacity="0.9">
+    <ellipse cx="0" cy="0" rx="46" ry="34" fill="#d9a441"/>
+    <ellipse cx="0" cy="0" rx="46" ry="34" fill="none" stroke="#8a6a24" stroke-width="3"/>
+    <ellipse cx="0" cy="0" rx="34" ry="24" fill="#f5e8c8"/>
+    <path d="M0 -26 C 14 -18 16 -6 12 4 C 10 10 4 16 -4 22" stroke="#8a6a24" stroke-width="2.5" fill="none"/>
+    <circle cx="0" cy="0" r="2.6" fill="#8a6a24"/>
+    <line x1="0" y1="0" x2="10" y2="-10" stroke="#8a6a24" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-8" y2="6" stroke="#8a6a24" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- red rose at the collarbone -->
+  <g transform="translate(316 470)">
+    <ellipse cx="0" cy="34" rx="22" ry="6" fill="#5e2a1e" opacity="0.35"/>
+    <path d="M0 0 C -6 -14 6 -22 0 -34" stroke="#2f4a24" stroke-width="4" fill="none"/>
+    <path d="M0 -8 C 10 -14 12 -2 20 -8" fill="#4d7f3e"/>
+    <path d="M0 -10 C -10 -16 -12 -4 -20 -10" fill="#3f6b34"/>
+    <g>
+      <circle cx="0" cy="-34" r="13" fill="#c0392b"/>
+      <circle cx="-8" cy="-28" r="8" fill="#a32b20"/>
+      <circle cx="8" cy="-28" r="8" fill="#a32b20"/>
+      <circle cx="0" cy="-22" r="8" fill="#a32b20"/>
+      <path d="M-4 -40 A 6 6 0 0 1 4 -40" stroke="#8e2218" stroke-width="2.5" fill="none"/>
+      <circle cx="-3" cy="-38" r="2.4" fill="#ffb3a0" opacity="0.8"/>
+    </g>
+  </g>
+
+  <rect width="800" height="800" filter="url(#grain)"/>
+</svg>

@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Andreas Krings</title>
+<meta name="description" content="About Andreas Krings — surrealist painter based in Berlin. Biography, selected exhibitions, and practice.">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  :root{
+    --bg:      oklch(98% 0.004 95);
+    --surface: oklch(100% 0.002 95);
+    --fg:      oklch(20% 0.018 70);
+    --muted:   oklch(48% 0.012 70);
+    --border:  oklch(90% 0.006 95);
+    --accent:  oklch(52% 0.10 28);
+    --font-display: 'Iowan Old Style','Charter',Georgia,serif;
+    --font-body:    -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-mono:    ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;
+    --measure: 1280px;
+    --pad: clamp(20px, 5vw, 64px);
+    --header-h: 72px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent); color:var(--surface)}
+  img{display:block; max-width:100%}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+  /* ---------- Shared ---------- */
+  .shell{max-width:var(--measure); margin-inline:auto; padding-inline:var(--pad)}
+  .kicker{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .kicker::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  section{padding-block:clamp(96px,13vw,168px); border-top:1px solid var(--border); scroll-margin-top:calc(var(--header-h) + 12px)}
+  .js .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js .reveal.in{opacity:1; transform:none}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky; top:0; z-index:40;
+    height:var(--header-h);
+    background:color-mix(in oklch, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .site-header .shell{height:100%; display:flex; align-items:center; justify-content:space-between; gap:24px}
+  .brand{font-family:var(--font-display); font-size:19px; letter-spacing:-.01em}
+  .brand em{font-style:italic}
+  .nav{display:flex; align-items:center; gap:clamp(20px,3vw,40px)}
+  .nav-link{
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    position:relative; padding:6px 2px;
+  }
+  .nav-link::after{
+    content:""; position:absolute; left:2px; right:2px; bottom:0; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .35s var(--ease);
+  }
+  .nav-link:hover{color:var(--accent)}
+  .nav-link:hover::after,.nav-link:focus-visible::after{transform:scaleX(1)}
+  .nav-link[aria-current="page"]{color:var(--accent)}
+  .nav-link[aria-current="page"]::after{transform:scaleX(1)}
+  .lang-toggle{display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:6px 2px; cursor:pointer; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; white-space:nowrap}
+  .lang-toggle__cur{color:var(--fg); font-weight:600}
+  .lang-toggle:hover{color:var(--accent)}
+  .lang-toggle:hover .lang-toggle__cur{color:var(--accent)}
+  .lang-toggle:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .menu .lang-toggle{margin-top:clamp(20px,4vh,40px)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .nav-toggle{display:none; background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .nav-toggle:hover{background:var(--fg); color:var(--bg)}
+
+  .menu{
+    position:fixed; inset:0; z-index:50; background:var(--bg);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:var(--pad);
+    transform:translateY(-102%); visibility:hidden;
+    transition:transform .5s var(--ease), visibility .5s;
+  }
+  .menu.open{transform:none; visibility:visible}
+  .menu-close{position:absolute; top:18px; right:var(--pad); background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .menu-close:hover{background:var(--fg); color:var(--bg)}
+  .menu-link{font-family:var(--font-display); font-size:clamp(40px,10vw,64px); line-height:1.15; padding:6px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline}
+  .menu-link small{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; color:var(--muted)}
+  .menu-link:hover{color:var(--accent)}
+  .menu-foot{margin-top:clamp(32px,6vh,64px); font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .menu-foot a{border-bottom:1px solid var(--border); padding-bottom:1px; transition:color .3s, border-color .3s}
+  .menu-foot a:hover{color:var(--accent); border-color:var(--accent)}
+
+  /* ---------- About hero ---------- */
+  .a-hero{
+    position:relative;
+    padding-top:clamp(48px,6vh,72px);
+    padding-bottom:clamp(70px,9vh,120px);
+    border-top:none;
+  }
+  .a-title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(52px,10vw,124px);
+    line-height:1;
+    letter-spacing:-.02em;
+    margin:26px 0 0;
+    text-wrap:balance;
+  }
+  .a-intro{
+    font-size:clamp(16px,1.6vw,19px);
+    line-height:1.8;
+    color:var(--muted);
+    max-width:56ch;
+    margin:clamp(26px,4vw,44px) 0 0;
+  }
+  .a-meta{
+    display:flex; flex-wrap:wrap; align-items:baseline;
+    gap:12px 28px;
+    margin:clamp(36px,5vw,60px) 0 0;
+    padding-top:22px;
+    border-top:1px solid var(--border);
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- About body ---------- */
+  .a-body{border-top:none; padding-top:0}
+  .a-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+    gap:clamp(44px,6vw,96px);
+    align-items:start;
+    border-top:1px solid var(--border);
+    padding-top:clamp(48px,6vh,72px);
+  }
+  .about-media{position:relative; max-width:520px}
+  .about-media img{aspect-ratio:3/4; object-fit:cover; width:100%; border:1px solid var(--border); background:var(--surface); transition:opacity .4s ease, filter .4s ease}
+  .about-orb{
+    position:absolute; right:22px; bottom:22px;
+    width:46px; aspect-ratio:1; border-radius:50%;
+    background:var(--accent);
+    border:6px solid var(--surface);
+    box-shadow:0 14px 30px -12px rgba(27,21,13,.4);
+    animation:bob 8s ease-in-out infinite;
+    cursor:pointer; -webkit-user-select:none; user-select:none; touch-action:manipulation;
+  }
+  .about-orb:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
+  .about-caption{display:flex; justify-content:space-between; margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .about-body p{font-size:clamp(15px,1.5vw,17px); line-height:1.85; margin:0 0 18px}
+  .about-body p + p{margin-top:18px}
+  .practice{display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:30px; font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .practice span::before{content:"·"; margin-right:22px; color:var(--muted)}
+
+  /* ---------- Pull quote ---------- */
+  .a-quote blockquote{
+    font-family:var(--font-display); font-style:italic; font-weight:400;
+    font-size:clamp(28px,4.6vw,56px);
+    line-height:1.25;
+    letter-spacing:-.01em;
+    max-width:24ch;
+    margin:0;
+    text-wrap:balance;
+    position:relative;
+  }
+  .a-quote blockquote::before{
+    content:""; position:absolute; top:-clamp(24px,3vw,40px); left:0;
+    width:56px; height:2px; background:var(--accent);
+  }
+  .a-quote cite{
+    display:block; margin-top:26px;
+    font-family:var(--font-mono); font-style:normal;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- Exhibitions ---------- */
+  .ex-subhead-row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:24px;
+    margin-bottom:clamp(26px,3.5vw,40px);
+  }
+  .ex-subhead{font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0}
+  .ex-count{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--muted)}
+  .exhibitions{list-style:none; margin:0; padding:0; border-top:1px solid var(--border)}
+  .exhibitions li{display:flex; gap:24px; align-items:baseline; border-bottom:1px solid var(--border); padding:15px 0; transition:color .3s var(--ease)}
+  .exhibitions .ex-year{font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted); flex:0 0 64px}
+  .exhibitions .ex-name{font-family:var(--font-display); font-size:17px}
+  .exhibitions .ex-place{margin-left:auto; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); text-align:right}
+  .exhibitions li:hover .ex-name{color:var(--accent)}
+
+  /* ---------- Closing CTA ---------- */
+  .a-cta .shell{display:flex; justify-content:space-between; align-items:baseline; gap:clamp(24px,4vw,64px); flex-wrap:wrap}
+  .a-cta p{
+    font-family:var(--font-display);
+    font-size:clamp(26px,3.6vw,44px);
+    line-height:1.2;
+    letter-spacing:-.01em;
+    max-width:18ch;
+    margin:0;
+    text-wrap:balance;
+  }
+  .a-cta-link{
+    font-family:var(--font-display);
+    font-size:clamp(22px,3vw,34px);
+    letter-spacing:-.01em;
+    display:inline-flex; align-items:center; gap:.35em;
+    position:relative;
+    padding-bottom:6px;
+  }
+  .a-cta-link::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .4s var(--ease);
+  }
+  .a-cta-link:hover::after,.a-cta-link:focus-visible::after{transform:scaleX(1)}
+  .a-cta-link .arr{font-family:var(--font-mono); font-size:.5em; color:var(--accent); transform:translateY(-3px)}
+
+  /* ---------- Floating eye (back to top) ---------- */
+  .orb{
+    position:fixed;
+    bottom:clamp(20px,4vh,44px);
+    right:clamp(10px,1.2vw,22px);
+    width:clamp(54px,6.8vw,84px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    animation:bob 7s ease-in-out infinite;
+    filter:drop-shadow(0 14px 24px rgba(27,21,13,.18));
+  }
+  .orb svg{display:block; width:100%; height:auto; transition:transform .35s var(--ease)}
+  .orb .eye-blink{transform-box:fill-box; transform-origin:center; animation:blink 8s ease-in-out infinite}
+  @keyframes blink{0%,90%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%,100%{transform:scaleY(1)}}
+  .orb:hover svg{transform:scale(1.07)}
+  .orb:focus-visible{outline:2px solid var(--accent); outline-offset:6px; border-radius:50%}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+  /* ---------- Footer ---------- */
+  .site-footer{border-top:1px solid var(--border); padding-block:30px}
+  .site-footer .shell{display:flex; align-items:center; justify-content:space-between; gap:20px; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .to-top{padding:6px 2px; color:var(--muted); transition:color .3s}
+  .to-top:hover{color:var(--accent)}
+  .to-top-eye{display:none; width:17px; height:auto}
+  .to-top-eye svg{display:block; width:100%; height:auto}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1120px){
+    .orb{right:clamp(10px,1.2vw,22px)}
+    .about-media{max-width:min(360px,80vw); margin-inline:auto}
+  }
+  @media (max-width:900px){
+    .orb{display:none}
+    .to-top-eye{display:inline-block; margin-right:9px; vertical-align:-3px}
+    .to-top-arrow{display:none}
+    .a-grid{grid-template-columns:1fr; gap:clamp(28px,4vw,48px)}
+    .about-media{max-width:min(360px,80vw); margin-inline:auto}
+  }
+  @media (max-width:760px){
+    .nav{display:none}
+    .site-header .lang-toggle{display:none}
+    .nav-toggle{display:inline-block}
+    .site-footer .shell{flex-wrap:wrap; row-gap:10px; justify-content:center}
+    .exhibitions li{flex-wrap:wrap; gap:4px 24px}
+    .exhibitions .ex-place{margin-left:0; width:100%; text-align:left}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important; transition:none!important}
+    html{scroll-behavior:auto}
+    .js .reveal{opacity:1; transform:none}
+  }
+</style>
+</head>
+<body id="top">
+
+  <header class="site-header" data-od-id="site-header">
+    <div class="shell">
+      <a class="brand" href="andreas-krings-portfolio.html" data-od-id="brand">Andreas <em>Krings</em></a>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="andreas-krings-portfolio.html#works" data-od-id="nav-works" data-i18n="nav.works">Works</a>
+        <a class="nav-link" href="about.html" aria-current="page" data-od-id="nav-about" data-i18n="nav.about">About</a>
+        <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language" data-od-id="lang-toggle"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-od-id="menu-open">Menu</button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-od-id="menu" aria-hidden="true">
+    <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
+    <nav aria-label="Menu">
+      <a class="menu-link" href="andreas-krings-portfolio.html#works" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
+      <a class="menu-link" href="about.html" aria-current="page" data-od-id="menu-about" data-i18n="menu.about">About <small>02</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>03</small></a>
+    </nav>
+    <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+    <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="mailto:hello@andreaskrings.com" data-od-id="menu-email">hello@andreaskrings.com</a></p>
+  </div>
+
+  <main>
+    <section class="a-hero" data-od-id="about-hero" aria-labelledby="about-title">
+      <div class="shell">
+        <p class="kicker" data-od-id="about-kicker" data-i18n="about.kicker">02 — About</p>
+        <h1 class="a-title" id="about-title" data-od-id="about-title" style="font-size: 60px;" data-i18n="about.title">The painter.</h1>
+        <p class="a-intro" data-od-id="about-intro" data-i18n="about.intro">Andreas Krings paints the ordinary set adrift — a chair, a suitcase, an hourglass — in a world where the rules of light, weight, and time no longer apply.</p>
+        <p class="a-meta" data-od-id="about-meta"><span data-i18n="about.meta1">Berlin · b. 1986</span><span data-i18n="about.meta2">Exhibiting since 2012</span></p>
+      </div>
+    </section>
+
+    <section class="a-body" data-od-id="about-body" aria-labelledby="bio-title">
+      <div class="shell a-grid">
+        <figure class="about-media reveal" data-od-id="about-media">
+          <img src="assets/portrait-andreas-2.png" alt="Portrait of Andreas Krings" loading="lazy">
+          <span class="about-orb" role="button" tabindex="0" aria-label="Show another portrait" data-od-id="about-orb" data-i18n-aria="about-orb.aria"></span>
+          <figcaption class="about-caption"><span data-i18n="about.caption">Portrait of Andreas Krings</span><span>2026</span></figcaption>
+        </figure>
+
+        <div class="about-body">
+          <h2 class="ex-subhead reveal" id="bio-title" data-od-id="bio-heading" data-i18n="about.biohead">Biography</h2>
+          <p class="reveal" data-od-id="about-bio-1" data-i18n="about.bio1">Andreas Krings is a surrealist painter working in Berlin. His canvases take the ordinary — a chair, a suitcase, an hourglass — and set it adrift in a world where the rules of light, weight, and time no longer apply.</p>
+          <p class="reveal" data-od-id="about-bio-2" data-i18n="about.bio2">Each painting begins as a small ink drawing. The idea is tested on paper first — the composition, the impossibility — and only then is it translated to canvas, where it grows slowly, over months, in thin layers of oil.</p>
+          <p class="reveal" data-od-id="about-bio-3" data-i18n="about.bio3">He has exhibited across Asia and Europe since 2012. His work sits in collections in Berlin, Osaka, London, and New York.</p>
+
+          <p class="practice reveal" data-od-id="about-practice"><span data-i18n="practice.1">Oil on canvas</span><span data-i18n="practice.2">Charcoal on paper</span><span data-i18n="practice.3">Ink on paper</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="a-quote" data-od-id="about-quote-band" aria-label="Artist's statement">
+      <div class="shell">
+        <blockquote class="reveal" data-od-id="about-quote" data-i18n="about.quote">“I don't paint impossible things. I paint things remembering that they are possible.”</blockquote>
+        <cite class="reveal" data-od-id="about-quote-cite" data-i18n="about.quotecite">— Andreas Krings</cite>
+      </div>
+    </section>
+
+    <section class="a-ex" data-od-id="about-exhibitions" aria-labelledby="ex-title">
+      <div class="shell">
+        <div class="ex-subhead-row reveal">
+          <h2 class="ex-subhead" id="ex-title" data-i18n="about.exh">Selected Exhibitions</h2>
+          <span class="ex-count" data-od-id="ex-count">05</span>
+        </div>
+        <ul class="exhibitions reveal" data-od-id="exhibitions">
+          <li><span class="ex-year">2025</span><span class="ex-name" data-i18n="ex.1">The Weight of Floating</span><span class="ex-place">Kitsune Gallery · Berlin</span></li>
+          <li><span class="ex-year">2024</span><span class="ex-name" data-i18n="ex.2">Rooms Without Corners</span><span class="ex-place">Freja Raum · Berlin</span></li>
+          <li><span class="ex-year">2023</span><span class="ex-name" data-i18n="ex.3">Things the Moon Forgot</span><span class="ex-place">Kunsthalle Berlin</span></li>
+          <li><span class="ex-year">2022</span><span class="ex-name" data-i18n="ex.4">A Garden That Moved Away</span><span class="ex-place">Galleria Vek · Milan</span></li>
+          <li><span class="ex-year">2021</span><span class="ex-name" data-i18n="ex.5">Blue Hours</span><span class="ex-place">Fushimi Hall · Osaka</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="a-cta" data-od-id="about-cta" aria-labelledby="cta-text">
+      <div class="shell">
+        <p id="cta-text" data-od-id="cta-text">Studio visits by appointment, commissions welcome.</p>
+        <a class="a-cta-link" href="contact.html" data-od-id="cta-contact">Say hello <span class="arr" aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-od-id="site-footer">
+    <div class="shell">
+      <span>© 2026 Andreas Krings</span>
+      <span data-i18n="footer.meta">Berlin · Germany</span>
+      <a class="to-top" href="#top" data-od-id="to-top" data-i18n="footer.top">
+        <svg class="to-top-eye" viewBox="0 0 48 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M5 15 C 13 4.5, 35 4.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M5 15 C 13 25.5, 35 25.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M15 8.5 C 16.5 5.5, 19 4, 22 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M26 8.5 C 28 5.5, 30 4.2, 33 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <circle cx="24" cy="15" r="7.5" stroke="currentColor" stroke-width="2"></circle>
+          <circle cx="24" cy="15" r="3" fill="currentColor"></circle>
+        </svg>
+        Back to top<span class="to-top-arrow"> ↑</span>
+      </a>
+    </div>
+  </footer>
+
+  <div class="orb" role="button" tabindex="0" aria-label="View all works" data-od-id="hero-orb" data-i18n-aria="orb.aria">
+            <svg class="dali-eye" viewBox="0 0 176 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 26 C 54 12, 112 12, 138 26" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"></path>
+          <g class="eye-blink">
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M24 52 C 22 40, 28 32, 40 30"></path>
+            <path d="M38 48 C 38 36, 48 30, 60 31"></path>
+            <path d="M54 45 C 56 34, 68 30, 80 33"></path>
+            <path d="M70 44 C 74 32, 88 32, 98 38"></path>
+            <path d="M86 45 C 92 34, 106 36, 114 42"></path>
+            <path d="M102 50 C 108 40, 120 42, 128 50"></path>
+          </g>
+          <path d="M16 68 C 38 34, 118 34, 142 68 C 118 102, 38 102, 16 68 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="3.5"></path>
+          <circle cx="79" cy="68" r="27" fill="oklch(86% 0.004 95)" stroke="var(--fg)" stroke-width="2.5"></circle>
+          <g fill="none" stroke="var(--fg)" stroke-linecap="round">
+            <circle cx="79" cy="68" r="22" stroke-width="1" opacity=".5"></circle>
+            <circle cx="79" cy="68" r="17" stroke-width="1" opacity=".32"></circle>
+            <circle cx="79" cy="68" r="13" stroke-width="1" opacity=".2"></circle>
+          </g>
+          <circle cx="79" cy="68" r="11" fill="var(--fg)"></circle>
+          <path d="M64 54 A 14 14 0 0 1 74 49" stroke="#fff" stroke-width="3" opacity=".6" stroke-linecap="round"></path>
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M36 94 C 38 104, 44 108, 54 108"></path>
+            <path d="M52 94 C 54 103, 62 106, 68 103"></path>
+            <path d="M92 94 C 96 103, 104 104, 110 98"></path>
+            <path d="M104 94 C 108 102, 116 102, 122 96"></path>
+          </g>
+        </g>
+        </svg>
+  </div>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+  // Click the red orb to cycle through portrait photographs.
+  const orbBtn = document.querySelector('.about-orb');
+  const media = orbBtn ? orbBtn.closest('.about-media') : null;
+  if (orbBtn && media) {
+    const img = media.querySelector('img');
+    const portraits = ['assets/portrait-andreas-2.png', 'assets/portrait-andreas-3.png', 'assets/portrait-andreas-4.png', 'assets/portrait-andreas-5.png'];
+    let idx = 0;
+    const next = () => {
+      idx = (idx + 1) % portraits.length;
+      img.style.opacity = '0';
+      window.setTimeout(() => {
+        img.src = portraits[idx];
+        img.style.opacity = '1';
+      }, 380);
+    };
+    orbBtn.addEventListener('click', next);
+    orbBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
+    });
+  }
+
+  const orb = document.querySelector('.orb');
+  const toTop = () => window.scrollTo({ top: 0 });
+  const goAllWorks = () => { window.location.href = 'all-works.html'; };
+  orb.addEventListener('click', goAllWorks);
+  orb.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goAllWorks(); }
+  });
+
+  // Anchor-based "back to top" links can fail inside embedded previews;
+  // route them through the same programmatic scroll so they always work.
+  document.querySelectorAll('a[href="#top"]').forEach((a) => {
+    a.addEventListener('click', (e) => { e.preventDefault(); toTop(); });
+  });
+
+  const menu = document.getElementById('menu');
+  const openBtn = document.querySelector('.nav-toggle');
+  const closeBtn = document.querySelector('.menu-close');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    openBtn.setAttribute('aria-expanded', String(open));
+    openBtn.setAttribute('aria-controls', 'menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  openBtn.addEventListener('click', () => setMenu(true));
+  closeBtn.addEventListener('click', () => setMenu(false));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+</script>
+
+<script>
+  window.AK_I18N = {
+    de: {
+      'about.kicker': '02 — Über',
+      'about.title': 'Der Maler.',
+      'about.intro': 'Andreas Krings malt das Gewöhnliche, das fortgetrieben wird — einen Stuhl, einen Koffer, eine Sanduhr — in einer Welt, in der die Gesetze von Licht, Gewicht und Zeit nicht mehr gelten.',
+      'about.meta1': 'Berlin · geb. 1986',
+      'about.meta2': 'Ausstellungen seit 2012',
+      'about.caption': 'Porträt von Andreas Krings',
+      'about.biohead': 'Biografie',
+      'about.bio1': 'Andreas Krings ist ein surrealistischer Maler in Berlin. Seine Leinwände nehmen das Gewöhnliche — einen Stuhl, einen Koffer, eine Sanduhr — und setzen es in einer Welt aus, in der die Gesetze von Licht, Gewicht und Zeit nicht mehr gelten.',
+      'about.bio2': 'Jedes Gemälde beginnt als kleine Tuschezeichnung. Die Idee wird zuerst auf Papier erprobt — die Komposition, die Unmöglichkeit — und erst dann auf die Leinwand übertragen, wo sie langsam, über Monate, in dünnen Ölschichten wächst.',
+      'about.bio3': 'Seit 2012 stellt er in Asien und Europa aus. Seine Werke befinden sich in Sammlungen in Berlin, Osaka, London und New York.',
+      'practice.1': 'Öl auf Leinwand',
+      'practice.2': 'Kohle auf Papier',
+      'practice.3': 'Tusche auf Papier',
+      'about.quote': '„Ich male keine unmöglichen Dinge. Ich male Dinge, die sich daran erinnern, dass sie möglich sind.“',
+      'about.quotecite': '— Andreas Krings',
+      'about.exh': 'Ausgewählte Ausstellungen'
+    }
+  };
+</script>
+
+  <script src="assets/i18n.js"></script>
+</body></html>

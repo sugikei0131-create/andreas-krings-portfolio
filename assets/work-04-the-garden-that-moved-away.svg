@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="An open suitcase holding a miniature living garden on a desert plain, a long-legged elephant walking in the distance, a single red berry inside">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e5aa8"/>
+      <stop offset="0.55" stop-color="#6f9fd4"/>
+      <stop offset="1" stop-color="#e8c89a"/>
+    </linearGradient>
+    <linearGradient id="desert" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9a35f"/>
+      <stop offset="1" stop-color="#b57e42"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff3cf"/>
+      <stop offset="1" stop-color="#fff3cf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leather" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7a4f2a"/>
+      <stop offset="0.5" stop-color="#96622f"/>
+      <stop offset="1" stop-color="#5e3a1e"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f9e4f"/>
+      <stop offset="1" stop-color="#47713a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+  <circle cx="660" cy="180" r="150" fill="url(#sun)" filter="url(#soft)"/>
+  <circle cx="660" cy="180" r="52" fill="#fff3cf"/>
+
+  <path d="M0 470 Q 240 440 460 468 T 800 460 L800 800 L0 800 Z" fill="url(#desert)"/>
+  <path d="M0 560 Q 300 530 540 560 T 800 552 L800 800 L0 800 Z" fill="#c8914d"/>
+  <path d="M0 680 Q 340 640 620 676 T 800 668 L800 800 L0 800 Z" fill="#b07c40"/>
+  <ellipse cx="620" cy="600" rx="160" ry="22" fill="#6e4a24" opacity="0.3" filter="url(#soft)"/>
+  <ellipse cx="300" cy="740" rx="200" ry="26" fill="#6e4a24" opacity="0.28" filter="url(#soft)"/>
+
+  <!-- long-legged elephant in the distance -->
+  <g fill="#3d4a5e" opacity="0.8">
+    <path d="M120 428 C 128 402 148 396 160 404 C 172 412 168 428 162 434 L156 470 L144 470 L150 430 C 144 426 136 428 130 432 L126 470 L114 470 L120 428 Z"/>
+    <path d="M118 470 L116 560 M158 470 L162 560" stroke="#3d4a5e" stroke-width="7" stroke-linecap="round"/>
+    <path d="M136 470 L140 548 M140 470 L136 560" stroke="#3d4a5e" stroke-width="6" stroke-linecap="round"/>
+    <ellipse cx="148" cy="556" rx="30" ry="6" fill="#3d4a5e"/>
+  </g>
+
+  <!-- suitcase shadow -->
+  <ellipse cx="400" cy="672" rx="190" ry="22" fill="#4a2c12" opacity="0.45" filter="url(#soft)"/>
+
+  <!-- open suitcase -->
+  <g transform="translate(400 640)">
+    <!-- lid, tilted back -->
+    <g transform="rotate(-24) translate(0 -240)">
+      <path d="M-150 -26 L150 -26 L166 66 L-166 66 Z" fill="url(#leather)" stroke="#33200f" stroke-width="5"/>
+      <rect x="-140" y="-16" width="280" height="64" rx="6" fill="#4a2c14"/>
+      <circle cx="0" cy="20" r="12" fill="#33200f"/>
+      <circle cx="0" cy="20" r="7" fill="#c89a55"/>
+    </g>
+    <!-- base -->
+    <path d="M-190 -40 L190 -40 L176 86 L-176 86 Z" fill="url(#leather)" stroke="#33200f" stroke-width="5"/>
+    <!-- miniature garden inside -->
+    <path d="M-170 -28 L170 -28 L158 72 L-158 72 Z" fill="url(#grass)"/>
+    <path d="M-170 -28 C -80 -52 80 -52 170 -28" fill="#5d8a44"/>
+    <ellipse cx="-60" cy="18" rx="40" ry="9" fill="#3f6634"/>
+    <ellipse cx="60" cy="42" rx="52" ry="10" fill="#3f6634"/>
+    <ellipse cx="10" cy="60" rx="46" ry="9" fill="#35572c"/>
+    <!-- tiny pond -->
+    <ellipse cx="96" cy="18" rx="26" ry="8" fill="#5f9ec9"/>
+    <ellipse cx="96" cy="17" rx="20" ry="5.5" fill="#7fb6da"/>
+    <!-- tiny trees -->
+    <g>
+      <rect x="-8" y="30" width="5" height="26" rx="2" fill="#4a3320"/>
+      <circle cx="-5" cy="26" r="16" fill="#4d7f3e"/>
+      <circle cx="-14" cy="30" r="11" fill="#5d9448"/>
+      <circle cx="5" cy="30" r="11" fill="#3f6b34"/>
+    </g>
+    <g>
+      <rect x="128" y="34" width="4" height="20" rx="2" fill="#4a3320"/>
+      <circle cx="130" cy="30" r="12" fill="#4d7f3e"/>
+      <circle cx="122" cy="34" r="8" fill="#5d9448"/>
+    </g>
+    <g>
+      <rect x="-112" y="40" width="4" height="18" rx="2" fill="#4a3320"/>
+      <circle cx="-110" cy="36" r="10" fill="#5d9448"/>
+    </g>
+    <!-- red berry -->
+    <circle cx="34" cy="20" r="8" fill="#c0392b"/>
+    <circle cx="32" cy="17" r="2.6" fill="#ffb3a0"/>
+    <!-- tiny path -->
+    <path d="M-20 64 Q 0 40 30 64" stroke="#c8a468" stroke-width="6" fill="none" opacity="0.8"/>
+    <!-- handle -->
+    <path d="M-70 -40 L-70 -70 Q -70 -84 -56 -84 L56 -84 Q 70 -84 70 -70 L70 -40" fill="none" stroke="#33200f" stroke-width="9"/>
+    <path d="M-70 -40 L-70 -70 Q -70 -84 -56 -84 L56 -84 Q 70 -84 70 -70 L70 -40" fill="none" stroke="#c89a55" stroke-width="4"/>
+  </g>
+
+  <rect width="800" height="800" filter="url(#grain)"/>
+</svg>
