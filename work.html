@@ -122,40 +122,55 @@
   .w-back:hover{color:var(--accent)}
   .w-back:hover::after,.w-back:focus-visible::after{transform:scaleX(1)}
 
+  .w-viewer{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    align-items:center;
+    gap:clamp(10px,1.6vw,22px);
+  }
   .w-stage{
     position:relative;
     border:1px solid var(--border);
     background:var(--surface);
     padding:clamp(14px,2.2vw,34px);
     display:grid; place-items:center;
+    min-width:0;
   }
   .w-stage{ touch-action:pan-y }
-  .w-stage img{
+  .w-slide{
+    position:relative;
+    display:grid; place-items:center;
+    width:100%;
+    overflow:hidden;
+  }
+  .w-slide img{
+    grid-area:1/1;
     max-height:min(72vh, 780px);
     width:auto; max-width:100%;
     margin-inline:auto;
-    transition:opacity .28s var(--ease), transform .28s var(--ease);
+    transition:transform .5s var(--ease);
   }
-  .w-stage img.fade{opacity:0; transform:translateY(12px)}
+  .w-slide img.slide-out{transform:translateX(calc(var(--slide-dir,1) * 55%))}
 
   .nav-arrow{
-    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
-    width:56px; height:56px; min-height:44px;
-    border-radius:50%;
-    border:1px solid var(--border);
-    background:color-mix(in oklch, var(--surface) 88%, transparent);
-    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
-    color:var(--fg);
+    background:none; border:0;
+    color:var(--muted);
+    padding:12px 8px;
+    min-width:44px; min-height:44px;
     display:grid; place-items:center;
     cursor:pointer;
-    box-shadow:0 12px 26px -14px oklch(20% 0.018 70 / .4);
-    transition:color .3s, border-color .3s, box-shadow .3s, transform .3s var(--ease);
+    transition:color .3s, transform .3s var(--ease);
   }
-  .nav-arrow svg{width:20px; height:20px; display:block}
-  .nav-arrow:hover{color:var(--accent); border-color:var(--accent); transform:translateY(-50%) scale(1.06); box-shadow:0 16px 30px -14px oklch(52% 0.10 28 / .45)}
-  .nav-arrow:active{transform:translateY(-50%) scale(.96)}
-  .nav-arrow--prev{left:clamp(10px,2vw,28px)}
-  .nav-arrow--next{right:clamp(10px,2vw,28px)}
+  .nav-arrow__icon{
+    width:clamp(22px,2.6vw,30px);
+    height:auto;
+    display:block;
+  }
+  .nav-arrow--prev{justify-self:end}
+  .nav-arrow--next{justify-self:start}
+  .nav-arrow:hover{color:var(--accent); transform:scale(1.18)}
+  .nav-arrow:active{transform:scale(.92)}
+  .nav-arrow:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
 
   .w-caption{margin-top:clamp(26px,3.6vw,46px)}
   .w-title{
@@ -235,7 +250,6 @@
     .site-header .lang-toggle{display:none}
     .nav-toggle{display:inline-block}
     .site-footer .shell{flex-wrap:wrap; row-gap:10px; justify-content:center}
-    .nav-arrow{width:48px; height:48px}
     .w-nav{grid-template-columns:1fr}
     .w-nav a:last-child{text-align:left; align-items:flex-start; border-top:1px solid var(--border)}
   }
@@ -280,10 +294,15 @@
           <a class="w-back" href="all-works.html" data-od-id="all-works" data-i18n="works.all">All works →</a>
         </div>
 
-        <div class="w-stage reveal in" data-od-id="work-stage">
-          <button class="nav-arrow nav-arrow--prev" type="button" id="btn-prev" data-od-id="work-prev" aria-label="Previous work" data-i18n-aria="work.prev.aria">←</button>
-          <img id="w-img" src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water" width="800" height="800">
-          <button class="nav-arrow nav-arrow--next" type="button" id="btn-next" data-od-id="work-next" aria-label="Next work" data-i18n-aria="work.next.aria">→</button>
+        <div class="w-viewer reveal in" data-od-id="work-stage">
+          <button class="nav-arrow nav-arrow--prev" type="button" id="btn-prev" data-od-id="work-prev" aria-label="Previous work" data-i18n-aria="work.prev.aria"><svg class="nav-arrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 5 L7 12 L18 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
+          <div class="w-stage">
+            <div class="w-slide">
+              <img id="w-img" src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water" width="800" height="800">
+              <img id="w-img2" alt="" aria-hidden="true" width="800" height="800">
+            </div>
+          </div>
+          <button class="nav-arrow nav-arrow--next" type="button" id="btn-next" data-od-id="work-next" aria-label="Next work" data-i18n-aria="work.next.aria"><svg class="nav-arrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 5 L17 12 L6 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
         </div>
 
         <div class="w-caption reveal in" data-od-id="work-caption" aria-live="polite">
@@ -374,6 +393,7 @@
   const KEY = 'andreas-krings-work';
 
   const img = document.getElementById('w-img');
+  const img2 = document.getElementById('w-img2');
   const kicker = document.getElementById('w-kicker');
   const titleEl = document.getElementById('w-title');
   const descEl = document.getElementById('w-desc');
@@ -384,6 +404,7 @@
   const nextTitle = document.getElementById('nav-next-title');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
+  let animating = false;
 
   function clampN(n) { return ((n - 1 + COUNT) % COUNT) + 1; }
 
@@ -395,35 +416,69 @@
     return (!Number.isNaN(stored) && stored >= 1 && stored <= COUNT) ? stored : 1;
   })();
 
-  function render(work, withFade) {
-    if (withFade) img.classList.add('fade');
-    setTimeout(() => {
-      const de = window.AK_I18N_CURRENT ? window.AK_I18N_CURRENT() === 'de' : false;
-      const title = de && work.titleDe ? work.titleDe : work.title;
-      const desc = de && work.descDe ? work.descDe : work.desc;
-      img.src = work.file;
-      img.alt = work.alt;
-      kicker.textContent = (de ? 'Alle Arbeiten — Nr. ' : 'All Works — No. ') + String(work.n).padStart(2, '0') + ' / ' + COUNT;
-      titleEl.textContent = title;
-      descEl.textContent = desc;
-      yearEl.textContent = work.year;
-      document.title = title + ' — Andreas Krings';
-      const prev = WORKS[clampN(work.n - 1) - 1];
-      const next = WORKS[clampN(work.n + 1) - 1];
-      prevLink.href = 'work.html?n=' + prev.n;
-      nextLink.href = 'work.html?n=' + next.n;
-      prevTitle.textContent = de && prev.titleDe ? prev.titleDe : prev.title;
-      nextTitle.textContent = de && next.titleDe ? next.titleDe : next.title;
-      btnPrev.setAttribute('aria-label', 'Previous work — ' + (de && prev.titleDe ? prev.titleDe : prev.title));
-      btnNext.setAttribute('aria-label', 'Next work — ' + (de && next.titleDe ? next.titleDe : next.title));
-      if (withFade) img.classList.remove('fade');
-    }, withFade ? 160 : 0);
+  function setImg(el, work) { el.src = work.file; el.alt = work.alt; }
+
+  function render(work, mode) {
+    const de = window.AK_I18N_CURRENT ? window.AK_I18N_CURRENT() === 'de' : false;
+    const title = de && work.titleDe ? work.titleDe : work.title;
+    const desc = de && work.descDe ? work.descDe : work.desc;
+    kicker.textContent = (de ? 'Alle Arbeiten — Nr. ' : 'All Works — No. ') + String(work.n).padStart(2, '0') + ' / ' + COUNT;
+    titleEl.textContent = title;
+    descEl.textContent = desc;
+    yearEl.textContent = work.year;
+    document.title = title + ' — Andreas Krings';
+    const prev = WORKS[clampN(work.n - 1) - 1];
+    const next = WORKS[clampN(work.n + 1) - 1];
+    prevLink.href = 'work.html?n=' + prev.n;
+    nextLink.href = 'work.html?n=' + next.n;
+    prevTitle.textContent = de && prev.titleDe ? prev.titleDe : prev.title;
+    nextTitle.textContent = de && next.titleDe ? next.titleDe : next.title;
+    btnPrev.setAttribute('aria-label', 'Previous work — ' + (de && prev.titleDe ? prev.titleDe : prev.title));
+    btnNext.setAttribute('aria-label', 'Next work — ' + (de && next.titleDe ? next.titleDe : next.title));
+
+    if (mode === 'next' || mode === 'prev') {
+      if (animating) return;
+      // Desktop (non-touch): instant switch, no slide. Slide only for mobile swipe.
+      if (!window.matchMedia('(max-width: 900px)').matches) {
+        setImg(img, work);
+        return;
+      }
+      animating = true;
+      const dir = mode === 'next' ? -1 : 1;   // next: old exits left, new enters from the right
+      setImg(img2, work);
+      img2.style.transition = 'none';
+      img2.style.transform = 'translateX(' + (-dir * 55) + '%)';
+      void img2.offsetWidth;                 // force reflow so the entry pose applies before animating
+      img2.style.transition = '';
+      img2.style.transform = 'translateX(0)';
+      img.style.setProperty('--slide-dir', dir);
+      img.classList.add('slide-out');
+      setTimeout(() => {
+        img.src = img2.src;
+        img.alt = img2.alt;
+        img.classList.remove('slide-out');
+        img.style.transition = 'none';
+        img.style.removeProperty('transform');
+        img.style.removeProperty('opacity');
+        img.style.removeProperty('--slide-dir');
+        void img.offsetWidth;
+        img.style.transition = '';
+        img2.removeAttribute('style');
+        animating = false;
+      }, 560);
+    } else {
+      setImg(img, work);
+    }
   }
 
   function go(n, updateUrl) {
+    if (animating) return;
     const work = WORKS[clampN(n) - 1];
+    let mode = null;
+    if (clampN(n) === clampN(current + 1)) mode = 'next';
+    else if (clampN(n) === clampN(current - 1)) mode = 'prev';
     current = work.n;
-    render(work, true);
+    render(work, mode);
     try {
       localStorage.setItem(KEY, String(work.n));
       if (updateUrl) history.pushState({ n: work.n }, '', 'work.html?n=' + work.n);
