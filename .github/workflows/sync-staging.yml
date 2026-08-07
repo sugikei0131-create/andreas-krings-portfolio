@@ -1,0 +1,33 @@
+name: Sync from Dashboard (Staging)
+
+on:
+  push:
+    branches:
+      - staging
+    paths:
+      - '.dashboard-state-staging.json'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: staging
+      
+      - name: Run sync script
+        run: python3 sync_from_dashboard.py .dashboard-state-staging.json --write-uploads
+      
+      - name: Commit changes
+        run: |
+          git config user.name "Andreas Krings"
+          git config user.email "dashboard@andreaskrings.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Dashboard (staging): sync works, schedule & photos"
+            git push origin staging
+          fi
