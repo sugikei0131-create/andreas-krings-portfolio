@@ -2226,7 +2226,7 @@
     var hdrs = {'Authorization':'Bearer '+ghToken, 'Accept':'application/vnd.github+json'};
 
     /* build state JSON payload */
-    var payload = JSON.stringify({works:state.works, schedule:state.schedule, photos:state.photos, uploadedAt:new Date().toISOString()}, null, 2);
+    var payload = JSON.stringify({works:state.works, schedule:state.schedule, photos:state.photos, uploads:state.uploads, uploadedAt:new Date().toISOString()}, null, 2);
 
     return fetch(BASE + '/git/ref/heads/main', {headers:hdrs}).then(function(r){ return r.json(); }).then(function(ref){
       var baseSha = ref.object.sha;

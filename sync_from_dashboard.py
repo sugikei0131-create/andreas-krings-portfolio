@@ -271,6 +271,29 @@ def update_ex_count(text, count):
     return (text[:m.start()] + new + text[m.end():], m.group(0) != new)
 
 
+def update_aw_count(text, count):
+    """Update the '12 paintings' counter in all-works.html."""
+    pat = re.compile(
+        r'(<p class="aw-count" data-od-id="aw-count" data-i18n="aw\.count">)\d+(\s+paintings</p>)')
+    m = pat.search(text)
+    if not m:
+        return text, False
+    new = m.group(1) + str(count) + m.group(2)
+    return (text[:m.start()] + new + text[m.end():], m.group(0) != new)
+
+
+def update_index_works_meta(text, count):
+    """Update the '8 selected' counter in index.html's works-meta."""
+    pat = re.compile(
+        r'(<p class="sec-meta" data-od-id="works-meta" data-i18n="works\.meta">'
+        r'\d{4} — \d{4} · )\d+(\s+selected</p>)')
+    m = pat.search(text)
+    if not m:
+        return text, False
+    new = m.group(1) + str(count) + m.group(2)
+    return (text[:m.start()] + new + text[m.end():], m.group(0) != new)
+
+
 def update_portraits(text, photos):
     arr = ["'%s'" % q1(p.get('file', '')) for p in photos]
     body = ', '.join(arr)
@@ -391,7 +414,9 @@ def apply_data(data, dry_run=False, write_upload_files=True):
 
     apply('work.html', update_works_js, works)
     apply('all-works.html', update_grid, works, 'aw-card')
+    apply('all-works.html', update_aw_count, len(works))
     apply('index.html', update_grid, [w for w in works if int(w.get('n', 0)) <= 8], 'work-card')
+    apply('index.html', update_index_works_meta, min(8, len(works)))
     apply('index.html', update_exhibitions, schedule, 'about-exhibitions')
     apply('index.html', update_portraits, photos)
     apply('about.html', update_exhibitions, schedule, 'exhibitions')
