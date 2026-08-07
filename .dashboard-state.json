@@ -7,7 +7,7 @@
       "year": "2025",
       "desc": "A wooden chair floats weightless above a dusk sea, its long shadow stretched across the water.",
       "titleDe": "Das Gewicht des Schwebens",
-      "descDe": "Ein hölzerner Stuhl schwebt schwerelos über einem Abendmeer, sein langer Schatten liegt auf dem Wasser."
+      "descDe": "Ein h\u00f6lzerner Stuhl schwebt schwerelos \u00fcber einem Abendmeer, sein langer Schatten liegt auf dem Wasser."
     },
     {
       "n": 2,
@@ -15,8 +15,8 @@
       "title": "A Door for Winter",
       "year": "2024",
       "desc": "A door propped by a crutch stands in a blue-hour snow field, light glowing through its keyhole.",
-      "titleDe": "Eine Tür für den Winter",
-      "descDe": "Eine Tür, von einer Krücke gestützt, steht im Schneefeld der blauen Stunde; Licht glüht durch ihr Schlüsselloch."
+      "titleDe": "Eine T\u00fcr f\u00fcr den Winter",
+      "descDe": "Eine T\u00fcr, von einer Kr\u00fccke gest\u00fctzt, steht im Schneefeld der blauen Stunde; Licht gl\u00fcht durch ihr Schl\u00fcsselloch."
     },
     {
       "n": 3,
@@ -25,7 +25,7 @@
       "year": "2023",
       "desc": "A towering hourglass rises at dusk, its sand frozen mid-fall, ants climbing the pedestal.",
       "titleDe": "Erinnerung an eine blaue Stunde",
-      "descDe": "Eine mächtige Sanduhr ragt in die Dämmerung, ihr Sand ist mitten im Fall erstarrt; Ameisen klettern am Sockel."
+      "descDe": "Eine m\u00e4chtige Sanduhr ragt in die D\u00e4mmerung, ihr Sand ist mitten im Fall erstarrt; Ameisen klettern am Sockel."
     },
     {
       "n": 4,
@@ -34,7 +34,7 @@
       "year": "2022",
       "desc": "An open suitcase holds a miniature garden on a desert plain, a long-legged elephant crossing the distance.",
       "titleDe": "Der Garten, der fortzog",
-      "descDe": "Ein offener Koffer hält einen Miniaturgarten auf einer Wüstenebene; ein Elefant mit langen Beinen durchquert die Ferne."
+      "descDe": "Ein offener Koffer h\u00e4lt einen Miniaturgarten auf einer W\u00fcstenebene; ein Elefant mit langen Beinen durchquert die Ferne."
     },
     {
       "n": 5,
@@ -42,8 +42,8 @@
       "title": "Portrait of an Hour",
       "year": "2021",
       "desc": "A classical profile dissolves into clouds and drifting clocks, a red rose at the collarbone.",
-      "titleDe": "Porträt einer Stunde",
-      "descDe": "Ein klassisches Profil löst sich in Wolken und treibende Uhren auf; eine rote Rose liegt am Schlüsselbein."
+      "titleDe": "Portr\u00e4t einer Stunde",
+      "descDe": "Ein klassisches Profil l\u00f6st sich in Wolken und treibende Uhren auf; eine rote Rose liegt am Schl\u00fcsselbein."
     },
     {
       "n": 6,
@@ -51,8 +51,8 @@
       "title": "Things the Moon Forgot",
       "year": "2020",
       "desc": "Everyday objects rest on a cratered moon with the Earth in the sky, a red balloon floating above.",
-      "titleDe": "Was der Mond vergaß",
-      "descDe": "Alltagsgegenstände ruhen auf einem Kratermond, darüber die Erde am Himmel; ein roter Ballon schwebt empor."
+      "titleDe": "Was der Mond verga\u00df",
+      "descDe": "Alltagsgegenst\u00e4nde ruhen auf einem Kratermond, dar\u00fcber die Erde am Himmel; ein roter Ballon schwebt empor."
     },
     {
       "n": 7,
@@ -70,7 +70,7 @@
       "year": "2019",
       "desc": "A golden clock melts over a rock, its hours unspooling into numerals and fragments.",
       "titleDe": "Die Uhr, die ihre Stunden verliert",
-      "descDe": "Eine goldene Uhr schmilzt über einem Felsen; ihre Stunden lösen sich in Zahlen und Bruchstücke auf."
+      "descDe": "Eine goldene Uhr schmilzt \u00fcber einem Felsen; ihre Stunden l\u00f6sen sich in Zahlen und Bruchst\u00fccke auf."
     },
     {
       "n": 9,
@@ -79,17 +79,16 @@
       "year": "2018",
       "desc": "A drawer pulled from the night sky holds a working lighthouse, its beam sweeping over the dark; ants file across the brass handles.",
       "titleDe": "Die Schublade des Leuchtturms",
-      "descDe": "Eine aus dem Nachthimmel gezogene Schublade birgt einen leuchtenden Leuchtturm; Ameisen ziehen über die Messinggriffe."
+      "descDe": "Eine aus dem Nachthimmel gezogene Schublade birgt einen leuchtenden Leuchtturm; Ameisen ziehen \u00fcber die Messinggriffe."
     },
     {
       "n": 10,
-      "title": "ABC",
-      "titleDe": "ABC",
-      "year": "2026",
-      "desc": "",
-      "descDe": "",
-      "file": "assets/work-13-abc.jpg",
-      "video": ""
+      "title": "The Rain That Fell Upward",
+      "titleDe": "Der Regen, der aufw\u00e4rts fiel",
+      "year": 2026,
+      "file": "assets/work-10-the-rain-that-fell-upward.svg",
+      "desc": "A man in a bowler hat stands beneath an umbrella as rain falls upward from the ground to the sky, defying gravity.",
+      "descDe": "Ein Mann mit Melone steht unter einem Regenschirm, w\u00e4hrend Regen vom Boden zum Himmel aufsteigt und die Schwerkraft \u00fcberwindet."
     },
     {
       "n": 11,
@@ -98,7 +97,7 @@
       "year": "2017",
       "desc": "A marble staircase descends into the sea, its lower steps dissolving into waves; a fish swims through the morning air.",
       "titleDe": "Die Treppe des Meeres",
-      "descDe": "Eine Marmortreppe steigt ins ruhige Meer hinab; ihre unteren Stufen lösen sich in Wellen auf, ein Fisch durchschwimmt die Morgenluft."
+      "descDe": "Eine Marmortreppe steigt ins ruhige Meer hinab; ihre unteren Stufen l\u00f6sen sich in Wellen auf, ein Fisch durchschwimmt die Morgenluft."
     },
     {
       "n": 12,
@@ -116,7 +115,7 @@
       "year": "2025",
       "title": "The Weight of Floating",
       "titleDe": "",
-      "place": "Kitsune Gallery · Berlin",
+      "place": "Kitsune Gallery \u00b7 Berlin",
       "link": ""
     },
     {
@@ -124,7 +123,7 @@
       "year": "2024",
       "title": "Rooms Without Corners",
       "titleDe": "",
-      "place": "Freja Raum · Berlin",
+      "place": "Freja Raum \u00b7 Berlin",
       "link": ""
     },
     {
@@ -140,7 +139,7 @@
       "year": "2022",
       "title": "A Garden That Moved Away",
       "titleDe": "",
-      "place": "Galleria Vek · Milan",
+      "place": "Galleria Vek \u00b7 Milan",
       "link": ""
     },
     {
@@ -148,7 +147,7 @@
       "year": "2021",
       "title": "Blue Hours",
       "titleDe": "",
-      "place": "Fushimi Hall · Osaka",
+      "place": "Fushimi Hall \u00b7 Osaka",
       "link": ""
     }
   ],
