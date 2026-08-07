@@ -305,29 +305,86 @@ def update_portraits(text, photos):
 
 
 def update_i18n(text, works):
-    existing = set(re.findall(r"'work\.title\.(\d+)':", text))
-    rows = []
+    """Update i18n dictionary for works beyond No. 12.
+    Replaces existing entries with updated values, adds new ones,
+    and removes entries for deleted works."""
+    entries = {}  # n -> full line string
     for r in gen_i18n_entries(works):
         m = re.search(r"'work\.title\.(\d+)':", r)
-        if m and m.group(1) not in existing:
-            rows.append(r)
-    if not rows:
-        return text, False
+        if m:
+            entries[m.group(1)] = r
+    if not entries:
+        # No works beyond 12 — remove any leftover dashboard entries
+        if 'added via dashboard' not in text:
+            return text, False
+        return _remove_i18n_dashboard_entries(text), True
+
     lines = text.split('\n')
-    idx = None
+    existing_keys = set()
+    changed = False
+
+    # Pass 1: update existing matching lines
     for i, ln in enumerate(lines):
-        if re.match(r"\s*'work\.title\.\d+':", ln):
-            idx = i
-    if idx is None:
-        raise RuntimeError('i18n.js: no work.title.N lines found')
-    m0 = re.search(r"'work\.title\.(\d+)':", rows[0])
-    first_n = m0.group(1) if m0 else '13'
-    parts = []
-    if 'added via dashboard' not in text:
-        parts.append("    // work titles %s+ (added via dashboard)" % first_n)
-    insert = '\n' + '\n'.join(parts + rows)
-    lines.insert(idx + 1, insert)
+        m = re.match(r"(\s*)('work\.title\.(\d+)':\s*)'.*',?", ln)
+        if m and m.group(3) in entries:
+            new_ln = m.group(1) + m.group(2) + "'%s'," % q1(
+                [w for w in works if str(w.get('n','')) == m.group(3)][0].get('titleDe', ''))
+            if lines[i] != new_ln:
+                lines[i] = new_ln
+                changed = True
+            existing_keys.add(m.group(3))
+
+    # Pass 2: remove entries for deleted works
+    for i, ln in enumerate(lines):
+        m = re.match(r"\s*'work\.title\.(\d+)':", ln)
+        if m and int(m.group(1)) > 12 and m.group(1) not in entries:
+            # Remove this line and any surrounding comment
+            del lines[i]
+            # Also remove preceding comment line if present
+            if i > 0 and 'added via dashboard' in lines[i-1]:
+                del lines[i-1]
+            changed = True
+            break  # reprocess after deletion
+
+    # Pass 3: add new entries after the last existing work.title.N line
+    new_entries = [(n, r) for n, r in entries.items() if n not in existing_keys]
+    if new_entries:
+        idx = None
+        for i, ln in enumerate(lines):
+            if re.match(r"\s*'work\.title\.\d+':", ln):
+                idx = i
+        if idx is None:
+            raise RuntimeError('i18n.js: no work.title.N lines found')
+        first_n = min(int(n) for n, _ in new_entries)
+        parts = []
+        if 'added via dashboard' not in text:
+            parts.append("    // work titles %s+ (added via dashboard)" % first_n)
+        rows = [r for _, r in sorted(new_entries)]
+        insert = '\n' + '\n'.join(parts + rows)
+        lines.insert(idx + 1, insert)
+        changed = True
+
+    if not changed:
+        return text, False
     return '\n'.join(lines), True
+
+
+def _remove_i18n_dashboard_entries(text):
+    """Remove all dashboard-added i18n entries when works <= 12."""
+    lines = text.split('\n')
+    out = []
+    skip = False
+    for ln in lines:
+        if 'added via dashboard' in ln:
+            skip = True
+            continue
+        if skip:
+            m = re.match(r"\s*'work\.title\.\d+':", ln)
+            if m and int(re.search(r'\d+', ln).group()) > 12:
+                continue
+            skip = False
+        out.append(ln)
+    return '\n'.join(out)
 
 
 # ----------------------------------------------------------------------------
