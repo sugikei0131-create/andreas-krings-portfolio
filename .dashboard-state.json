@@ -1,0 +1,183 @@
+{
+  "works": [
+    {
+      "n": 1,
+      "file": "assets/work-01-the-weight-of-floating.svg",
+      "title": "The Weight of Floating",
+      "year": "2025",
+      "desc": "A wooden chair floats weightless above a dusk sea, its long shadow stretched across the water.",
+      "titleDe": "Das Gewicht des Schwebens",
+      "descDe": "Ein hölzerner Stuhl schwebt schwerelos über einem Abendmeer, sein langer Schatten liegt auf dem Wasser."
+    },
+    {
+      "n": 2,
+      "file": "assets/work-02-a-door-for-winter.svg",
+      "title": "A Door for Winter",
+      "year": "2024",
+      "desc": "A door propped by a crutch stands in a blue-hour snow field, light glowing through its keyhole.",
+      "titleDe": "Eine Tür für den Winter",
+      "descDe": "Eine Tür, von einer Krücke gestützt, steht im Schneefeld der blauen Stunde; Licht glüht durch ihr Schlüsselloch."
+    },
+    {
+      "n": 3,
+      "file": "assets/work-03-memory-of-a-blue-hour.svg",
+      "title": "Memory of a Blue Hour",
+      "year": "2023",
+      "desc": "A towering hourglass rises at dusk, its sand frozen mid-fall, ants climbing the pedestal.",
+      "titleDe": "Erinnerung an eine blaue Stunde",
+      "descDe": "Eine mächtige Sanduhr ragt in die Dämmerung, ihr Sand ist mitten im Fall erstarrt; Ameisen klettern am Sockel."
+    },
+    {
+      "n": 4,
+      "file": "assets/work-04-the-garden-that-moved-away.svg",
+      "title": "The Garden That Moved Away",
+      "year": "2022",
+      "desc": "An open suitcase holds a miniature garden on a desert plain, a long-legged elephant crossing the distance.",
+      "titleDe": "Der Garten, der fortzog",
+      "descDe": "Ein offener Koffer hält einen Miniaturgarten auf einer Wüstenebene; ein Elefant mit langen Beinen durchquert die Ferne."
+    },
+    {
+      "n": 5,
+      "file": "assets/work-05-portrait-of-an-hour.svg",
+      "title": "Portrait of an Hour",
+      "year": "2021",
+      "desc": "A classical profile dissolves into clouds and drifting clocks, a red rose at the collarbone.",
+      "titleDe": "Porträt einer Stunde",
+      "descDe": "Ein klassisches Profil löst sich in Wolken und treibende Uhren auf; eine rote Rose liegt am Schlüsselbein."
+    },
+    {
+      "n": 6,
+      "file": "assets/work-06-things-the-moon-forgot.svg",
+      "title": "Things the Moon Forgot",
+      "year": "2020",
+      "desc": "Everyday objects rest on a cratered moon with the Earth in the sky, a red balloon floating above.",
+      "titleDe": "Was der Mond vergaß",
+      "descDe": "Alltagsgegenstände ruhen auf einem Kratermond, darüber die Erde am Himmel; ein roter Ballon schwebt empor."
+    },
+    {
+      "n": 7,
+      "file": "assets/work-07-a-room-without-corners.svg",
+      "title": "A Room Without Corners",
+      "year": "2024",
+      "desc": "A round room with a single round window, a rug floating in mid-air.",
+      "titleDe": "Ein Raum ohne Ecken",
+      "descDe": "Ein runder Raum mit einem einzigen runden Fenster; ein Teppich schwebt in der Luft."
+    },
+    {
+      "n": 8,
+      "file": "assets/work-08-the-clock-that-sheds-its-hours.svg",
+      "title": "The Clock That Sheds Its Hours",
+      "year": "2019",
+      "desc": "A golden clock melts over a rock, its hours unspooling into numerals and fragments.",
+      "titleDe": "Die Uhr, die ihre Stunden verliert",
+      "descDe": "Eine goldene Uhr schmilzt über einem Felsen; ihre Stunden lösen sich in Zahlen und Bruchstücke auf."
+    },
+    {
+      "n": 9,
+      "file": "assets/work-09-the-drawer-of-the-lighthouse.svg",
+      "title": "The Drawer of the Lighthouse",
+      "year": "2018",
+      "desc": "A drawer pulled from the night sky holds a working lighthouse, its beam sweeping over the dark; ants file across the brass handles.",
+      "titleDe": "Die Schublade des Leuchtturms",
+      "descDe": "Eine aus dem Nachthimmel gezogene Schublade birgt einen leuchtenden Leuchtturm; Ameisen ziehen über die Messinggriffe."
+    },
+    {
+      "n": 10,
+      "file": "assets/work-10-the-rain-that-fell-upward.svg",
+      "title": "The Rain That Fell Upward",
+      "year": "2026",
+      "desc": "Rain rises from the desert into a floating umbrella; a man in a bowler hat watches the weather undo itself.",
+      "titleDe": "Der Regen, der nach oben fiel",
+      "descDe": "Regen steigt von der Wüstenebene in einen schwebenden Riesenschirm; ein kleiner Mann mit Melone schaut zu."
+    },
+    {
+      "n": 11,
+      "file": "assets/work-11-the-staircase-of-the-sea.svg",
+      "title": "The Staircase of the Sea",
+      "year": "2017",
+      "desc": "A marble staircase descends into the sea, its lower steps dissolving into waves; a fish swims through the morning air.",
+      "titleDe": "Die Treppe des Meeres",
+      "descDe": "Eine Marmortreppe steigt ins ruhige Meer hinab; ihre unteren Stufen lösen sich in Wellen auf, ein Fisch durchschwimmt die Morgenluft."
+    },
+    {
+      "n": 12,
+      "file": "assets/work-12-the-mirror-of-the-ocean.svg",
+      "title": "The Mirror of the Ocean",
+      "year": "2019",
+      "desc": "A mirror with a melting frame reflects a storm the sea has forgotten how to have; a rose lies on the wet sand.",
+      "titleDe": "Der Spiegel des Ozeans",
+      "descDe": "Ein Spiegel mit schmelzendem Rahmen spiegelt einen Sturm, den das Meer vergessen hat; eine Rose liegt im nassen Sand."
+    },
+    {
+      "n": 13,
+      "title": "A",
+      "titleDe": "A",
+      "year": "2026",
+      "desc": "",
+      "descDe": "",
+      "file": "assets/work-13-a.jpg",
+      "video": ""
+    }
+  ],
+  "schedule": [
+    {
+      "id": 1,
+      "year": "2025",
+      "title": "The Weight of Floating",
+      "titleDe": "",
+      "place": "Kitsune Gallery · Berlin",
+      "link": ""
+    },
+    {
+      "id": 2,
+      "year": "2024",
+      "title": "Rooms Without Corners",
+      "titleDe": "",
+      "place": "Freja Raum · Berlin",
+      "link": ""
+    },
+    {
+      "id": 3,
+      "year": "2023",
+      "title": "Things the Moon Forgot",
+      "titleDe": "",
+      "place": "Kunsthalle Berlin",
+      "link": ""
+    },
+    {
+      "id": 4,
+      "year": "2022",
+      "title": "A Garden That Moved Away",
+      "titleDe": "",
+      "place": "Galleria Vek · Milan",
+      "link": ""
+    },
+    {
+      "id": 5,
+      "year": "2021",
+      "title": "Blue Hours",
+      "titleDe": "",
+      "place": "Fushimi Hall · Osaka",
+      "link": ""
+    }
+  ],
+  "photos": [
+    {
+      "id": 1,
+      "file": "assets/portrait-andreas-2.png"
+    },
+    {
+      "id": 2,
+      "file": "assets/portrait-andreas-3.png"
+    },
+    {
+      "id": 3,
+      "file": "assets/portrait-andreas-4.png"
+    },
+    {
+      "id": 4,
+      "file": "assets/portrait-andreas-5.png"
+    }
+  ],
+  "uploadedAt": "2026-08-07T20:23:38.094Z"
+}
