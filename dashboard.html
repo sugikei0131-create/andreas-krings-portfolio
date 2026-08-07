@@ -712,7 +712,23 @@
 </style>
 </head>
 <body>
-<!-- login removed — using local server API instead -->
+<!-- login overlay -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h1>Studio Manager</h1>
+    <p class="login-desc">Andreas Krings — Sign in to manage your portfolio and publish changes.</p>
+    <label for="loginPw">Password</label>
+    <input type="password" id="loginPw" placeholder="Enter password…" autocomplete="current-password">
+    <p class="login-error" id="loginError" hidden></p>
+    <div class="login-actions">
+      <label class="login-remember"><input type="checkbox" id="loginRemember" checked> Remember me</label>
+      <button class="btn btn-primary" id="loginBtn">Sign in</button>
+    </div>
+    <p style="margin:12px 0 0; font-size:12px; color:var(--muted); text-align:center">
+      <a href="#" id="loginLogout" style="color:var(--accent); text-decoration:underline; display:none">Sign out</a>
+    </p>
+  </div>
+</div>
 
 
 <header class="hd" data-od-id="dash-header">
@@ -1079,6 +1095,77 @@
 <script>
 (function(){
   'use strict';
+
+  /* ---------- encrypted token (unlocked by password) ---------- */
+  var ENCRYPTED_PAYLOAD = 'sfQbMjA5zT6UL3CCr923X9z5mXuvvy/3jpFrJzPhrDgDmvmwyc6J8HYLKVn1m/Q14hxsxTSdY4XAmlBac444eNeHztvTZnIluSzqOtvJGDgC27N7OtSQqjeid8P/uaCoFRMShY4d26BV7YBJphwi+e4KxX4g0mKCAx5P5hlwA5dM4ZBDzERp2S8=';
+  var ghToken = null;
+
+  /* decrypt the GitHub token with Web Crypto API */
+  async function decryptToken(password) {
+    var enc = new TextEncoder();
+    var pw = enc.encode(password);
+    var ikm = await crypto.subtle.importKey('raw', pw, 'PBKDF2', false, ['deriveBits']);
+    var raw = Uint8Array.from(atob(ENCRYPTED_PAYLOAD), function(c){ return c.charCodeAt(0); });
+    var salt = raw.slice(0, 16);
+    var iv = raw.slice(16, 28);
+    var ct = raw.slice(28);
+    var bits = await crypto.subtle.deriveBits({name:'PBKDF2', salt:salt, iterations:100000, hash:'SHA-256'}, ikm, 256);
+    var key = await crypto.subtle.importKey('raw', bits, 'AES-GCM', false, ['decrypt']);
+    var pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:iv}, key, ct);
+    return new TextDecoder().decode(pt);
+  }
+
+  function hideLogin() {
+    var o = $('loginOverlay');
+    if (o) { o.hidden = true; }
+    $('loginLogout').style.display = 'inline';
+  }
+
+  function showLogin(msg) {
+    var o = $('loginOverlay');
+    if (o) { o.hidden = false; }
+    if (msg) { $('loginError').textContent = msg; $('loginError').hidden = false; }
+    else { $('loginError').hidden = true; }
+    $('loginLogout').style.display = 'none';
+    setPublishEnabled(false);
+  }
+
+  /* ---------- login form ---------- */
+  $('loginBtn').addEventListener('click', function(){
+    var pw = $('loginPw').value;
+    if (!pw) { showLogin('Please enter the password.'); return; }
+    $('loginBtn').disabled = true;
+    $('loginBtn').textContent = 'Signing in…';
+    decryptToken(pw).then(function(tok){
+      ghToken = tok.trim();
+      var store = $('loginRemember').checked ? localStorage : sessionStorage;
+      store.setItem('ak-gh-token', ghToken);
+      hideLogin();
+      $('loginBtn').disabled = false;
+      $('loginBtn').textContent = 'Sign in';
+      pubStatus('Signed in — ready to publish.', 'ok');
+      setPublishEnabled(true);
+    }).catch(function(){
+      showLogin('Wrong password — please try again.');
+      $('loginBtn').disabled = false;
+      $('loginBtn').textContent = 'Sign in';
+    });
+  });
+
+  $('loginPw').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') $('loginBtn').click();
+  });
+
+  $('loginLogout').addEventListener('click', function(e){
+    e.preventDefault();
+    sessionStorage.removeItem('ak-gh-token');
+    localStorage.removeItem('ak-gh-token');
+    ghToken = null;
+    showLogin();
+    pubStatus('Signed out. Enter the password to publish changes.', 'dim');
+    $('loginPw').value = '';
+  });
+
   var LS_KEY = 'ak-dashboard-v1';
 
   /* ---------- seed data (current site contents) ---------- */
@@ -2089,52 +2176,85 @@
     setPublishBusy(true);
     pubLog.innerHTML = '';
     pubLog.hidden = true;
+
+    /* try local server first */
     pubStatus('Saving changes to the site files…', 'busy');
     apiPost('/api/sync', state).then(function(res){
-      if (!res || !res.ok){
-        pubStatus('Sync failed: ' + esc(res && res.error ? res.error : 'server unreachable — open via localhost'), 'err');
-        return null;
+      if (res && res.ok) {
+        var j = res;
+        pubLine('SYNC — ' + j.works + ' works, ' + j.schedule + ' schedule, ' + j.photos + ' photos', 'dim');
+        var updated = 0;
+        j.files.forEach(function(f){
+          if (f.status === 'updated'){ updated++; pubLine('✓ ' + f.file + ' — updated', 'ok'); }
+          else if (f.status === 'no change'){ pubLine('· ' + f.file + ' — no change', 'dim'); }
+          else { pubLine('✗ ' + f.file + ' — ' + esc(f.status), 'err'); }
+        });
+        j.uploads.forEach(function(u){ pubLine('✓ image ' + esc(u.path) + ' (' + u.bytes + ' bytes) written to assets/', 'ok'); });
+        (j.newWorks || []).forEach(function(w){ pubLine('new work No.' + w.n + ' "' + esc(w.title) + '" → ' + esc(w.file), ''); });
+        (j.missing || []).forEach(function(f){ pubLine('✗ missing file: ' + esc(f), 'err'); });
+        if (!updated && !j.uploads.length){ pubLine('No files changed.', 'dim'); }
+        pubStatus('Files updated' + (updated ? ' (' + updated + ')' : '') + ' — publishing to GitHub…', 'busy');
+        return apiPost('/api/publish');
       }
-      var j = res;
-      pubLine('SYNC — ' + j.works + ' works, ' + j.schedule + ' schedule, ' + j.photos + ' photos', 'dim');
-      var updated = 0;
-      j.files.forEach(function(f){
-        if (f.status === 'updated'){ updated++; pubLine('✓ ' + f.file + ' — updated', 'ok'); }
-        else if (f.status === 'no change'){ pubLine('· ' + f.file + ' — no change', 'dim'); }
-        else { pubLine('✗ ' + f.file + ' — ' + esc(f.status), 'err'); }
-      });
-      j.uploads.forEach(function(u){ pubLine('✓ image ' + esc(u.path) + ' (' + u.bytes + ' bytes) written to assets/', 'ok'); });
-      (j.newWorks || []).forEach(function(w){ pubLine('new work No.' + w.n + ' "' + esc(w.title) + '" → ' + esc(w.file), ''); });
-      (j.missing || []).forEach(function(f){ pubLine('✗ missing file: ' + esc(f), 'err'); });
-      if (!updated && !j.uploads.length){ pubLine('No files changed.', 'dim'); }
-      pubStatus('Files updated' + (updated ? ' (' + updated + ')' : '') + ' — publishing to GitHub…', 'busy');
-      return apiPost('/api/publish');
+      /* local server unavailable — try GitHub API */
+      if (!ghToken) throw new Error('Not connected to local server and not signed in to GitHub.');
+      pubStatus('Local server not available — publishing via GitHub API…', 'busy');
+      return publishViaGitHub();
     }).then(function(res2){
       if (!res2) return;
-      if (!res2.ok){
-        pubStatus('Publish failed: ' + esc(res2.error ? res2.error : 'server unreachable'), 'err');
+      if (res2.ok === false){
+        pubStatus('Publish failed: ' + esc(res2.error || 'unknown error'), 'err');
         return;
       }
-      var j2 = res2;
-      if (j2.nothing){
-        pubLine('PUBLISH — ' + esc(j2.message), 'dim');
+      if (res2.nothing){
+        pubLine('PUBLISH — ' + esc(res2.message), 'dim');
         pubStatus('All saved and up to date. The public site already matches.', 'ok');
-      } else {
-        pubLine('PUBLISH — commit ' + esc(j2.commit) + ': ' + esc(j2.message), 'ok');
-        pubLine(j2.pushed ? 'pushed to GitHub ✓ — the public site rebuilds in 1–2 minutes.' : '✗ ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
-        pubStatus(j2.pushed
-          ? 'Published ✓ — commit <b>' + esc(j2.commit) + '</b> is live. The public site rebuilds in 1–2 minutes.'
-          : 'Committed but <b class="err">push failed</b>: ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
+      } else if (res2.commit) {
+        pubLine('PUBLISH — commit ' + esc(res2.commit) + ': ' + esc(res2.message), 'ok');
+        pubStatus('Published ✓ — commit <b>' + esc(res2.commit) + '</b> is live via GitHub Actions. Site rebuilds in 1–2 minutes.', 'ok');
       }
     }).catch(function(err){
       pubStatus('Error: ' + esc(String(err && err.message || err)), 'err');
     }).then(function(){ setPublishBusy(false); });
   }
-  $('publishBtn').addEventListener('click', doPublish);
-  $('hdPublishBtn').addEventListener('click', doPublish);
+
+  /* publish via GitHub API — write .dashboard-state.json, GitHub Actions rebuilds the site */
+  function publishViaGitHub(){
+    var REPO = 'sugikei0131-create/andreas-krings-portfolio';
+    var BASE = 'https://api.github.com/repos/' + REPO;
+    var hdrs = {'Authorization':'Bearer '+ghToken, 'Accept':'application/vnd.github+json'};
+
+    /* build state JSON payload */
+    var payload = JSON.stringify({works:state.works, schedule:state.schedule, photos:state.photos, uploadedAt:new Date().toISOString()}, null, 2);
+
+    return fetch(BASE + '/git/ref/heads/main', {headers:hdrs}).then(function(r){ return r.json(); }).then(function(ref){
+      var baseSha = ref.object.sha;
+      /* get base tree sha */
+      return fetch(BASE + '/git/commits/' + baseSha, {headers:hdrs}).then(function(r){ return r.json(); }).then(function(commit){
+        var baseTree = commit.tree.sha;
+        /* create blob for .dashboard-state.json */
+        return fetch(BASE + '/git/blobs', {method:'POST', headers:hdrs, body:JSON.stringify({content:payload, encoding:'utf-8'})}).then(function(r){ return r.json(); }).then(function(blob){
+          /* create tree with the new blob */
+          var treeData = {base_tree:baseTree, tree:[{path:'.dashboard-state.json', mode:'100644', type:'blob', sha:blob.sha}]};
+          return fetch(BASE + '/git/trees', {method:'POST', headers:hdrs, body:JSON.stringify(treeData)}).then(function(r){ return r.json(); }).then(function(tree){
+            /* create commit */
+            var commitData = {message:'Dashboard publish — ' + new Date().toISOString().slice(0,16).replace('T',' '), tree:tree.sha, parents:[baseSha]};
+            return fetch(BASE + '/git/commits', {method:'POST', headers:hdrs, body:JSON.stringify(commitData)}).then(function(r){ return r.json(); }).then(function(newCommit){
+              /* update ref */
+              return fetch(BASE + '/git/refs/heads/main', {method:'PATCH', headers:hdrs, body:JSON.stringify({sha:newCommit.sha, force:false})}).then(function(r){
+                if (!r.ok) return r.json().then(function(e){ throw new Error('ref update: ' + (e.message || r.status)); });
+                return {ok:true, commit:newCommit.sha.slice(0,7), message:'State file published — GitHub Actions will rebuild the site.'};
+              });
+            });
+          });
+        });
+      });
+    });
+  }
+$('hdPublishBtn').addEventListener('click', doPublish);
 
   /* ---------- init ---------- */
-  /* restore saved token */
+  /* restore saved token or show login */
   try {
     ghToken = sessionStorage.getItem('ak-gh-token') || localStorage.getItem('ak-gh-token');
     if (ghToken) { hideLogin(); pubStatus('Signed in — ready to publish.', 'ok'); setPublishEnabled(true); }
