@@ -38,8 +38,6 @@
     'work.title.11': 'Die Treppe des Meeres',
     'work.title.12': 'Der Spiegel des Ozeans',
 
-    // work titles 13+ (added via dashboard)
-    'work.title.13': 'Die Wolke, die zu regnen vergass',
 
     // exhibition names
     'ex.1': 'Das Gewicht des Schwebens',
