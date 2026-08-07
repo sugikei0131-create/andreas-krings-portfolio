@@ -37,6 +37,11 @@
     'work.title.10': 'Der Regen, der nach oben fiel',
     'work.title.11': 'Die Treppe des Meeres',
     'work.title.12': 'Der Spiegel des Ozeans',
+
+    // work titles 13+ (added via dashboard)
+    'work.title.13': 'dali',
+    'work.title.14': 'dali',
+    'work.title.15': 'A',
     // exhibition names
     'ex.1': 'Das Gewicht des Schwebens',
     'ex.2': 'Räume ohne Ecken',
