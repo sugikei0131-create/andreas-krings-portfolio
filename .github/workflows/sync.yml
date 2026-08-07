@@ -1,0 +1,29 @@
+name: Sync from Dashboard
+
+on:
+  push:
+    paths:
+      - '.dashboard-state.json'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run sync script
+        run: python3 sync_from_dashboard.py .dashboard-state.json --write-uploads
+      
+      - name: Commit changes
+        run: |
+          git config user.name "Andreas Krings"
+          git config user.email "dashboard@andreaskrings.com"
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Dashboard: sync works, schedule & photos"
+            git push
+          fi

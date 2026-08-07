@@ -13,3 +13,4 @@ __pycache__/
 # Source reference images (not used by the site)
 スクリーンショット-*.png
 drawing-*.png
+.dashboard-token.txt
