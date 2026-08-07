@@ -107,6 +107,16 @@
       "desc": "A mirror with a melting frame reflects a storm the sea has forgotten how to have; a rose lies on the wet sand.",
       "titleDe": "Der Spiegel des Ozeans",
       "descDe": "Ein Spiegel mit schmelzendem Rahmen spiegelt einen Sturm, den das Meer vergessen hat; eine Rose liegt im nassen Sand."
+    },
+    {
+      "n": 13,
+      "title": "Test Work for Upload",
+      "titleDe": "Testarbeit für Upload",
+      "year": "2026",
+      "desc": "A test work created to verify the image upload and publish workflow.",
+      "descDe": "Eine Testarbeit zur Überprüfung des Upload- und Veröffentlichungs-Workflows.",
+      "file": "assets/work-13-test-work-for-upload.svg",
+      "video": ""
     }
   ],
   "schedule": [
@@ -169,5 +179,5 @@
       "file": "assets/portrait-andreas-5.png"
     }
   ],
-  "uploadedAt": "2026-08-07T20:51:15.180Z"
+  "uploadedAt": "2026-08-07T21:59:40.684Z"
 }
