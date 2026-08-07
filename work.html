@@ -130,9 +130,8 @@
   }
   .w-stage{
     position:relative;
-    border:1px solid var(--border);
-    background:var(--surface);
-    padding:clamp(14px,2.2vw,34px);
+    background:none;
+    padding:0;
     display:grid; place-items:center;
     min-width:0;
   }
@@ -151,6 +150,7 @@
     transition:transform .5s var(--ease);
   }
   .w-slide img.slide-out{transform:translateX(calc(var(--slide-dir,1) * 55%))}
+  #w-img2:not([src]){display:none}
 
   .nav-arrow{
     background:none; border:0;
@@ -207,64 +207,6 @@
   .wn-title{font-family:var(--font-display); font-size:clamp(17px,2.2vw,22px); line-height:1.25}
   .w-nav a:hover{background:var(--fg); color:var(--bg)}
   .w-nav a:hover .wn-label{color:color-mix(in oklch, var(--bg) 72%, transparent)}
-
-  /* ---------- Fullscreen viewer ---------- */
-  .fs-open{
-    position:absolute; right:clamp(6px,1vw,12px); bottom:clamp(6px,1vw,12px);
-    width:40px; height:40px;
-    display:grid; place-items:center;
-    background:color-mix(in oklch, var(--surface) 78%, transparent);
-    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
-    border:1px solid var(--border);
-    color:var(--muted);
-    cursor:pointer;
-    transition:color .3s, border-color .3s, transform .3s var(--ease);
-  }
-  .fs-open:hover{color:var(--accent); border-color:var(--accent); transform:scale(1.08)}
-  .fs-open:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
-  .fs-open svg{width:18px; height:18px; display:block}
-
-  .fs{
-    position:fixed; inset:0; z-index:90;
-    background:var(--surface);
-    display:flex; align-items:center; justify-content:center;
-    opacity:0; visibility:hidden;
-    transition:opacity .35s var(--ease), visibility .35s;
-  }
-  .fs.open{opacity:1; visibility:visible}
-  .fs img{
-    max-width:100vw; max-height:96vh;
-    width:auto; height:auto;
-    box-shadow:0 18px 60px rgba(0,0,0,.22);
-    cursor:zoom-out;
-  }
-  .fs-close{
-    position:absolute; top:clamp(12px,2.4vh,24px); right:clamp(12px,2.4vw,24px);
-    width:48px; height:48px;
-    display:grid; place-items:center;
-    background:none; border:0;
-    color:var(--fg);
-    cursor:pointer;
-    transition:color .3s, transform .3s var(--ease);
-  }
-  .fs-close svg{width:26px; height:26px; display:block}
-  .fs-close:hover{color:var(--accent); transform:scale(1.1)}
-  .fs-close:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:50%}
-  .fs-nav{
-    position:absolute; top:50%; transform:translateY(-50%);
-    width:56px; height:56px;
-    display:grid; place-items:center;
-    background:none; border:0;
-    color:var(--muted);
-    cursor:pointer;
-    opacity:.6; transition:opacity .3s, color .3s;
-  }
-  .fs-nav:hover{opacity:1; color:var(--accent)}
-  .fs-nav--prev{left:clamp(6px,1.4vw,20px)}
-  .fs-nav--next{right:clamp(6px,1.4vw,20px)}
-  .fs-nav svg{width:clamp(24px,2.8vw,34px); height:auto; display:block}
-  .fs-nav:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:50%}
-  @media (max-width:900px){ .fs-nav{display:none} }
 
   /* ---------- Floating eye (back to top) ---------- */
   .orb{
@@ -356,10 +298,9 @@
           <button class="nav-arrow nav-arrow--prev" type="button" id="btn-prev" data-od-id="work-prev" aria-label="Previous work" data-i18n-aria="work.prev.aria"><svg class="nav-arrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 5 L7 12 L18 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
           <div class="w-stage">
             <div class="w-slide">
-              <img id="w-img" src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water" width="800" height="800">
-              <img id="w-img2" alt="" aria-hidden="true" width="800" height="800">
+              <img id="w-img" src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — a wooden chair floating weightless above a dusk sea, a long shadow on the water">
+              <img id="w-img2" alt="" aria-hidden="true">
             </div>
-            <button class="fs-open" type="button" id="fs-open" data-od-id="fs-open" aria-label="Open fullscreen" data-i18n-aria="work.fs.open.aria"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 4 H4 V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 4 H20 V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 20 H4 V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 20 H20 V15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           </div>
           <button class="nav-arrow nav-arrow--next" type="button" id="btn-next" data-od-id="work-next" aria-label="Next work" data-i18n-aria="work.next.aria"><svg class="nav-arrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 5 L17 12 L6 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
         </div>
@@ -383,13 +324,6 @@
       </div>
     </section>
   </main>
-
-  <div class="fs" id="fs" role="dialog" aria-modal="true" aria-label="Fullscreen viewer" data-od-id="fullscreen-viewer">
-    <img id="fs-img" src="" alt="">
-    <button class="fs-close" type="button" id="fs-close" data-od-id="fs-close" aria-label="Close fullscreen" data-i18n-aria="work.fs.close.aria"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6 L18 18 M18 6 L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg></button>
-    <button class="fs-nav fs-nav--prev" type="button" id="fs-prev" data-od-id="fs-prev" aria-label="Previous work" data-i18n-aria="work.prev.aria"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 5 L7 12 L18 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
-    <button class="fs-nav fs-nav--next" type="button" id="fs-next" data-od-id="fs-next" aria-label="Next work" data-i18n-aria="work.next.aria"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 5 L17 12 L6 19" stroke="currentColor" stroke-width="1.25" stroke-linejoin="miter"/></svg></button>
-  </div>
 
   <div class="orb" role="button" tabindex="0" aria-label="View all works" data-od-id="hero-orb" data-i18n-aria="orb.aria">
             <svg class="dali-eye" viewBox="0 0 176 150" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -470,12 +404,6 @@
   const nextTitle = document.getElementById('nav-next-title');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
-  const fsEl = document.getElementById('fs');
-  const fsImg = document.getElementById('fs-img');
-  const fsOpen = document.getElementById('fs-open');
-  const fsClose = document.getElementById('fs-close');
-  const fsPrev = document.getElementById('fs-prev');
-  const fsNext = document.getElementById('fs-next');
   let animating = false;
 
   function clampN(n) { return ((n - 1 + COUNT) % COUNT) + 1; }
@@ -499,7 +427,6 @@
     descEl.textContent = desc;
     yearEl.textContent = work.year;
     document.title = title + ' — Andreas Krings';
-    if (fsEl.classList.contains('open')) { fsImg.src = work.file; fsImg.alt = work.alt; }
     const prev = WORKS[clampN(work.n - 1) - 1];
     const next = WORKS[clampN(work.n + 1) - 1];
     prevLink.href = 'work.html?n=' + prev.n;
@@ -580,39 +507,10 @@
     else go(current - 1, true);               // flick right → previous
   }, { passive: true });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && fsEl.classList.contains('open')) closeFs();
     if (e.key === 'ArrowLeft') go(current - 1, true);
     if (e.key === 'ArrowRight') go(current + 1, true);
   });
 
-  // Fullscreen viewer — tap/click the painting (or the expand icon) to view it large.
-  // Browsing stays in fullscreen: edge arrows, ← → keys and swipe keep working.
-  function openFs() {
-    fsImg.src = WORKS[current - 1].file;
-    fsImg.alt = WORKS[current - 1].alt;
-    fsEl.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    fsClose.focus();
-  }
-  function closeFs() {
-    fsEl.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  fsOpen.addEventListener('click', (e) => { e.stopPropagation(); openFs(); });
-  stage.addEventListener('click', (e) => { if (!animating && !e.target.closest('.fs-open')) openFs(); });
-  fsEl.addEventListener('click', (e) => { if (e.target === fsEl) closeFs(); });
-  fsClose.addEventListener('click', closeFs);
-  fsPrev.addEventListener('click', () => go(current - 1, true));
-  fsNext.addEventListener('click', () => go(current + 1, true));
-  let fsTouchX = null;
-  fsEl.addEventListener('touchstart', (e) => { fsTouchX = e.changedTouches[0].clientX; }, { passive: true });
-  fsEl.addEventListener('touchend', (e) => {
-    if (fsTouchX === null) return;
-    const dx = e.changedTouches[0].clientX - fsTouchX;
-    fsTouchX = null;
-    if (Math.abs(dx) < 48) return;
-    if (dx < 0) go(current + 1, true); else go(current - 1, true);
-  }, { passive: true });
   document.querySelectorAll('.w-nav a').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -680,8 +578,6 @@
       'work.next': 'Weiter →',
       'work.prev.aria': 'Vorheriges Werk',
       'work.next.aria': 'Nächstes Werk',
-      'work.fs.open.aria': 'Vollbild öffnen',
-      'work.fs.close.aria': 'Vollbild schließen'
     }
   };
 </script>
