@@ -424,7 +424,8 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     apply('work.html', update_works_js, works)
     apply('all-works.html', update_grid, works, 'aw-card')
     apply('all-works.html', update_aw_count, len(works))
-    apply('index.html', update_grid, [w for w in works if int(w.get('n', 0)) <= 8], 'work-card')
+    top8 = [{**w, 'n': i + 1} for i, w in enumerate(works[:8])]
+    apply('index.html', update_grid, top8, 'work-card')
     apply('index.html', update_index_works_meta, min(8, len(works)))
     apply('index.html', update_exhibitions, schedule, 'about-exhibitions')
     apply('index.html', update_portraits, photos)
