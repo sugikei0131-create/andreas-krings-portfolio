@@ -25,7 +25,7 @@ import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PORT = 8765
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"  # accessible from any device on the same WiFi
 LOG = os.path.join(ROOT, "server.log")
 
 

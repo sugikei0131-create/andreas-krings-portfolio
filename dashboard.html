@@ -377,6 +377,298 @@
     .rank-bar{flex-basis:22%}
   }
 
+  /* ---------- layout ---------- */
+  .shell{max-width:var(--measure); margin:0 auto; padding:var(--pad)}
+  .view{display:none}
+  .view.is-active{display:block; animation:fade .35s var(--ease)}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+
+  .view-head{display:flex; align-items:flex-end; flex-wrap:wrap; gap:14px 24px; margin-bottom:clamp(28px,4vh,44px)}
+  .kicker{
+    margin:0; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted); width:100%;
+  }
+  .view-title{margin:2px 0 0; font-family:var(--font-display); font-weight:500; font-size:clamp(30px,4.5vw,46px); line-height:1.2}
+  .view-actions{display:flex; align-items:center; gap:12px; margin-left:auto; flex-wrap:wrap}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:10px 18px; font-size:14px; letter-spacing:.02em;
+    border:1px solid var(--border); border-radius:2px;
+    background:var(--surface); color:var(--fg);
+    transition:background .18s var(--ease), border-color .18s var(--ease), color .18s var(--ease);
+  }
+  .btn:hover{border-color:var(--fg)}
+  .btn-primary{background:var(--accent); border-color:var(--accent); color:var(--surface)}
+  .btn-primary:hover{background:oklch(46% 0.10 28); border-color:oklch(46% 0.10 28)}
+  .btn-danger{color:var(--accent); border-color:color-mix(in oklch, var(--accent) 30%, var(--border))}
+  .btn-danger:hover{border-color:var(--accent); background:color-mix(in oklch, var(--accent) 6%, var(--surface))}
+  .btn-sm{padding:5px 10px; font-size:12px}
+  .btn:disabled{opacity:.45; cursor:default; pointer-events:none}
+  .icon-btn{
+    width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:15px; color:var(--muted);
+    border:1px solid transparent; border-radius:2px;
+  }
+  .icon-btn:hover{color:var(--fg); border-color:var(--border); background:var(--surface)}
+
+  .sort{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--muted)}
+  .sort select{
+    font:inherit; color:var(--fg); background:var(--surface);
+    border:1px solid var(--border); border-radius:2px; padding:8px 10px;
+  }
+  .dnd-hint{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+
+  /* ---------- work list ---------- */
+  .list{list-style:none; margin:0; padding:0; border-top:1px solid var(--border)}
+  .list > li{
+    display:grid; grid-template-columns:64px 64px 1fr auto; align-items:center;
+    gap:clamp(12px,2vw,20px); padding:14px 4px;
+    border-bottom:1px solid var(--border);
+    transition:background .18s var(--ease);
+  }
+  .list > li:hover{background:oklch(97.2% 0.004 95)}
+  .list > li[draggable="true"]{cursor:grab}
+  .list > li.is-dragging{opacity:.45; background:oklch(97.2% 0.004 95); cursor:grabbing}
+  .list > li.is-dragging *{pointer-events:none}
+  .list > li.is-over-top{box-shadow:inset 0 2px 0 var(--accent)}
+  .list > li.is-over-bottom{box-shadow:inset 0 -2px 0 var(--accent)}
+  .grip{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:22px; height:32px; font-family:var(--font-mono); font-size:13px;
+    letter-spacing:-2px; color:var(--border); user-select:none; cursor:grab;
+  }
+  .grip:hover{color:var(--muted)}
+  .thumb{
+    width:64px; height:64px; border-radius:2px; overflow:hidden;
+    background:repeating-conic-gradient(var(--bg) 0% 25%, color-mix(in oklch, var(--border) 50%, var(--bg)) 0% 50%);
+    background-size:12px 12px; border:1px solid var(--border);
+  }
+  .thumb img{width:100%; height:100%; object-fit:contain}
+  .thumb.is-empty{display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; color:var(--muted)}
+  .row-no{font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .row-main{min-width:0}
+  .row-title{font-family:var(--font-display); font-size:18px; line-height:1.3; margin:0}
+  .row-title a{color:var(--fg); text-decoration:none}
+  .row-title a:hover{color:var(--accent)}
+  .row-sub{font-size:12.5px; color:var(--muted); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .row-meta{display:flex; align-items:center; gap:10px; justify-content:flex-end}
+  .badge{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 8px; border:1px solid var(--border); border-radius:999px; color:var(--muted); white-space:nowrap;
+  }
+  .badge-video{color:var(--accent); border-color:color-mix(in oklch, var(--accent) 45%, var(--border))}
+  .row-actions{display:flex; gap:2px}
+  .empty{
+    padding:clamp(48px,8vh,80px) 0; text-align:center; color:var(--muted); font-size:14px;
+  }
+
+  /* ---------- schedule list ---------- */
+  .list > li.sch-row{grid-template-columns:84px 1fr auto}
+  .sch-year{font-family:var(--font-mono); font-size:13px; letter-spacing:.06em; color:var(--muted)}
+  .sch-main{min-width:0}
+  .sch-title{font-family:var(--font-display); font-size:18px; line-height:1.3; margin:0}
+  .sch-place{font-size:13px; color:var(--muted); margin-top:2px}
+  .list > li.ph-row{grid-template-columns:64px 1fr auto}
+  .ph-file{font-family:var(--font-mono); font-size:13px; letter-spacing:.02em; margin:0}
+  .ph-label{font-size:12.5px; color:var(--muted); margin-top:2px}
+
+  /* ---------- data view ---------- */
+  .data-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.5vw,28px)}
+  .panel{
+    background:var(--surface); border:1px solid var(--border); border-radius:3px;
+    padding:clamp(18px,2.5vw,28px);
+  }
+  .panel h2{margin:0 0 4px; font-family:var(--font-display); font-weight:500; font-size:21px; line-height:1.3}
+  .panel .p-desc{font-size:13.5px; color:var(--muted); margin:0 0 16px}
+  .panel .p-actions{display:flex; gap:10px; flex-wrap:wrap}
+  .codegen{margin-top:clamp(20px,3vw,32px)}
+  .cg-row{display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; margin-bottom:8px}
+  .cg-row h3{margin:0; font-family:var(--font-display); font-weight:500; font-size:17px}
+  .cg-row p{margin:0; font-size:12.5px; color:var(--muted)}
+  textarea{
+    width:100%; min-height:190px; resize:vertical;
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.55;
+    color:var(--fg); background:oklch(97.4% 0.004 95);
+    border:1px solid var(--border); border-radius:3px; padding:14px;
+  }
+  .cg-note{font-size:12.5px; color:var(--muted); margin:14px 0 0; line-height:1.7}
+
+  /* ---------- publish panel ---------- */
+  .publish-panel{
+    margin-bottom:clamp(18px,2.5vw,28px);
+    background:color-mix(in oklch, var(--accent) 3%, var(--surface));
+    border:1px solid color-mix(in oklch, var(--accent) 32%, var(--border));
+  }
+  .publish-head{display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap}
+  .publish-head h2{margin:0 0 4px; font-family:var(--font-display); font-weight:500; font-size:22px}
+  .publish-head .p-desc{margin:0; max-width:56ch}
+  .btn-lg{padding:13px 26px; font-size:15px; letter-spacing:.03em}
+  .pub-status{font-size:13px; color:var(--muted); margin-top:14px; line-height:1.7}
+  .pub-status .ok{color:oklch(46% 0.09 150)}
+  .pub-status .err{color:var(--accent)}
+  .pub-status .busy{color:var(--fg)}
+  .pub-log{
+    margin-top:12px; max-height:280px; overflow:auto;
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.6;
+    background:oklch(97.4% 0.004 95); border:1px solid var(--border); border-radius:3px; padding:12px 14px;
+  }
+  .pub-log div{white-space:pre-wrap; word-break:break-word}
+  .pub-log .ok{color:oklch(46% 0.09 150)}
+  .pub-log .err{color:var(--accent)}
+  .pub-log .dim{color:var(--muted)}
+
+  /* ---------- editor panel ---------- */
+  .overlay{
+    position:fixed; inset:0; z-index:45; background:oklch(20% 0.018 70 / .35);
+    opacity:0; transition:opacity .25s var(--ease); pointer-events:none;
+  }
+  .overlay.is-open{opacity:1; pointer-events:auto}
+  .editor{
+    position:fixed; top:0; right:0; bottom:0; z-index:50;
+    width:min(540px, 100vw); background:var(--surface); border-left:1px solid var(--border);
+    transform:translateX(102%); transition:transform .32s var(--ease);
+    display:flex; flex-direction:column;
+  }
+  .editor.is-open{transform:none}
+  .ed-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px clamp(18px,3vw,28px); border-bottom:1px solid var(--border);
+  }
+  .ed-head h2{margin:0; font-family:var(--font-display); font-weight:500; font-size:22px}
+  .ed-close{width:40px; height:40px; font-size:20px; color:var(--muted)}
+  .ed-close:hover{color:var(--fg)}
+  .ed-body{flex:1; overflow-y:auto; padding:clamp(18px,3vw,28px)}
+  .field{margin-bottom:18px}
+  .field label{display:block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+  .field .req{color:var(--accent)}
+  .field input[type=text], .field input[type=url], .field input[type=number], .field textarea, .field input[type=file]{
+    width:100%; font:inherit; font-size:15px; color:var(--fg);
+    background:transparent; border:0; border-bottom:1px solid var(--border);
+    padding:8px 2px; border-radius:0; transition:border-color .18s var(--ease);
+  }
+  .field input:focus, .field textarea:focus{outline:none; border-color:var(--accent)}
+  .field textarea{resize:vertical; min-height:84px; line-height:1.6}
+  .field .hint{font-size:11.5px; color:var(--muted); margin-top:5px}
+  .ed-preview{margin:6px 0 18px}
+  .ed-preview img{
+    display:block; width:auto; height:auto; max-width:100%; max-height:220px; margin-inline:auto;
+    object-fit:contain; border:1px solid var(--border); border-radius:3px;
+    background-image:repeating-conic-gradient(var(--bg) 0% 25%, color-mix(in oklch, var(--border) 50%, var(--bg)) 0% 50%);
+    background-size:14px 14px;
+  }
+  .ed-preview.is-empty{
+    display:flex; align-items:center; justify-content:center; min-height:120px;
+    border:1px dashed var(--border); border-radius:3px; color:var(--muted); font-size:12px;
+  }
+  .ed-preview .up-meta{margin-top:8px; display:flex; align-items:center; gap:10px; font-size:11.5px; color:var(--muted)}
+  .ed-preview .up-meta a{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
+  .upload-zone{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    margin:10px 0 14px; padding:22px 14px; cursor:pointer; text-align:center;
+    border:1.5px dashed var(--border); border-radius:3px; color:var(--muted);
+    transition:border-color .18s var(--ease), background-color .18s var(--ease);
+  }
+  .upload-zone:hover{border-color:var(--accent)}
+  .upload-zone.is-over{border-color:var(--accent); background:color-mix(in oklch, var(--accent) 7%, transparent)}
+  .upload-zone .uz-icon{font-size:18px; line-height:1}
+  .upload-zone .uz-main{font-size:13px; color:var(--fg)}
+  .upload-zone .uz-sub{font-size:11px}
+  .uploads-list{display:flex; flex-direction:column; gap:10px}
+  .up-row{display:flex; align-items:center; gap:14px; padding:10px; border:1px solid var(--border); border-radius:3px}
+  .up-row img{width:56px; height:56px; object-fit:contain; border:1px solid var(--border); border-radius:2px;
+    background-image:repeating-conic-gradient(var(--bg) 0% 25%, color-mix(in oklch, var(--border) 50%, var(--bg)) 0% 50%);
+    background-size:12px 12px}
+  .up-info{flex:1; min-width:0}
+  .up-name{font-family:var(--font-mono); font-size:11.5px; letter-spacing:.02em; color:var(--fg); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .up-size{font-size:11px; color:var(--muted); margin-top:2px}
+  .ed-foot{
+    display:flex; justify-content:flex-end; gap:10px;
+    padding:16px clamp(18px,3vw,28px); border-top:1px solid var(--border); background:var(--surface);
+  }
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed; left:50%; bottom:28px; transform:translate(-50%, 16px);
+    z-index:60; background:var(--fg); color:var(--bg);
+    font-size:13.5px; letter-spacing:.02em; padding:12px 22px; border-radius:3px;
+    opacity:0; pointer-events:none; transition:opacity .25s var(--ease), transform .25s var(--ease);
+    box-shadow:0 10px 30px oklch(20% 0.018 70 / .18);
+  }
+  .toast.is-open{opacity:1; transform:translate(-50%,0)}
+
+  /* ---------- confirm modal ---------- */
+  .modal{
+    position:fixed; inset:0; z-index:70; display:flex; align-items:center; justify-content:center;
+    background:oklch(20% 0.018 70 / .35);
+    opacity:0; pointer-events:none; transition:opacity .2s var(--ease);
+  }
+  .modal[hidden]{display:none}
+  .modal.is-open{opacity:1; pointer-events:auto}
+  .modal-card{
+    width:min(420px, calc(100vw - 40px)); background:var(--surface);
+    border:1px solid var(--border); border-radius:4px; padding:24px;
+    box-shadow:0 18px 50px oklch(20% 0.018 70 / .2);
+  }
+  .modal-title{margin:0 0 8px; font-family:var(--font-display); font-weight:500; font-size:19px}
+  .modal-msg{margin:0 0 20px; font-size:14px; color:var(--muted); line-height:1.6}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .hd{height:auto; min-height:var(--header-h); flex-wrap:wrap; padding-top:10px; padding-bottom:10px; gap:8px 16px}
+    .tabs{order:3; width:100%; margin-left:0; overflow-x:auto; padding-bottom:2px; gap:22px}
+    .tab{white-space:nowrap}
+    .data-grid{grid-template-columns:1fr}
+    .list > li{grid-template-columns:56px 1fr auto; grid-template-rows:auto auto}
+    .thumb{width:56px; height:56px}
+    .row-no{display:none}
+    .row-actions{grid-column:2 / -1; justify-content:flex-end}
+    .list > li.sch-row{grid-template-columns:1fr auto}
+    .list > li.ph-row{grid-template-columns:56px 1fr auto}
+    .sch-year{grid-column:1 / -1}
+  }
+
+  /* ---------- analytics view ---------- */
+  .sample-tag{
+    display:inline-block; margin-left:8px; padding:1px 7px;
+    font-family:var(--font-mono); font-size:9px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent);
+    border:1px solid color-mix(in oklch, var(--accent) 40%, var(--border));
+    border-radius:999px; vertical-align:2px;
+  }
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:18px}
+  .stat{background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:16px 18px}
+  .stat__label{margin:0; font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+  .stat__value{margin:5px 0 0; font-family:var(--font-display); font-weight:500; font-size:clamp(24px,3vw,32px); line-height:1.15}
+  .stat__sub{margin:3px 0 0; font-size:12px; color:var(--muted)}
+  .chart{background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:clamp(16px,2.5vw,24px)}
+  .chart h3{margin:0 0 2px; font-family:var(--font-display); font-weight:500; font-size:19px}
+  .chart .p-desc{font-size:12.5px; color:var(--muted); margin:0 0 14px}
+  .chart svg{display:block; width:100%; height:auto}
+  .axis{stroke:var(--border); stroke-width:1}
+  .bar-track{fill:oklch(96.5% 0.005 95)}
+  .bar{fill:var(--accent); opacity:.82; transition:opacity .15s var(--ease)}
+  .bar:hover{opacity:1}
+  .bar-label{font-family:var(--font-mono); font-size:9px; letter-spacing:.04em; fill:var(--muted)}
+  .rank-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.5vw,28px); margin-top:18px}
+  .rank-item{display:flex; align-items:center; gap:12px; padding:11px 4px; border-bottom:1px solid var(--border); font-size:13.5px}
+  .rank-n{font-family:var(--font-mono); font-size:11px; color:var(--muted); width:18px; flex:none}
+  .rank-name{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .rank-val{font-family:var(--font-mono); font-size:12px; color:var(--muted); flex:none}
+  .rank-bar{height:3px; border-radius:2px; overflow:hidden; background:var(--border); flex:0 0 30%}
+  .rank-bar i{display:block; height:100%; background:var(--accent); opacity:.85}
+  .src-note{margin-top:18px}
+  .src-note ul{margin:10px 0 0; padding-left:18px; font-size:13.5px; color:var(--muted)}
+  .src-note li{margin:6px 0}
+  .src-note b{color:var(--fg); font-weight:550}
+  code{font-family:var(--font-mono); font-size:12px; background:var(--bg); border:1px solid var(--border); border-radius:2px; padding:1px 5px}
+  @media (max-width:760px){
+    .rank-grid{grid-template-columns:1fr}
+    .rank-bar{flex-basis:22%}
+  }
+
   /* ---------- login ---------- */
   .login-overlay{
     position:fixed; inset:0; z-index:100;
@@ -420,24 +712,7 @@
 </style>
 </head>
 <body>
-
-<div class="login-overlay" id="loginOverlay" hidden>
-  <div class="login-box">
-    <h1>Studio Manager</h1>
-    <p class="login-desc">Enter your password to manage the portfolio. Your credentials stay on this device.</p>
-    <label for="loginPassword">Password</label>
-    <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
-    <p class="login-error" id="loginError"></p>
-    <div class="login-actions">
-      <button class="btn btn-primary" id="loginBtn" style="flex:1">Sign in</button>
-    </div>
-    <div class="login-actions" style="margin-top:14px">
-      <label class="login-remember">
-        <input type="checkbox" id="loginRemember"> Remember on this device
-      </label>
-    </div>
-  </div>
-</div>
+<!-- login removed — using local server API instead -->
 
 
 <header class="hd" data-od-id="dash-header">
@@ -1731,225 +2006,130 @@
   }
 
 
-  /* ---------- auth ---------- */
-  var ENCRYPTED_TOKEN = {"salt": "fsn4Z5cLtwSdFDx1u+XjbQ==", "nonce": "LTtK/GbGrVpSkQ2l", "data": "IDO7Kj28qcssdlaBlKbgJmm2d3rxngs3uNA7TzOG4VVmVTaxcL+Hke/dnrRtn0C5jNnx5Ctf37wh1XwE4c+sSYM9SOFJGWUC+nvbvSMH6zuCMnq2pn2KbJjhWoHGMhYlhfInaHGxrK0YzPETkQ=="};
-  var GH_OWNER = 'sugikei0131-create';
-  var GH_REPO  = 'andreas-krings-portfolio';
-  var GH_BRANCH = 'main';
-  var ghToken = null; /* decrypted at login */
-
-  function showLogin() {
-    $('loginOverlay').hidden = false;
-    $('loginPassword').focus();
-    $('loginError').textContent = '';
+  /* ---------- save & publish (local server API) ---------- */
+  function apiPost(path, body){
+    return fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function(r){
+      return r.json().catch(function(){ return { ok:false, error:'bad response (' + r.status + ')' }; });
+    });
   }
-  function hideLogin() { $('loginOverlay').hidden = true; }
-  $('loginBtn').addEventListener('click', function() {
-    var pw = $('loginPassword').value;
-    $('loginError').textContent = '';
-    decryptToken(pw).then(function(tok) {
-      if (!tok) { $('loginError').textContent = 'Wrong password.'; return; }
-      ghToken = tok;
-      if ($('loginRemember').checked) {
-        try { localStorage.setItem('ak-gh-token', tok); } catch(e){}
+  var pubLog = $('pubLog');
+  function pubLine(html, cls){
+    var d = document.createElement('div');
+    if (cls) d.className = cls;
+    d.innerHTML = html;
+    pubLog.appendChild(d);
+    pubLog.hidden = false;
+    pubLog.scrollTop = pubLog.scrollHeight;
+  }
+  function pubStatus(html, cls){
+    var el = $('pubStatus');
+    el.innerHTML = html;
+    el.className = 'pub-status' + (cls ? ' ' + cls : '');
+    var hd = $('hdPubState');
+    hd.className = 'hd__pubstate' + (cls ? ' is-' + cls : '');
+    if (cls === 'ok') hd.innerHTML = 'Connected ✓';
+    else if (cls === 'busy') hd.innerHTML = 'Working…';
+    else if (cls === 'err') hd.innerHTML = 'Not connected';
+    else hd.innerHTML = 'Ready';
+  }
+  function syncButtons(busy, on){
+    var btns = [$('publishBtn'), $('hdPublishBtn')];
+    btns.forEach(function(b, i){
+      if (busy !== undefined){
+        b.disabled = busy;
+        b.textContent = busy ? 'Working…' : 'Save &amp; Publish';
       }
-      try { sessionStorage.setItem('ak-gh-token', tok); } catch(e){}
-      hideLogin();
-      pubStatus('Signed in — ready to publish.', 'ok');
-      setPublishEnabled(true);
-      checkConnection();
-    }).catch(function() {
-      $('loginError').textContent = 'Wrong password.';
-    });
-  });
-  $('loginPassword').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') $('loginBtn').click();
-  });
-
-  /* Web Crypto: derive key from password, decrypt token */
-  function decryptToken(password) {
-    var enc = ENCRYPTED_TOKEN;
-    var pw = new TextEncoder().encode(password);
-    var salt = Uint8Array.from(atob(enc.salt), function(c){return c.charCodeAt(0)});
-    var nonce = Uint8Array.from(atob(enc.nonce), function(c){return c.charCodeAt(0)});
-    var data = Uint8Array.from(atob(enc.data), function(c){return c.charCodeAt(0)});
-
-    return crypto.subtle.importKey('raw', pw, 'PBKDF2', false, ['deriveKey'])
-      .then(function(baseKey) {
-        return crypto.subtle.deriveKey(
-          {name:'PBKDF2', salt:salt, iterations:600000, hash:'SHA-256'},
-          baseKey, {name:'AES-GCM', length:256}, false, ['decrypt']
-        );
-      })
-      .then(function(aesKey) {
-        return crypto.subtle.decrypt({name:'AES-GCM', iv:nonce}, aesKey, data);
-      })
-      .then(function(decrypted) {
-        return new TextDecoder().decode(decrypted);
-      })
-      .catch(function() { return null; });
-  }
-
-  /* ---------- GitHub API ---------- */
-  function ghApi(path, method, body) {
-    var opts = {
-      method: method || 'GET',
-      headers: { 'Authorization':'Bearer ' + ghToken, 'Accept':'application/vnd.github+json' }
-    };
-    if (body) {
-      opts.headers['Content-Type'] = 'application/json';
-      opts.body = JSON.stringify(body);
-    }
-    return fetch('https://api.github.com' + path, opts).then(function(r) {
-      return r.json().catch(function(){ return {ok:false, error:'HTTP '+r.status} });
+      if (!busy && on !== undefined){
+        b.disabled = !on;
+        b.title = on ? '' : 'Open from the local server to publish (http://<Mac-IP>:8765/dashboard.html)';
+      }
     });
   }
-
-  function ghGetFile(p) {
-    return ghApi('/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + p + '?ref=' + GH_BRANCH)
-      .then(function(d) {
-        if (!d.content) throw new Error('No content for ' + p);
-        return { content:atob(d.content), sha:d.sha };
-      });
-  }
-
-  function ghPutFile(p, content, sha, msg) {
-    var body = {
-      message: msg || 'Dashboard update: ' + p,
-      content: btoa(unescape(encodeURIComponent(content))),
-      branch: GH_BRANCH
-    };
-    if (sha) body.sha = sha;
-    return ghApi('/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + p, 'PUT', body);
-  }
-
-  /* section replacers (compact JS versions of sync_from_dashboard.py logic) */
-  function replaceBlock(text, pattern, replacement) {
-    var m = text.match(pattern);
-    if (!m) throw new Error('Block not found: ' + String(pattern).substring(0,60));
-    return text.substring(0, m.index) + replacement + text.substring(m.index + m[0].length);
-  }
-
-  function genAlt(w) {
-    var t = w.title || 'Untitled';
-    var d = w.descEn || '';
-    return q1(t + (d ? ' — ' + d : ''));
-  }
-
-  function genWorksJs(works) {
-    var items = works.map(function(w) {
-      var vid = w.video ? ', video:' + q1(w.video) : '';
-      return '    {n:' + w.n + ', file:' + q1(w.file||'') + ', title:' + q1(w.title||'') + ', alt:' + q1(genAlt(w)) + ', desc:' + q1(w.descEn||'') + ', titleDe:' + q1(w.titleDe||'') + ', descDe:' + q1(w.descDe||'') + ', year:' + w.year + vid + '}';
-    });
-    return '  const WORKS = [\n' + items.join(',\n') + '\n  ];\n  const COUNT = WORKS.length;';
-  }
-
-  function genGridCards(works, prefix) {
-    prefix = prefix || '';
-    return works.map(function(w) {
-      var fid = slugId(w.file, w.n);
-      var vidBadge = w.video ? '<span class=\'badge badge-video\'>video ▼</span>' : '';
-      return prefix + '<li data-od-id="aw-card-' + esc(fid) + '">\n' +
-        prefix + '  <a href="work.html?n=' + w.n + '" class="work-card" aria-label="' + esc(w.title||'') + ', ' + (w.year||'') + '">\n' +
-        prefix + '    <div class="work-img"><img src="' + esc(w.file||'') + '" alt="" loading="lazy"></div>\n' +
-        prefix + '    <div class="work-reveal">\n' +
-        prefix + '      <span class="work-no">No. ' + pad2(w.n) + '</span>\n' +
-        prefix + '      <span class="work-title" data-i18n="work.title.' + w.n + '">' + esc(w.title||'') + '</span>\n' +
-        prefix + '      <span class="work-year">' + esc(w.year||'') + vidBadge + '</span>\n' +
-        prefix + '    </div>\n' +
-        prefix + '  </a>\n' +
-        prefix + '</li>';
-    }).join('\n');
-  }
-
-  function genSchedHtml(schedule) {
-    if (!schedule.length) return '{no entries}';
-    var sorted = schedule.slice().sort(function(a,b) { return (b.year||0)-(a.year||0) || (a.id||0)-(b.id||0); });
-    return sorted.map(function(it, i) {
-      return '<li data-od-id="ex-item-' + (i+1) + '"><span class="ex-year">' + esc(it.year||'') + '</span><span class="ex-name" data-i18n="ex.' + (i+1) + '">' + esc(it.title||'') + '</span><span class="ex-place">' + esc(it.place||'') + '</span></li>';
-    }).join('\n');
-  }
-
-  function genPortraitsJs(photos) {
-    var arr = photos.map(function(p) { return "'" + q1(p.file||'') + "'"; });
-    return 'const portraits = [' + arr.join(', ') + '];';
-  }
-
-  function genI18nEntries(works) {
-    return works.filter(function(w) { return w.n > 12 && (w.titleDe||'').trim(); })
-      .map(function(w) { return "    'work.title." + w.n + "': '" + q1(w.titleDe||'') + "',"; });
-  }
-
-  /* helpers - slug from file path, leading article stripped */
-  function slugId(file, n) {
-    var base = (file||'').replace(/.*[\\\/]/, '').replace(/\.(svg|png|jpe?g|webp)$/i, '');
-    var s = base.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    s = s || ('work-' + pad2(n));
-    s = s.replace(/^work-\d+-/, '') || ('work-' + pad2(n));
-    s = s.replace(/^(a|an|the)-/, '');
-    return s || ('work-' + pad2(n));
-  }
-
-  /* ---------- save & publish (GitHub API) ---------- */
-  function checkConnection() {
-    if (ghToken) {
-      ghApi('/repos/' + GH_OWNER + '/' + GH_REPO).then(function(r) {
-        if (r.full_name) {
-          pubStatus('Signed in — ready to publish to <b>' + esc(r.full_name) + '</b>.', 'ok');
-          setPublishEnabled(true);
-        } else {
-          pubStatus('GitHub API error. Try signing in again.', 'err');
-          setPublishEnabled(false);
+  function setPublishBusy(busy){ syncButtons(busy); }
+  function setPublishEnabled(on){ syncButtons(false, on); }
+  function checkConnection(){
+    /* try local server first */
+    apiPost('/api/status').then(function(res){
+      if (res && res.ok){
+        var g = res.git || {};
+        var dirty = g.dirty ? ' — <b class="err">unpublished changes on disk</b>' : '';
+        pubStatus('Connected to local server. Repo <b>' + esc(g.branch || '?') + '</b> @ ' + esc(g.commit || '?') + dirty + ' — publish to update the public site.', 'ok');
+        setPublishEnabled(true);
+      } else {
+        /* try GitHub API as fallback (requires token in localStorage) */
+        var tok = null;
+        try { tok = sessionStorage.getItem('ak-gh-token') || localStorage.getItem('ak-gh-token'); } catch(e){}
+        if (tok) {
+          return fetch('https://api.github.com/repos/sugikei0131-create/andreas-krings-portfolio', {
+            headers: {'Authorization':'Bearer '+tok, 'Accept':'application/vnd.github+json'}
+          }).then(function(r){ return r.json(); }).then(function(d){
+            if (d.full_name) {
+              pubStatus('Connected via GitHub API — repo <b>' + esc(d.full_name) + '</b>.', 'ok');
+              setPublishEnabled(true);
+            } else { throw new Error('bad token'); }
+          }).catch(function(){
+            pubStatus('Not connected. <b>Open this dashboard from the local server to publish.</b> On the Mac, double-click <b>Andreas Dashboard.command</b>, then on your phone visit:<br><code>http://&lt;Mac-IP&gt;:8765/dashboard.html</code>', 'err');
+            setPublishEnabled(false);
+          });
         }
-      }).catch(function() {
-        pubStatus('Signed in but cannot reach GitHub.', 'err');
+        pubStatus('Not connected. <b>Open this dashboard from the local server to publish.</b> On the Mac, double-click <b>Andreas Dashboard.command</b>, then on your phone visit:<br><code>http://&lt;Mac-IP&gt;:8765/dashboard.html</code> (same WiFi).', 'err');
         setPublishEnabled(false);
-      });
-    } else {
-      /* Try local server as fallback */
-      fetch('/api/status', {method:'POST'}).then(function(r){ return r.json().catch(function(){return null}) })
-        .then(function(res) {
-          if (res && res.ok) {
-            var g = res.git || {};
-            pubStatus('Connected to local server. Repo <b>' + esc(g.branch||'?') + '</b> @ ' + esc(g.commit||'?'), 'ok');
-            setPublishEnabled(true);
-          } else { showLogin(); }
-        }).catch(function() { showLogin(); });
-    }
+      }
+    }).catch(function(){
+      pubStatus('Not connected. <b>To publish:</b> double-click <b>Andreas Dashboard.command</b> on the Mac, then open <code>http://&lt;Mac-IP&gt;:8765/dashboard.html</code> on any device on the same WiFi.', 'err');
+      setPublishEnabled(false);
+    });
   }
 
-  function doPublish() {
-    if (!ghToken) { showLogin(); return; }
+  function doPublish(){
     setPublishBusy(true);
     pubLog.innerHTML = '';
     pubLog.hidden = true;
-    pubStatus('Syncing to GitHub…', 'busy');
-
-    var stateJson = JSON.stringify(state, null, 2);
-
-    /* commit .dashboard-state.json to trigger GitHub Action */
-    ghGetFile('.dashboard-state.json').then(function(f) {
-      return ghPutFile('.dashboard-state.json', stateJson, f.sha, 'Dashboard: save state for sync');
-    }).catch(function() {
-      /* file doesn't exist yet — create it */
-      return ghPutFile('.dashboard-state.json', stateJson, null, 'Dashboard: initial state for sync');
-    }).then(function(res) {
-      if (res.content || res.commit) {
-        var sha = (res.content && res.content.sha) || (res.commit && res.commit.sha) || '';
-        pubLine('✓ State saved to .dashboard-state.json', 'ok');
-        pubLine('GitHub Actions workflow triggered — syncing files…', 'dim');
-        pubStatus('Published ✓ — GitHub Actions is updating the site (1–2 minutes).', 'ok');
-        pubLine('The Action will run sync_from_dashboard.py, commit changes, and deploy automatically.', 'dim');
-        /* poll for a bit to see if Action completes quickly */
-        setTimeout(function(){ checkConnection(); }, 5000);
-      } else {
-        throw new Error(res.message || 'Unknown GitHub API error');
+    pubStatus('Saving changes to the site files…', 'busy');
+    apiPost('/api/sync', state).then(function(res){
+      if (!res || !res.ok){
+        pubStatus('Sync failed: ' + esc(res && res.error ? res.error : 'server unreachable — open via localhost'), 'err');
+        return null;
       }
-    }).catch(function(err) {
-      pubStatus('Error: ' + esc(err.message || String(err)), 'err');
-    }).then(function() { setPublishBusy(false); });
+      var j = res;
+      pubLine('SYNC — ' + j.works + ' works, ' + j.schedule + ' schedule, ' + j.photos + ' photos', 'dim');
+      var updated = 0;
+      j.files.forEach(function(f){
+        if (f.status === 'updated'){ updated++; pubLine('✓ ' + f.file + ' — updated', 'ok'); }
+        else if (f.status === 'no change'){ pubLine('· ' + f.file + ' — no change', 'dim'); }
+        else { pubLine('✗ ' + f.file + ' — ' + esc(f.status), 'err'); }
+      });
+      j.uploads.forEach(function(u){ pubLine('✓ image ' + esc(u.path) + ' (' + u.bytes + ' bytes) written to assets/', 'ok'); });
+      (j.newWorks || []).forEach(function(w){ pubLine('new work No.' + w.n + ' "' + esc(w.title) + '" → ' + esc(w.file), ''); });
+      (j.missing || []).forEach(function(f){ pubLine('✗ missing file: ' + esc(f), 'err'); });
+      if (!updated && !j.uploads.length){ pubLine('No files changed.', 'dim'); }
+      pubStatus('Files updated' + (updated ? ' (' + updated + ')' : '') + ' — publishing to GitHub…', 'busy');
+      return apiPost('/api/publish');
+    }).then(function(res2){
+      if (!res2) return;
+      if (!res2.ok){
+        pubStatus('Publish failed: ' + esc(res2.error ? res2.error : 'server unreachable'), 'err');
+        return;
+      }
+      var j2 = res2;
+      if (j2.nothing){
+        pubLine('PUBLISH — ' + esc(j2.message), 'dim');
+        pubStatus('All saved and up to date. The public site already matches.', 'ok');
+      } else {
+        pubLine('PUBLISH — commit ' + esc(j2.commit) + ': ' + esc(j2.message), 'ok');
+        pubLine(j2.pushed ? 'pushed to GitHub ✓ — the public site rebuilds in 1–2 minutes.' : '✗ ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
+        pubStatus(j2.pushed
+          ? 'Published ✓ — commit <b>' + esc(j2.commit) + '</b> is live. The public site rebuilds in 1–2 minutes.'
+          : 'Committed but <b class="err">push failed</b>: ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
+      }
+    }).catch(function(err){
+      pubStatus('Error: ' + esc(String(err && err.message || err)), 'err');
+    }).then(function(){ setPublishBusy(false); });
   }
-
   $('publishBtn').addEventListener('click', doPublish);
   $('hdPublishBtn').addEventListener('click', doPublish);
 
