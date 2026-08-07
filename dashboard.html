@@ -187,6 +187,30 @@
   }
   .cg-note{font-size:12.5px; color:var(--muted); margin:14px 0 0; line-height:1.7}
 
+  /* ---------- publish panel ---------- */
+  .publish-panel{
+    margin-bottom:clamp(18px,2.5vw,28px);
+    background:color-mix(in oklch, var(--accent) 3%, var(--surface));
+    border:1px solid color-mix(in oklch, var(--accent) 32%, var(--border));
+  }
+  .publish-head{display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap}
+  .publish-head h2{margin:0 0 4px; font-family:var(--font-display); font-weight:500; font-size:22px}
+  .publish-head .p-desc{margin:0; max-width:56ch}
+  .btn-lg{padding:13px 26px; font-size:15px; letter-spacing:.03em}
+  .pub-status{font-size:13px; color:var(--muted); margin-top:14px; line-height:1.7}
+  .pub-status .ok{color:oklch(46% 0.09 150)}
+  .pub-status .err{color:var(--accent)}
+  .pub-status .busy{color:var(--fg)}
+  .pub-log{
+    margin-top:12px; max-height:280px; overflow:auto;
+    font-family:var(--font-mono); font-size:11.5px; line-height:1.6;
+    background:oklch(97.4% 0.004 95); border:1px solid var(--border); border-radius:3px; padding:12px 14px;
+  }
+  .pub-log div{white-space:pre-wrap; word-break:break-word}
+  .pub-log .ok{color:oklch(46% 0.09 150)}
+  .pub-log .err{color:var(--accent)}
+  .pub-log .dim{color:var(--muted)}
+
   /* ---------- editor panel ---------- */
   .overlay{
     position:fixed; inset:0; z-index:45; background:oklch(20% 0.018 70 / .35);
@@ -454,6 +478,17 @@
     <div class="view-head">
       <p class="kicker">Data — backup &amp; deploy</p>
       <h1 class="view-title">Data</h1>
+    </div>
+    <div class="panel publish-panel" data-od-id="panel-publish">
+      <div class="publish-head">
+        <div>
+          <h2>Save &amp; publish</h2>
+          <p class="p-desc">Applies every change (works, schedule, photos, uploaded images) to the site files and updates the public website on GitHub — no code, no terminal. Works when this dashboard is opened from the local server.</p>
+        </div>
+        <button class="btn btn-primary btn-lg" id="publishBtn" data-od-id="publish-btn">Save &amp; Publish</button>
+      </div>
+      <div class="pub-status" id="pubStatus" data-od-id="publish-status">Checking connection…</div>
+      <pre class="pub-log" id="pubLog" hidden data-od-id="publish-log"></pre>
     </div>
     <div class="data-grid">
       <div class="panel" data-od-id="panel-export">
@@ -1617,6 +1652,95 @@
     $('rankPages').innerHTML = rank(a.pages, false);
     $('rankRefs').innerHTML = rank(a.refs, true);
   }
+
+  /* ---------- save & publish (local server API) ---------- */
+  function apiPost(path, body){
+    return fetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined
+    }).then(function(r){
+      return r.json().catch(function(){ return { ok:false, error:'bad response (' + r.status + ')' }; });
+    });
+  }
+  var pubLog = $('pubLog');
+  function pubLine(html, cls){
+    var d = document.createElement('div');
+    if (cls) d.className = cls;
+    d.innerHTML = html;
+    pubLog.appendChild(d);
+    pubLog.hidden = false;
+    pubLog.scrollTop = pubLog.scrollHeight;
+  }
+  function pubStatus(html, cls){
+    var el = $('pubStatus');
+    el.innerHTML = html;
+    el.className = 'pub-status' + (cls ? ' ' + cls : '');
+  }
+  function setPublishBusy(busy){
+    var b = $('publishBtn');
+    b.disabled = busy;
+    b.textContent = busy ? 'Working…' : 'Save & Publish';
+  }
+  function checkConnection(){
+    apiPost('/api/status').then(function(res){
+      if (res && res.ok){
+        var g = res.git || {};
+        var dirty = g.dirty ? ' — <b class="err">unpublished changes on disk</b>' : '';
+        pubStatus('Connected to the local server. Repo <b>' + esc(g.branch || '?') + '</b> @ ' + esc(g.commit || '?') + dirty + ' — publishing updates the public site automatically.', 'ok');
+      } else {
+        pubStatus('Not connected. Open this dashboard from <b>http://localhost:8765/dashboard.html</b> (double-click the launcher) — Save &amp; Publish only works there.', 'err');
+      }
+    }).catch(function(){
+      pubStatus('Not connected. Open this dashboard from <b>http://localhost:8765/dashboard.html</b> — Save &amp; Publish only works there.', 'err');
+    });
+  }
+  $('publishBtn').addEventListener('click', function(){
+    setPublishBusy(true);
+    pubLog.innerHTML = '';
+    pubLog.hidden = true;
+    pubStatus('Saving changes to the site files…', 'busy');
+    apiPost('/api/sync', state).then(function(res){
+      if (!res || !res.ok){
+        pubStatus('Sync failed: ' + esc(res && res.error ? res.error : 'server unreachable — open via localhost'), 'err');
+        return null;
+      }
+      var j = res;
+      pubLine('SYNC — ' + j.works + ' works, ' + j.schedule + ' schedule, ' + j.photos + ' photos', 'dim');
+      var updated = 0;
+      j.files.forEach(function(f){
+        if (f.status === 'updated'){ updated++; pubLine('✓ ' + f.file + ' — updated', 'ok'); }
+        else if (f.status === 'no change'){ pubLine('· ' + f.file + ' — no change', 'dim'); }
+        else { pubLine('✗ ' + f.file + ' — ' + esc(f.status), 'err'); }
+      });
+      j.uploads.forEach(function(u){ pubLine('✓ image ' + esc(u.path) + ' (' + u.bytes + ' bytes) written to assets/', 'ok'); });
+      (j.newWorks || []).forEach(function(w){ pubLine('new work No.' + w.n + ' "' + esc(w.title) + '" → ' + esc(w.file), ''); });
+      (j.missing || []).forEach(function(f){ pubLine('✗ missing file: ' + esc(f), 'err'); });
+      if (!updated && !j.uploads.length){ pubLine('No files changed.', 'dim'); }
+      pubStatus('Files updated' + (updated ? ' (' + updated + ')' : '') + ' — publishing to GitHub…', 'busy');
+      return apiPost('/api/publish');
+    }).then(function(res2){
+      if (!res2) return; /* sync failed — already reported */
+      if (!res2.ok){
+        pubStatus('Publish failed: ' + esc(res2.error ? res2.error : 'server unreachable'), 'err');
+        return;
+      }
+      var j2 = res2;
+      if (j2.nothing){
+        pubLine('PUBLISH — ' + esc(j2.message), 'dim');
+        pubStatus('All saved and up to date. The public site already matches.', 'ok');
+      } else {
+        pubLine('PUBLISH — commit ' + esc(j2.commit) + ': ' + esc(j2.message), 'ok');
+        pubLine(j2.pushed ? 'pushed to GitHub ✓ — the public site rebuilds in 1–2 minutes.' : '✗ ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
+        pubStatus(j2.pushed
+          ? 'Published ✓ — commit <b>' + esc(j2.commit) + '</b> is live. The public site rebuilds in 1–2 minutes.'
+          : 'Committed but <b class="err">push failed</b>: ' + esc(j2.push), j2.pushed ? 'ok' : 'err');
+      }
+    }).catch(function(err){
+      pubStatus('Error: ' + esc(String(err && err.message || err)), 'err');
+    }).then(function(){ setPublishBusy(false); });
+  });
+  checkConnection();
 
   /* ---------- init ---------- */
   renderWorks();

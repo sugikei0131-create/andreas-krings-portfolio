@@ -3,6 +3,10 @@
 server.log
 *.artifact.json
 
+# Sync script backups
+.sync-backups/
+__pycache__/
+
 # macOS
 .DS_Store
 
