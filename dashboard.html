@@ -68,6 +68,22 @@
     border-bottom:1px solid var(--border); padding-bottom:1px; white-space:nowrap;
   }
   .site-link:hover{border-color:var(--accent); color:var(--accent)}
+  .hd__publish{
+    font-size:13px; font-weight:520; letter-spacing:.02em;
+    padding:6px 16px; border-radius:3px;
+    background:var(--accent); color:var(--surface);
+    white-space:nowrap; transition:background .2s, opacity .2s;
+  }
+  .hd__publish:hover{opacity:.88}
+  .hd__publish:disabled{background:var(--border); color:var(--muted); cursor:not-allowed; opacity:1}
+  .hd__pubstate{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.04em;
+    color:var(--muted); white-space:nowrap; max-width:180px;
+    overflow:hidden; text-overflow:ellipsis;
+  }
+  .hd__pubstate.is-ok{color:var(--muted)}
+  .hd__pubstate.is-err{color:var(--accent)}
+  .hd__pubstate.is-busy{color:var(--accent)}
 
   /* ---------- layout ---------- */
   .shell{max-width:var(--measure); margin:0 auto; padding:var(--pad)}
@@ -377,7 +393,8 @@
     <button class="tab" role="tab" aria-selected="false" data-tab="data">Data</button>
   </nav>
   <div class="hd__right">
-    <span class="save-state" id="saveState" data-od-id="save-state">Saved</span>
+    <span class="hd__pubstate" id="hdPubState" data-od-id="pub-state">Checking…</span>
+    <button class="hd__publish" id="hdPublishBtn" data-od-id="publish-btn" disabled>Save &amp; Publish</button>
     <a class="site-link" href="index.html" target="_blank" rel="noopener">Open site ↗</a>
   </div>
 </header>
@@ -482,10 +499,10 @@
     <div class="panel publish-panel" data-od-id="panel-publish">
       <div class="publish-head">
         <div>
-          <h2>Save &amp; publish</h2>
-          <p class="p-desc">Applies every change (works, schedule, photos, uploaded images) to the site files and updates the public website on GitHub — no code, no terminal. Works when this dashboard is opened from the local server.</p>
+          <h2>Publish log</h2>
+          <p class="p-desc">Detailed output from the last <b>Save &amp; Publish</b> run — use the header button to publish. All backup, restore, and code-generation tools are below.</p>
         </div>
-        <button class="btn btn-primary btn-lg" id="publishBtn" data-od-id="publish-btn">Save &amp; Publish</button>
+        <button class="btn btn-primary btn-lg" id="publishBtn" data-od-id="publish-btn" disabled hidden>Save &amp; Publish</button>
       </div>
       <div class="pub-status" id="pubStatus" data-od-id="publish-status">Checking connection…</div>
       <pre class="pub-log" id="pubLog" hidden data-od-id="publish-log"></pre>
@@ -781,10 +798,10 @@
       toast('Storage full — remove unused uploads or export and clear');
       return;
     }
-    var el = document.getElementById('saveState');
     var now = new Date();
-    el.textContent = 'Saved ' + pad(now.getHours()) + ':' + pad(now.getMinutes());
-    el.classList.remove('is-dirty');
+    var ts = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    var el = document.getElementById('saveState');
+    if (el) { el.textContent = 'Saved ' + ts; el.classList.remove('is-dirty'); }
     if (!quiet) toast('Saved');
   }
   function pruneUploads(){
@@ -807,7 +824,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ t.classList.remove('is-open'); }, 2200);
   }
-  function markDirty(){ var el = $('saveState'); el.textContent = 'Unsaved changes'; el.classList.add('is-dirty'); }
+  function markDirty(){ var el = $('saveState'); if (el) { el.textContent = 'Unsaved changes'; el.classList.add('is-dirty'); } }
 
   /* ---------- confirm modal (replaces native confirm) ---------- */
   var cfResolve = null;
@@ -1673,29 +1690,50 @@
     pubLog.scrollTop = pubLog.scrollHeight;
   }
   function pubStatus(html, cls){
+    /* Data tab detail */
     var el = $('pubStatus');
     el.innerHTML = html;
     el.className = 'pub-status' + (cls ? ' ' + cls : '');
+    /* header compact */
+    var hd = $('hdPubState');
+    hd.className = 'hd__pubstate' + (cls ? ' is-' + cls : '');
+    if (cls === 'ok') hd.innerHTML = 'Published ✓';
+    else if (cls === 'busy') hd.innerHTML = 'Working…';
+    else if (cls === 'err') hd.innerHTML = 'Not connected';
+    else hd.innerHTML = 'Ready';
   }
-  function setPublishBusy(busy){
-    var b = $('publishBtn');
-    b.disabled = busy;
-    b.textContent = busy ? 'Working…' : 'Save & Publish';
+  function syncButtons(busy, on){
+    var btns = [$('publishBtn'), $('hdPublishBtn')];
+    btns.forEach(function(b, i){
+      if (busy !== undefined){
+        b.disabled = busy;
+        b.textContent = busy ? 'Working…' : 'Save &amp; Publish';
+      }
+      if (!busy && on !== undefined){
+        b.disabled = !on;
+        b.title = on ? '' : 'Publishing only works from the local dashboard';
+      }
+    });
   }
+  function setPublishBusy(busy){ syncButtons(busy); }
+  function setPublishEnabled(on){ syncButtons(false, on); }
   function checkConnection(){
     apiPost('/api/status').then(function(res){
       if (res && res.ok){
         var g = res.git || {};
         var dirty = g.dirty ? ' — <b class="err">unpublished changes on disk</b>' : '';
         pubStatus('Connected to the local server. Repo <b>' + esc(g.branch || '?') + '</b> @ ' + esc(g.commit || '?') + dirty + ' — publishing updates the public site automatically.', 'ok');
+        setPublishEnabled(true);
       } else {
-        pubStatus('Not connected. Open this dashboard from <b>http://localhost:8765/dashboard.html</b> (double-click the launcher) — Save &amp; Publish only works there.', 'err');
+        pubStatus('Not connected. <b>You are viewing the public copy of this dashboard.</b> To save &amp; publish, open the local dashboard on the Mac: double-click <b>Andreas Dashboard.command</b> (or visit <b>http://localhost:8765/dashboard.html</b>). Editing here only affects this browser.', 'err');
+        setPublishEnabled(false);
       }
     }).catch(function(){
-      pubStatus('Not connected. Open this dashboard from <b>http://localhost:8765/dashboard.html</b> — Save &amp; Publish only works there.', 'err');
+      pubStatus('Not connected. <b>You are viewing the public copy of this dashboard.</b> To save &amp; publish, open the local dashboard on the Mac: double-click <b>Andreas Dashboard.command</b> (or visit <b>http://localhost:8765/dashboard.html</b>).', 'err');
+      setPublishEnabled(false);
     });
   }
-  $('publishBtn').addEventListener('click', function(){
+  function doPublish(){
     setPublishBusy(true);
     pubLog.innerHTML = '';
     pubLog.hidden = true;
@@ -1739,7 +1777,9 @@
     }).catch(function(err){
       pubStatus('Error: ' + esc(String(err && err.message || err)), 'err');
     }).then(function(){ setPublishBusy(false); });
-  });
+  }
+  $('publishBtn').addEventListener('click', doPublish);
+  $('hdPublishBtn').addEventListener('click', doPublish);
   checkConnection();
 
   /* ---------- init ---------- */
