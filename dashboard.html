@@ -1334,7 +1334,7 @@
       li.draggable = draggable;
       var vid = videoPlatform(w.video);
       var thumb = w.file
-        ? '<span class="thumb"><img src="' + esc(srcFor(w.file)) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'is-empty\');this.style.display=\'none\'"></span>'
+        ? '<span class="thumb"><img src="' + esc(srcFor(w.file)) + '" alt="" onerror="this.parentNode.classList.add(\'is-empty\');this.style.display=\'none\'"></span>'
         : '<span class="thumb is-empty">NO IMG</span>';
       var vidBadge = vid ? '<span class="badge badge-video">' + esc(vid) + '</span>' : '';
       var deSub = w.titleDe ? esc(w.titleDe) : '<span style="opacity:.55">(DE not set)</span>';
@@ -1724,7 +1724,7 @@
       li.dataset.id = p.id;
       li.draggable = true;
       var thumb = p.file
-        ? '<span class="thumb"><img src="' + esc(srcFor(p.file)) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'is-empty\');this.style.display=\'none\'"></span>'
+        ? '<span class="thumb"><img src="' + esc(srcFor(p.file)) + '" alt="" onerror="this.parentNode.classList.add(\'is-empty\');this.style.display=\'none\'"></span>'
         : '<span class="thumb is-empty">NO IMG</span>';
       li.innerHTML =
         thumb +
@@ -1963,7 +1963,7 @@
         '          <li>',
         '            <a class="work-card" href="work.html?n=' + w.n + '" data-od-id="aw-card-' + slugId + '" aria-label="' + esc(w.title) + ', ' + esc(w.year) + '">',
         '              <figure class="work-figure">',
-        '                <img src="' + esc(w.file) + '" alt="' + esc(altFor(w)) + '" loading="lazy" width="800" height="800">',
+        '                <img src="' + esc(w.file) + '" alt="' + esc(altFor(w)) + '" width="800" height="800">',
         '                <figcaption class="work-reveal">',
         '                  <span class="work-reveal__index">No. ' + pad2(w.n) + '</span>',
         '                  <span class="work-reveal__title" data-i18n="work.title.' + w.n + '">' + esc(w.title) + '</span>',

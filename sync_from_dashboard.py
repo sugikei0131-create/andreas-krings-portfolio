@@ -179,7 +179,7 @@ def gen_cards_html(works, prefix, alt_map):
             '<li>\n'
             '  <a class="work-card" href="work.html?n=%d" data-od-id="%s" aria-label="%s, %s">\n'
             '    <figure class="work-figure">\n'
-            '      <img src="%s" alt="%s" loading="lazy" width="800" height="800">\n'
+            '      <img src="%s" alt="%s" width="800" height="800">\n'
             '      <figcaption class="work-reveal">\n'
             '        <span class="work-reveal__index">No. %s</span>\n'
             '        <span class="work-reveal__title" data-i18n="work.title.%d">%s</span>\n'
