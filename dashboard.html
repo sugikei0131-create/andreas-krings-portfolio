@@ -1757,6 +1757,7 @@
       hideLogin();
       pubStatus('Signed in — ready to publish.', 'ok');
       setPublishEnabled(true);
+      checkConnection();
     }).catch(function() {
       $('loginError').textContent = 'Wrong password.';
     });
@@ -1953,6 +1954,12 @@
   $('hdPublishBtn').addEventListener('click', doPublish);
 
   /* ---------- init ---------- */
+  /* restore saved token */
+  try {
+    ghToken = sessionStorage.getItem('ak-gh-token') || localStorage.getItem('ak-gh-token');
+    if (ghToken) { hideLogin(); pubStatus('Signed in — ready to publish.', 'ok'); setPublishEnabled(true); }
+  } catch(e){}
+  checkConnection();
   renderWorks();
   renderSchedule();
   renderPhotos();
