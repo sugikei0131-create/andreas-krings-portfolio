@@ -386,16 +386,19 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     if not isinstance(uploads, dict):
         uploads = {}
 
-    works.sort(key=lambda w: int(w.get('n', 0)))
+    # Re-number works by array position (dashboard order is the source of truth)
+    for i, w in enumerate(works):
+        w['n'] = i + 1
 
     files = []
+    pending = {}  # rel -> text (batched operations for same file)
 
     def apply(rel, fn, *fn_args):
         path = os.path.join(ROOT, rel)
         if not os.path.exists(path):
             files.append({'file': rel, 'status': 'not found'})
             return
-        text = open(path, encoding='utf-8').read()
+        text = pending.get(rel) or open(path, encoding='utf-8').read()
         try:
             result = fn(text, *fn_args)
             if isinstance(result, tuple):
@@ -405,12 +408,18 @@ def apply_data(data, dry_run=False, write_upload_files=True):
         except RuntimeError as e:
             files.append({'file': rel, 'status': 'skipped: %s' % e})
             return
-        if new_text == text:
-            files.append({'file': rel, 'status': 'no change'})
-            return
-        files.append({'file': rel, 'status': 'updated'})
-        if not dry_run:
-            open(path, 'w', encoding='utf-8').write(new_text)
+        pending[rel] = new_text
+
+    def flush_pending():
+        for rel, text in pending.items():
+            path = os.path.join(ROOT, rel)
+            orig = open(path, encoding='utf-8').read()
+            if text == orig:
+                files.append({'file': rel, 'status': 'no change'})
+                continue
+            files.append({'file': rel, 'status': 'updated'})
+            if not dry_run:
+                open(path, 'w', encoding='utf-8').write(text)
 
     apply('work.html', update_works_js, works)
     apply('all-works.html', update_grid, works, 'aw-card')
@@ -423,6 +432,8 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     apply('about.html', update_ex_count, len(schedule))
     apply('about.html', update_portraits, photos)
     apply('assets/i18n.js', update_i18n, works)
+
+    flush_pending()
 
     touched = [f['file'] for f in files if f['status'] == 'updated']
     backup = None
