@@ -234,6 +234,35 @@
   .to-top-eye{display:none; width:17px; height:auto}
   .to-top-eye svg{display:block; width:100%; height:auto}
 
+  /* ---------- Lightbox (mobile only) ---------- */
+  .fs{
+    position:fixed; inset:0; z-index:95;
+    background:var(--surface);
+    display:none;
+    align-items:center; justify-content:center;
+    padding:clamp(14px,3vw,28px);
+    overscroll-behavior:contain;
+  }
+  .fs.open{display:flex}
+  .fs-img{
+    max-width:100%; max-height:96vh;
+    width:auto; height:auto;
+    display:block;
+    margin-inline:auto;
+  }
+  .fs-close{
+    position:absolute; top:clamp(10px,2.4vh,20px); right:clamp(10px,2.4vw,20px);
+    width:44px; height:44px;
+    display:grid; place-items:center;
+    background:none; border:0;
+    color:var(--fg); cursor:pointer;
+    transition:color .3s;
+  }
+  .fs-close svg{width:24px; height:24px; display:block}
+  .fs-close:hover{color:var(--accent)}
+  .fs-close:active{transform:scale(.92)}
+  .fs-close:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:0}
+
   /* ---------- Responsive ---------- */
   @media (max-width:1120px){
     .orb{right:clamp(10px,1.2vw,22px)}
@@ -326,6 +355,14 @@
     </section>
   </main>
 
+  <!-- Lightbox — mobile only (≤900px) -->
+  <div class="fs" id="fs" data-od-id="work-lightbox" role="dialog" aria-modal="true" aria-label="Work — fullscreen" data-i18n-aria="work.fs.aria">
+    <img class="fs-img" id="fs-img" alt="">
+    <button class="fs-close" type="button" id="fs-close" data-od-id="fs-close" aria-label="Close lightbox" data-i18n-aria="work.fs.close.aria">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5 L19 19 M19 5 L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg>
+    </button>
+  </div>
+
   <div class="orb" role="button" tabindex="0" aria-label="View all works" data-od-id="hero-orb" data-i18n-aria="orb.aria">
             <svg class="dali-eye" viewBox="0 0 176 150" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M30 26 C 54 12, 112 12, 138 26" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"></path>
@@ -405,7 +442,13 @@
   const nextTitle = document.getElementById('nav-next-title');
   const btnPrev = document.getElementById('btn-prev');
   const btnNext = document.getElementById('btn-next');
+  const fs = document.getElementById('fs');
+  const fsImg = document.getElementById('fs-img');
+  const fsClose = document.getElementById('fs-close');
   let animating = false;
+  let fsOpen = false;
+  let lastSwipeAt = 0;
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
 
   function clampN(n) { return ((n - 1 + COUNT) % COUNT) + 1; }
 
@@ -480,6 +523,7 @@
     else if (clampN(n) === clampN(current - 1)) mode = 'prev';
     current = work.n;
     render(work, mode);
+    syncFs(work);
     try {
       localStorage.setItem(KEY, String(work.n));
       if (updateUrl) history.pushState({ n: work.n }, '', 'work.html?n=' + work.n);
@@ -507,6 +551,56 @@
     if (dx < 0) go(current + 1, true);        // flick left → next
     else go(current - 1, true);               // flick right → previous
   }, { passive: true });
+
+  // Lightbox — open on tap, mobile only
+  function syncFs(work) {
+    if (!fsOpen) return;
+    fsImg.src = work.file;
+    fsImg.alt = work.alt;
+  }
+  function openFs() {
+    if (!isMobile() || fsOpen) return;
+    fsOpen = true;
+    fs.classList.add('open');
+    syncFs(WORKS[current - 1]);
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFs() {
+    if (!fsOpen) return;
+    fsOpen = false;
+    fs.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  stage.addEventListener('click', () => {
+    if (Date.now() - lastSwipeAt < 400) return;   // click right after a swipe — ignore
+    openFs();
+  });
+  let fsTouchX = null, fsTouchY = null;
+  fs.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    fsTouchX = t.clientX; fsTouchY = t.clientY;
+  }, { passive: true });
+  fs.addEventListener('touchend', (e) => {
+    if (fsTouchX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - fsTouchX;
+    const dy = t.clientY - fsTouchY;
+    fsTouchX = null; fsTouchY = null;
+    if (Math.abs(dx) < 48) return;                 // tap — the click handler closes
+    if (Math.abs(dy) > Math.abs(dx)) return;
+    lastSwipeAt = Date.now();
+    if (dx < 0) go(current + 1, true);             // flick left → next
+    else go(current - 1, true);                    // flick right → previous
+  }, { passive: true });
+  fsClose.addEventListener('click', (e) => { e.stopPropagation(); closeFs(); });
+  fs.addEventListener('click', () => {
+    if (Date.now() - lastSwipeAt < 400) return;    // click right after a swipe — don't close
+    closeFs();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeFs();
+  });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') go(current - 1, true);
     if (e.key === 'ArrowRight') go(current + 1, true);
@@ -569,6 +663,7 @@
   // Re-render the viewer when the language changes (EN/DE toggle)
   document.addEventListener('ak:langchange', () => {
     render(WORKS[current - 1], false);
+    if (fsOpen) syncFs(WORKS[current - 1]);
   });
 </script>
 
@@ -579,9 +674,11 @@
       'work.next': 'Weiter →',
       'work.prev.aria': 'Vorheriges Werk',
       'work.next.aria': 'Nächstes Werk',
+      'work.fs.aria': 'Werk — Vollbild',
+      'work.fs.close.aria': 'Lightbox schließen',
     }
   };
 </script>
 
-  <script src="assets/i18n.js"></script>
+  <script src="assets/i18n.js?v=3"></script>
 </body></html>

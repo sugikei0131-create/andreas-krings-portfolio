@@ -67,8 +67,8 @@
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
       var key = el.getAttribute('data-i18n');
-      if (!key) continue;
-      if (!(key in defaults)) {
+      if (!key && !el.getAttribute('data-i18n-html') && !el.getAttribute('data-i18n-ph') && !el.getAttribute('data-i18n-aria')) continue;
+      if (key && !(key in defaults)) {
         var tn = firstTextNode(el);
         defaults[key] = tn ? tn.nodeValue : el.textContent;
       }
