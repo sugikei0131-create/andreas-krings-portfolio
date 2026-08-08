@@ -1618,13 +1618,19 @@
     if (!title) { toast('Title (English) is required'); $('weTitleEn').focus(); return; }
     var n = parseInt($('weNo').value, 10);
     if (!n || n < 1) { toast('Work No. must be a number of 1 or more'); $('weNo').focus(); return; }
+    var file = $('weFile').value.trim();
+    if (!file) {
+      var base = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      file = 'assets/work-' + pad2(n) + '-' + base + '.svg';
+      $('weFile').value = file;
+    }
     var payload = {
       n: n, title: title,
       titleDe: $('weTitleDe').value.trim(),
       year: $('weYear').value.trim(),
       desc: $('weDescEn').value.trim(),
       descDe: $('weDescDe').value.trim(),
-      file: $('weFile').value.trim(),
+      file: file,
       video: $('weVideo').value.trim()
     };
     if (editingWork) {
