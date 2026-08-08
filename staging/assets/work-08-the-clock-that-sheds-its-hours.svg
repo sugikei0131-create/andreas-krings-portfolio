@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A golden clock melting over a rock, its hours unspooling into a cascade of numerals and fragments, a red gear on the ground">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2e5aa8"/>
+      <stop offset="0.6" stop-color="#6f9fd4"/>
+      <stop offset="1" stop-color="#e8c89a"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#fff3cf"/>
+      <stop offset="1" stop-color="#fff3cf" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#f2cf7d"/>
+      <stop offset="0.45" stop-color="#d9a441"/>
+      <stop offset="1" stop-color="#a87a24"/>
+    </linearGradient>
+    <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a8578"/>
+      <stop offset="1" stop-color="#5e5a50"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+  <circle cx="600" cy="180" r="160" fill="url(#sun)" filter="url(#soft)"/>
+  <circle cx="600" cy="180" r="46" fill="#fff3cf"/>
+
+  <!-- desert ground -->
+  <path d="M0 520 Q 200 500 420 522 T 800 516 L800 800 L0 800 Z" fill="#d9a35f"/>
+  <path d="M0 620 Q 300 590 560 620 T 800 614 L800 800 L0 800 Z" fill="#c8914d"/>
+  <ellipse cx="400" cy="660" rx="220" ry="24" fill="#6e4a24" opacity="0.35" filter="url(#soft)"/>
+
+  <!-- rock -->
+  <g>
+    <path d="M200 540 C 240 470 340 448 400 462 C 460 476 540 460 590 520 C 620 560 610 620 580 660 L220 660 C 180 620 176 580 200 540 Z" fill="url(#rock)" stroke="#403c34" stroke-width="4"/>
+    <path d="M260 500 C 300 478 360 472 400 482" stroke="#a49c8c" stroke-width="5" fill="none" opacity="0.7" stroke-linecap="round"/>
+    <path d="M330 620 C 380 600 450 600 500 620" stroke="#403c34" stroke-width="4" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- melting golden clock draped over the rock -->
+  <g>
+    <path d="M300 380
+             C 340 320 420 300 480 330
+             C 520 350 540 400 530 450
+             C 520 500 500 540 470 570
+             C 450 590 420 600 400 596
+             C 380 592 372 570 380 548
+             C 388 526 410 512 430 516
+             C 450 520 458 538 452 554
+             C 446 570 428 578 416 572"
+          fill="url(#gold)" stroke="#8a6a24" stroke-width="4"/>
+    <!-- dial -->
+    <path d="M330 360 C 380 330 440 330 470 356 C 486 370 488 396 474 412 C 460 428 428 432 404 424 C 380 416 352 396 338 380 C 328 370 322 366 330 360 Z"
+          fill="#f5e8c8" stroke="#8a6a24" stroke-width="3.5"/>
+    <!-- melted dial dripping -->
+    <path d="M404 424 C 390 470 380 520 368 560" stroke="#f5e8c8" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M404 424 C 390 470 380 520 368 560" stroke="#8a6a24" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.35"/>
+    <!-- hour marks -->
+    <g stroke="#8a6a24" stroke-width="3" stroke-linecap="round">
+      <line x1="408" y1="342" x2="408" y2="356"/>
+      <line x1="462" y1="372" x2="450" y2="382"/>
+      <line x1="444" y1="422" x2="432" y2="414"/>
+      <line x1="366" y1="414" x2="378" y2="404"/>
+      <line x1="344" y1="376" x2="358" y2="378"/>
+    </g>
+    <!-- hands -->
+    <line x1="404" y1="390" x2="430" y2="366" stroke="#8a6a24" stroke-width="3.4" stroke-linecap="round"/>
+    <line x1="404" y1="390" x2="378" y2="400" stroke="#8a6a24" stroke-width="3.4" stroke-linecap="round"/>
+    <circle cx="404" cy="390" r="4.5" fill="#8a6a24"/>
+    <!-- ants on the case -->
+    <g fill="#241f14">
+      <g transform="translate(500 420)">
+        <ellipse cx="0" cy="0" rx="6" ry="4.4"/>
+        <ellipse cx="8" cy="-1" rx="4.4" ry="3.6"/>
+        <circle cx="14" cy="0" r="3"/>
+        <path d="M12 -2 L16 -7 M13 1 L17 4 M7 -3 L6 -9 M10 -2 L12 -7" stroke="#241f14" stroke-width="1.5"/>
+      </g>
+      <g transform="translate(470 470)">
+        <ellipse cx="0" cy="0" rx="5.4" ry="4"/>
+        <ellipse cx="7" cy="-1" rx="4" ry="3.2"/>
+        <circle cx="12" cy="0" r="2.6"/>
+        <path d="M11 -2 L14 -6 M11 1 L14 4" stroke="#241f14" stroke-width="1.4"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- hours unspooling as a cascade of numerals -->
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#8a6a24">
+    <text x="420" y="640" font-size="26" transform="rotate(-14 420 640)">Ⅰ</text>
+    <text x="470" y="680" font-size="24" transform="rotate(-8 470 680)">Ⅱ</text>
+    <text x="420" y="720" font-size="22" transform="rotate(-18 420 720)">Ⅲ</text>
+    <text x="500" y="700" font-size="20" transform="rotate(6 500 700)">Ⅳ</text>
+    <text x="540" y="650" font-size="18" transform="rotate(-4 540 650)">Ⅵ</text>
+  </g>
+  <g fill="#d9a441" opacity="0.9">
+    <rect x="370" y="600" width="16" height="6" rx="2" transform="rotate(24 378 603)"/>
+    <rect x="352" y="640" width="13" height="5" rx="2" transform="rotate(-16 358 642)"/>
+    <rect x="390" y="680" width="14" height="5" rx="2" transform="rotate(30 397 682)"/>
+    <rect x="470" y="740" width="16" height="6" rx="2" transform="rotate(-12 478 743)"/>
+    <rect x="540" y="720" width="12" height="5" rx="2" transform="rotate(18 546 722)"/>
+  </g>
+
+  <!-- red gear on the ground -->
+  <g transform="translate(600 700)">
+    <circle cx="0" cy="0" r="26" fill="#c0392b"/>
+    <g fill="#c0392b">
+      <rect x="-7" y="-34" width="14" height="14" rx="3"/>
+      <rect x="-7" y="20" width="14" height="14" rx="3"/>
+      <rect x="-34" y="-7" width="14" height="14" rx="3"/>
+      <rect x="20" y="-7" width="14" height="14" rx="3"/>
+    </g>
+    <circle cx="0" cy="0" r="14" fill="#8e2218"/>
+    <circle cx="0" cy="0" r="6" fill="#c0392b"/>
+    <circle cx="-6" cy="-8" r="4" fill="#ffb3a0" opacity="0.7"/>
+  </g>
+
+  <rect width="800" height="800" filter="url(#grain)"/>
+</svg>

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A giant wooden drawer floating in a night sky, a miniature lighthouse glowing inside it, ants crossing its brass handles">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10173f"/>
+      <stop offset="0.55" stop-color="#232c6e"/>
+      <stop offset="1" stop-color="#3d438c"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f4e9c8"/>
+      <stop offset="0.65" stop-color="#e8d9a8" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#e8d9a8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a3a24"/>
+      <stop offset="0.5" stop-color="#7a5130"/>
+      <stop offset="1" stop-color="#4a2f1c"/>
+    </linearGradient>
+    <linearGradient id="woodDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#33200f"/>
+      <stop offset="1" stop-color="#1c1108"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#f7c56a" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#f7c56a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8c37a"/>
+      <stop offset="0.5" stop-color="#b98a3e"/>
+      <stop offset="1" stop-color="#8a5f22"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#night)"/>
+
+  <!-- stars -->
+  <g fill="#cfd8f2" opacity="0.85">
+    <circle cx="96" cy="120" r="2.2"/>
+    <circle cx="210" cy="72" r="1.6"/>
+    <circle cx="330" cy="140" r="2"/>
+    <circle cx="480" cy="58" r="1.8"/>
+    <circle cx="620" cy="110" r="2.4"/>
+    <circle cx="712" cy="190" r="1.6"/>
+    <circle cx="150" cy="300" r="1.5"/>
+    <circle cx="690" cy="330" r="1.9"/>
+    <circle cx="40" cy="230" r="1.7"/>
+    <circle cx="770" cy="60" r="2"/>
+  </g>
+
+  <!-- moon -->
+  <circle cx="620" cy="180" r="130" fill="url(#moon)" filter="url(#soft)"/>
+  <circle cx="620" cy="180" r="52" fill="#f4e9c8"/>
+  <circle cx="640" cy="196" r="10" fill="#dccf9e" opacity="0.7"/>
+  <circle cx="608" cy="164" r="6" fill="#dccf9e" opacity="0.6"/>
+  <circle cx="622" cy="146" r="4" fill="#dccf9e" opacity="0.5"/>
+
+  <!-- low clouds -->
+  <g fill="#161d4a" opacity="0.85">
+    <path d="M0 640 Q120 600 240 636 T520 632 T800 640 L800 800 L0 800 Z"/>
+  </g>
+  <g fill="#0f1436" opacity="0.9">
+    <path d="M0 700 Q160 660 340 700 T760 690 L800 690 L800 800 L0 800 Z"/>
+  </g>
+
+  <!-- glow behind drawer -->
+  <ellipse cx="390" cy="430" rx="250" ry="190" fill="url(#glow)" filter="url(#soft)"/>
+
+  <!-- drawer -->
+  <g transform="rotate(-7 400 420)">
+    <!-- drawer body -->
+    <rect x="150" y="280" width="500" height="260" rx="10" fill="url(#wood)" stroke="#33200f" stroke-width="3"/>
+    <!-- open interior -->
+    <path d="M210 290 L420 290 L420 530 L210 530 Z" fill="url(#woodDark)"/>
+    <!-- interior side panels -->
+    <path d="M420 290 L510 322 L510 488 L420 520 Z" fill="#241505"/>
+    <path d="M210 290 L420 290 L420 530 L210 530 Z" fill="none" stroke="#33200f" stroke-width="2"/>
+
+    <!-- lighthouse inside -->
+    <g>
+      <!-- lantern glow -->
+      <circle cx="315" cy="392" r="86" fill="url(#glow)" filter="url(#soft)"/>
+      <!-- beam to the right -->
+      <path d="M315 392 L560 320 L560 470 Z" fill="#ffe9a8" opacity="0.22" filter="url(#soft2)"/>
+      <path d="M315 392 L540 330 L540 460 Z" fill="#ffe9a8" opacity="0.16"/>
+      <!-- tower -->
+      <path d="M300 420 L330 420 L324 352 L306 352 Z" fill="#efe3c4"/>
+      <path d="M300 420 L330 420 L324 352 L306 352 Z" fill="none" stroke="#8a7a54" stroke-width="1.5"/>
+      <!-- red stripes -->
+      <path d="M306 376 L324 376 L322 366 L308 366 Z" fill="#b03a2e"/>
+      <!-- lantern room -->
+      <rect x="304" y="344" width="22" height="16" rx="2" fill="#ffe9a8"/>
+      <path d="M302 344 L328 344 L324 332 L306 332 Z" fill="#8a7a54"/>
+      <!-- finial -->
+      <rect x="312" y="322" width="6" height="10" fill="#8a7a54"/>
+      <circle cx="315" cy="318" r="3.4" fill="#e8c37a"/>
+      <!-- base -->
+      <rect x="296" y="418" width="38" height="10" rx="2" fill="#7a6a48"/>
+    </g>
+
+    <!-- drawer front panel (closed part) -->
+    <rect x="480" y="290" width="158" height="240" rx="8" fill="url(#wood)" stroke="#33200f" stroke-width="3"/>
+    <rect x="496" y="306" width="126" height="208" rx="4" fill="none" stroke="#8a5a33" stroke-width="2" opacity="0.6"/>
+    <!-- brass handle on closed panel -->
+    <circle cx="559" cy="400" r="17" fill="url(#brass)" stroke="#5e3a1e" stroke-width="2.5"/>
+    <circle cx="559" cy="400" r="6" fill="#5e3a1e"/>
+    <path d="M542 398 Q559 412 576 398" fill="none" stroke="#e8c37a" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- drawer legs -->
+    <rect x="180" y="540" width="26" height="120" rx="4" fill="url(#wood)" stroke="#33200f" stroke-width="2"/>
+    <rect x="596" y="540" width="26" height="120" rx="4" fill="url(#wood)" stroke="#33200f" stroke-width="2"/>
+    <circle cx="193" cy="662" r="13" fill="url(#brass)"/>
+    <circle cx="609" cy="662" r="13" fill="url(#brass)"/>
+
+    <!-- ants on the bottom edge -->
+    <g fill="#1c1108">
+      <ellipse cx="262" cy="556" rx="9" ry="5" transform="rotate(-10 262 556)"/>
+      <ellipse cx="252" cy="554" rx="6" ry="4" transform="rotate(-10 252 554)"/>
+      <ellipse cx="278" cy="558" rx="6" ry="4" transform="rotate(-10 278 558)"/>
+      <ellipse cx="560" cy="558" rx="9" ry="5" transform="rotate(8 560 558)"/>
+      <ellipse cx="551" cy="556" rx="6" ry="4" transform="rotate(8 551 556)"/>
+      <ellipse cx="572" cy="560" rx="6" ry="4" transform="rotate(8 572 560)"/>
+    </g>
+    <g stroke="#1c1108" stroke-width="1.4" fill="none" opacity="0.85">
+      <path d="M262 552 L258 546 M262 552 L260 545 M262 552 L266 546"/>
+      <path d="M560 554 L564 548 M560 554 L562 547 M560 554 L556 548"/>
+    </g>
+  </g>
+
+  <rect width="800" height="800" fill="url(#grain)" pointer-events="none"/>
+</svg>

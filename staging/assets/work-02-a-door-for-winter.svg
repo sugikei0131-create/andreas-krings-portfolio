@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A solitary door standing in a snow field at blue hour, amber light glowing through its keyhole, a crutch propping it open">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1b3d"/>
+      <stop offset="0.5" stop-color="#2b3f6e"/>
+      <stop offset="0.85" stop-color="#7c93b8"/>
+      <stop offset="1" stop-color="#a9bdd6"/>
+    </linearGradient>
+    <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dde6f0"/>
+      <stop offset="1" stop-color="#c3d0e2"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#ffcf7d"/>
+      <stop offset="0.5" stop-color="#f2a94f" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f2a94f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="door" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a3424"/>
+      <stop offset="0.5" stop-color="#5d4330"/>
+      <stop offset="1" stop-color="#3a281a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#sky)"/>
+  <g fill="#ffffff" opacity="0.85">
+    <circle cx="120" cy="90" r="2.2"/>
+    <circle cx="300" cy="60" r="1.6"/>
+    <circle cx="470" cy="110" r="2"/>
+    <circle cx="660" cy="70" r="1.8"/>
+    <circle cx="720" cy="150" r="2.4"/>
+    <circle cx="200" cy="170" r="1.4"/>
+    <circle cx="560" cy="180" r="1.6"/>
+  </g>
+  <circle cx="640" cy="330" r="30" fill="#dfe7f2" opacity="0.5"/>
+
+  <!-- snow field -->
+  <path d="M0 470 Q 200 450 400 472 T 800 468 L800 800 L0 800 Z" fill="url(#snow)"/>
+  <path d="M0 540 Q 260 512 520 540 T 800 536 L800 800 L0 800 Z" fill="#d3ddef"/>
+  <path d="M0 640 Q 300 606 620 640 T 800 636 L800 800 L0 800 Z" fill="#c6d2e6"/>
+  <ellipse cx="230" cy="600" rx="150" ry="26" fill="#8ea3c4" opacity="0.35" filter="url(#soft)"/>
+  <ellipse cx="600" cy="700" rx="190" ry="30" fill="#8ea3c4" opacity="0.3" filter="url(#soft)"/>
+
+  <!-- long blue shadows on the snow -->
+  <g fill="#5d7399" opacity="0.5">
+    <path d="M340 640 L330 800 L450 800 L480 660 Z" transform="skewX(-14)"/>
+    <ellipse cx="430" cy="660" rx="46" ry="10" opacity="0.6"/>
+  </g>
+
+  <!-- keyhole glow -->
+  <circle cx="392" cy="566" r="130" fill="url(#glow)" filter="url(#soft)"/>
+
+  <!-- the door -->
+  <g transform="translate(400 300) rotate(2)">
+    <path d="M-96 -140 L96 -140 L104 300 L-104 300 Z" fill="url(#door)" stroke="#241710" stroke-width="5"/>
+    <rect x="-78" y="-116" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="-64" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="-12" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="40" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="92" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="144" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <rect x="-78" y="196" width="156" height="40" rx="4" fill="#2c1d12"/>
+    <circle cx="84" cy="170" r="5" fill="#c89a55"/>
+    <path d="M-14 250 L14 250 L18 300 L-18 300 Z" fill="#2c1d12"/>
+    <!-- keyhole -->
+    <circle cx="0" cy="276" r="9" fill="#ffd98f"/>
+    <path d="M-5 276 L5 276 L3 294 L-3 294 Z" fill="#ffd98f"/>
+    <circle cx="0" cy="276" r="4" fill="#fff1d0"/>
+  </g>
+
+  <!-- Dali crutch propping the door -->
+  <g stroke="#7a5c3a" stroke-width="9" stroke-linecap="round" fill="none">
+    <path d="M548 560 L468 300"/>
+  </g>
+  <g stroke="#7a5c3a" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M540 300 L476 300"/>
+    <path d="M532 344 L508 344"/>
+    <path d="M520 390 L502 390"/>
+  </g>
+
+  <rect width="800" height="800" filter="url(#grain)"/>
+</svg>

@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Works — Andreas Krings</title>
+<meta name="description" content="The complete catalogue of Andreas Krings — surrealist painter based in Berlin. Twelve paintings, 2017 to 2026.">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+  :root{
+    --bg:      oklch(98% 0.004 95);
+    --surface: oklch(100% 0.002 95);
+    --fg:      oklch(20% 0.018 70);
+    --muted:   oklch(48% 0.012 70);
+    --border:  oklch(90% 0.006 95);
+    --accent:  oklch(52% 0.10 28);
+    --font-display: 'Iowan Old Style','Charter',Georgia,serif;
+    --font-body:    -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-mono:    ui-monospace,'SF Mono','JetBrains Mono',Menlo,monospace;
+    --measure: 1280px;
+    --pad: clamp(20px, 5vw, 64px);
+    --header-h: 72px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent); color:var(--surface)}
+  img{display:block; max-width:100%}
+  a{color:inherit; text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+  /* ---------- Shared ---------- */
+  .shell{max-width:var(--measure); margin-inline:auto; padding-inline:var(--pad)}
+  .kicker{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .kicker::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  .js .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+  .js .reveal.in{opacity:1; transform:none}
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky; top:0; z-index:40;
+    height:var(--header-h);
+    background:color-mix(in oklch, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .site-header .shell{height:100%; display:flex; align-items:center; justify-content:space-between; gap:24px}
+  .brand{font-family:var(--font-display); font-size:19px; letter-spacing:-.01em}
+  .brand em{font-style:italic}
+  .nav{display:flex; align-items:center; gap:clamp(20px,3vw,40px)}
+  .nav-link{
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    position:relative; padding:6px 2px;
+  }
+  .nav-link::after{
+    content:""; position:absolute; left:2px; right:2px; bottom:0; height:1px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .35s var(--ease);
+  }
+  .nav-link:hover{color:var(--accent)}
+  .nav-link:hover::after,.nav-link:focus-visible::after{transform:scaleX(1)}
+  .nav-link[aria-current="page"]{color:var(--accent)}
+  .nav-link[aria-current="page"]::after{transform:scaleX(1)}
+  .lang-toggle{display:inline-flex; align-items:center; gap:8px; background:none; border:0; padding:6px 2px; cursor:pointer; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; color:var(--muted); text-transform:uppercase; white-space:nowrap}
+  .lang-toggle__cur{color:var(--fg); font-weight:600}
+  .lang-toggle:hover{color:var(--accent)}
+  .lang-toggle:hover .lang-toggle__cur{color:var(--accent)}
+  .lang-toggle:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .menu .lang-toggle{margin-top:clamp(20px,4vh,40px)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .nav-toggle{display:none; background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .nav-toggle:hover{background:var(--fg); color:var(--bg)}
+
+  .menu{
+    position:fixed; inset:0; z-index:50; background:var(--bg);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:var(--pad);
+    transform:translateY(-102%); visibility:hidden;
+    transition:transform .5s var(--ease), visibility .5s;
+  }
+  .menu.open{transform:none; visibility:visible}
+  .menu-close{position:absolute; top:18px; right:var(--pad); background:none; border:1px solid var(--fg); color:var(--fg); font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:10px 16px; cursor:pointer; min-height:44px}
+  .menu-close:hover{background:var(--fg); color:var(--bg)}
+  .menu-link{font-family:var(--font-display); font-size:clamp(40px,10vw,64px); line-height:1.15; padding:6px 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:baseline}
+  .menu-link small{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; color:var(--muted)}
+  .menu-link:hover{color:var(--accent)}
+  .menu-foot{margin-top:clamp(32px,6vh,64px); font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .menu-foot a{border-bottom:1px solid var(--border); padding-bottom:1px; transition:color .3s, border-color .3s}
+  .menu-foot a:hover{color:var(--accent); border-color:var(--accent)}
+
+  /* ---------- All works index ---------- */
+  .aw-view{border-top:none; padding-top:clamp(48px,6vh,72px); padding-bottom:clamp(80px,10vw,120px)}
+  .aw-head{margin-bottom:clamp(36px,5vw,64px)}
+  .aw-title{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(52px,8.6vw,110px);
+    line-height:.98;
+    letter-spacing:-.02em;
+    margin:18px 0 0;
+    text-wrap:balance;
+  }
+  .aw-sub{
+    display:flex; justify-content:space-between; align-items:baseline; gap:24px;
+    margin-top:clamp(20px,2.6vw,30px);
+    padding-top:clamp(16px,2vw,22px);
+    border-top:1px solid var(--border);
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted);
+  }
+  .aw-sub p{margin:0}
+  .aw-sub .aw-count{white-space:nowrap}
+
+  /* ---------- Grid ---------- */
+  .works-grid{
+    list-style:none; margin:0; padding:0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:clamp(20px,2.6vw,34px);
+  }
+  .work-card{display:block}
+  .work-figure{
+    margin:0; position:relative; overflow:hidden;
+    aspect-ratio:1; background:var(--surface);
+    border:1px solid var(--border);
+    transition:border-color .4s var(--ease);
+  }
+  .work-figure img{width:100%; height:100%; object-fit:cover; transition:transform .7s var(--ease)}
+  .work-card:hover .work-figure{border-color:color-mix(in oklch, var(--fg) 30%, var(--border))}
+  .work-card:hover .work-figure img{transform:scale(1.035)}
+
+  .work-reveal{
+    position:absolute; inset:auto 0 0 0;
+    background:var(--surface);
+    border-top:1px solid var(--border);
+    padding:11px 15px 13px;
+    transform:translateY(102%);
+    transition:transform .45s var(--ease);
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-areas:"index index" "title year";
+    gap:1px 12px;
+    align-items:baseline;
+  }
+  .work-card:hover .work-reveal,.work-card:focus-visible .work-reveal{transform:none}
+  .work-reveal__index{grid-area:index; font-family:var(--font-mono); font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted)}
+  .work-reveal__title{grid-area:title; font-family:var(--font-display); font-size:clamp(13px,1vw,15px); line-height:1.2}
+  .work-reveal__year{grid-area:year; font-family:var(--font-mono); font-size:11px; color:var(--muted)}
+
+  .work-caption{display:none}
+  @media (hover:none){
+    .work-reveal{display:none}
+    .work-caption{
+      display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+      margin-top:12px;
+    }
+    .work-caption .wc-title{font-family:var(--font-display); font-size:15px}
+    .work-caption .wc-meta{font-family:var(--font-mono); font-size:10px; letter-spacing:.08em; color:var(--muted); text-transform:uppercase; white-space:nowrap}
+  }
+
+  /* ---------- Floating eye (back to top) ---------- */
+  .orb{
+    position:fixed;
+    bottom:clamp(20px,4vh,44px);
+    right:clamp(10px,1.2vw,22px);
+    width:clamp(54px,6.8vw,84px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    animation:bob 7s ease-in-out infinite;
+    filter:drop-shadow(0 14px 24px rgba(27,21,13,.18));
+  }
+  .orb svg{display:block; width:100%; height:auto; transition:transform .35s var(--ease)}
+  .orb .eye-blink{transform-box:fill-box; transform-origin:center; animation:blink 8s ease-in-out infinite}
+  @keyframes blink{0%,90%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%,100%{transform:scaleY(1)}}
+  .orb:hover svg{transform:scale(1.07)}
+  .orb:focus-visible{outline:2px solid var(--accent); outline-offset:6px; border-radius:50%}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+  /* ---------- Footer ---------- */
+  .site-footer{border-top:1px solid var(--border); padding-block:30px}
+  .site-footer .shell{display:flex; align-items:center; justify-content:space-between; gap:20px; font-family:var(--font-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .to-top{padding:6px 2px; color:var(--muted); transition:color .3s}
+  .to-top:hover{color:var(--accent)}
+  .to-top-eye{display:none; width:17px; height:auto}
+  .to-top-eye svg{display:block; width:100%; height:auto}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1120px){
+    .orb{right:clamp(10px,1.2vw,22px)}
+    .works-grid{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (max-width:900px){
+    .orb{display:none}
+    .to-top-eye{display:inline-block; margin-right:9px; vertical-align:-3px}
+    .to-top-arrow{display:none}
+    .works-grid{grid-template-columns:repeat(3,1fr)}
+    .work-reveal{display:none}
+    .work-caption{display:none}
+  }
+  @media (max-width:760px){
+    .nav{display:none}
+    .site-header .lang-toggle{display:none}
+    .nav-toggle{display:inline-block}
+    .site-footer .shell{flex-wrap:wrap; row-gap:10px; justify-content:center}
+    .works-grid{grid-template-columns:repeat(3,1fr); gap:10px}
+    .work-caption{display:none}
+    .aw-sub{flex-direction:column; align-items:flex-start; gap:6px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important; transition:none!important}
+    html{scroll-behavior:auto}
+    .js .reveal{opacity:1; transform:none}
+  }
+</style>
+</head>
+<body id="top">
+
+  <header class="site-header" data-od-id="site-header">
+    <div class="shell">
+      <a class="brand" href="index.html" data-od-id="brand">Andreas <em>Krings</em></a>
+      <nav class="nav" aria-label="Primary">
+        <a class="nav-link" href="all-works.html" aria-current="page" data-od-id="nav-works" data-i18n="nav.works">Works</a>
+        <a class="nav-link" href="about.html" data-od-id="nav-about" data-i18n="nav.about">About</a>
+        <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
+      </nav>
+      <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language" data-od-id="lang-toggle"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-od-id="menu-open">Menu</button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-od-id="menu" aria-hidden="true">
+    <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
+    <nav aria-label="Menu">
+      <a class="menu-link" href="all-works.html" aria-current="page" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
+      <a class="menu-link" href="about.html" data-od-id="menu-about" data-i18n="menu.about">About <small>02</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>03</small></a>
+    </nav>
+    <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
+    <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · </p>
+  </div>
+
+  <main>
+    <section class="aw-view" data-od-id="section-all-works" aria-labelledby="aw-title">
+      <div class="shell">
+        <div class="aw-head reveal in">
+          <p class="kicker" data-od-id="aw-kicker" data-i18n="aw.kicker">Index — All Works</p>
+          <h1 class="aw-title" id="aw-title" data-od-id="aw-title" style="font-size: 46px;" data-i18n="aw.title">All Works</h1>
+          <div class="aw-sub">
+            <p class="aw-intro" data-od-id="aw-intro" data-i18n="aw.intro">The complete catalogue — every painting, 2017 to 2026.</p>
+            <p class="aw-count" data-od-id="aw-count" data-i18n="aw.count">13 paintings</p>
+          </div>
+        </div>
+
+        <ul class="works-grid" data-od-id="works-grid">
+          <li>
+            <a class="work-card" href="work.html?n=1" data-od-id="aw-card-dali" aria-label="dali, 2026">
+              <figure class="work-figure">
+                <img src="assets/work-10-dali.jpg" alt="dali" width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 01</span>
+                  <span class="work-reveal__title" data-i18n="work.title.1">dali</span>
+                  <span class="work-reveal__year">2026</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.1">dali</span><span class="wc-meta">2026</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=2" data-od-id="aw-card-door-for-winter" aria-label="A Door for Winter, 2024">
+              <figure class="work-figure">
+                <img src="assets/work-02-a-door-for-winter.svg" alt="A Door for Winter — A door propped by a crutch stands in a blue-hour snow field, light glowing through its keyhole." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 02</span>
+                  <span class="work-reveal__title" data-i18n="work.title.2">A Door for Winter</span>
+                  <span class="work-reveal__year">2024</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.2">A Door for Winter</span><span class="wc-meta">2024</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=3" data-od-id="aw-card-weight-of-floating" aria-label="The Weight of Floating, 2025">
+              <figure class="work-figure">
+                <img src="assets/work-01-the-weight-of-floating.svg" alt="The Weight of Floating — A wooden chair floats weightless above a dusk sea, its long shadow stretched across the water." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 03</span>
+                  <span class="work-reveal__title" data-i18n="work.title.3">The Weight of Floating</span>
+                  <span class="work-reveal__year">2025</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.3">The Weight of Floating</span><span class="wc-meta">2025</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=4" data-od-id="aw-card-memory-of-a-blue-hour" aria-label="Memory of a Blue Hour, 2023">
+              <figure class="work-figure">
+                <img src="assets/work-03-memory-of-a-blue-hour.svg" alt="Memory of a Blue Hour — A towering hourglass rises at dusk, its sand frozen mid-fall, ants climbing the pedestal." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 04</span>
+                  <span class="work-reveal__title" data-i18n="work.title.4">Memory of a Blue Hour</span>
+                  <span class="work-reveal__year">2023</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.4">Memory of a Blue Hour</span><span class="wc-meta">2023</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=5" data-od-id="aw-card-garden-that-moved-away" aria-label="The Garden That Moved Away, 2022">
+              <figure class="work-figure">
+                <img src="assets/work-04-the-garden-that-moved-away.svg" alt="The Garden That Moved Away — An open suitcase holds a miniature garden on a desert plain, a long-legged elephant crossing the distance." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 05</span>
+                  <span class="work-reveal__title" data-i18n="work.title.5">The Garden That Moved Away</span>
+                  <span class="work-reveal__year">2022</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.5">The Garden That Moved Away</span><span class="wc-meta">2022</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=6" data-od-id="aw-card-portrait-of-an-hour" aria-label="Portrait of an Hour, 2021">
+              <figure class="work-figure">
+                <img src="assets/work-05-portrait-of-an-hour.svg" alt="Portrait of an Hour — A classical profile dissolves into clouds and drifting clocks, a red rose at the collarbone." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 06</span>
+                  <span class="work-reveal__title" data-i18n="work.title.6">Portrait of an Hour</span>
+                  <span class="work-reveal__year">2021</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.6">Portrait of an Hour</span><span class="wc-meta">2021</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=7" data-od-id="aw-card-things-the-moon-forgot" aria-label="Things the Moon Forgot, 2020">
+              <figure class="work-figure">
+                <img src="assets/work-06-things-the-moon-forgot.svg" alt="Things the Moon Forgot — Everyday objects rest on a cratered moon with the Earth in the sky, a red balloon floating above." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 07</span>
+                  <span class="work-reveal__title" data-i18n="work.title.7">Things the Moon Forgot</span>
+                  <span class="work-reveal__year">2020</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.7">Things the Moon Forgot</span><span class="wc-meta">2020</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=8" data-od-id="aw-card-room-without-corners" aria-label="A Room Without Corners, 2024">
+              <figure class="work-figure">
+                <img src="assets/work-07-a-room-without-corners.svg" alt="A Room Without Corners — A round room with a single round window, a rug floating in mid-air." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 08</span>
+                  <span class="work-reveal__title" data-i18n="work.title.8">A Room Without Corners</span>
+                  <span class="work-reveal__year">2024</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.8">A Room Without Corners</span><span class="wc-meta">2024</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=9" data-od-id="aw-card-clock-that-sheds-its-hours" aria-label="The Clock That Sheds Its Hours, 2019">
+              <figure class="work-figure">
+                <img src="assets/work-08-the-clock-that-sheds-its-hours.svg" alt="The Clock That Sheds Its Hours — A golden clock melts over a rock, its hours unspooling into numerals and fragments." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 09</span>
+                  <span class="work-reveal__title" data-i18n="work.title.9">The Clock That Sheds Its Hours</span>
+                  <span class="work-reveal__year">2019</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.9">The Clock That Sheds Its Hours</span><span class="wc-meta">2019</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=10" data-od-id="aw-card-drawer-of-the-lighthouse" aria-label="The Drawer of the Lighthouse, 2018">
+              <figure class="work-figure">
+                <img src="assets/work-09-the-drawer-of-the-lighthouse.svg" alt="The Drawer of the Lighthouse — A drawer pulled from the night sky holds a working lighthouse, its beam sweeping over the dark; ants file across the brass handles." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 10</span>
+                  <span class="work-reveal__title" data-i18n="work.title.10">The Drawer of the Lighthouse</span>
+                  <span class="work-reveal__year">2018</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.10">The Drawer of the Lighthouse</span><span class="wc-meta">2018</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=11" data-od-id="aw-card-staircase-of-the-sea" aria-label="The Staircase of the Sea, 2017">
+              <figure class="work-figure">
+                <img src="assets/work-11-the-staircase-of-the-sea.svg" alt="The Staircase of the Sea — A marble staircase descends into the sea, its lower steps dissolving into waves; a fish swims through the morning air." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 11</span>
+                  <span class="work-reveal__title" data-i18n="work.title.11">The Staircase of the Sea</span>
+                  <span class="work-reveal__year">2017</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.11">The Staircase of the Sea</span><span class="wc-meta">2017</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=12" data-od-id="aw-card-mirror-of-the-ocean" aria-label="The Mirror of the Ocean, 2019">
+              <figure class="work-figure">
+                <img src="assets/work-12-the-mirror-of-the-ocean.svg" alt="The Mirror of the Ocean — A mirror with a melting frame reflects a storm the sea has forgotten how to have; a rose lies on the wet sand." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 12</span>
+                  <span class="work-reveal__title" data-i18n="work.title.12">The Mirror of the Ocean</span>
+                  <span class="work-reveal__year">2019</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.12">The Mirror of the Ocean</span><span class="wc-meta">2019</span></p>
+            </a>
+          </li>
+          <li>
+            <a class="work-card" href="work.html?n=13" data-od-id="aw-card-rain-that-fell-upward" aria-label="The Rain That Fell Upward, 2026">
+              <figure class="work-figure">
+                <img src="assets/work-10-the-rain-that-fell-upward.svg" alt="The Rain That Fell Upward — Rain rises from the desert into a floating umbrella; a man in a bowler hat watches the weather undo itself." width="800" height="800">
+                <figcaption class="work-reveal">
+                  <span class="work-reveal__index">No. 13</span>
+                  <span class="work-reveal__title" data-i18n="work.title.13">The Rain That Fell Upward</span>
+                  <span class="work-reveal__year">2026</span>
+                </figcaption>
+              </figure>
+              <p class="work-caption"><span class="wc-title" data-i18n="work.title.13">The Rain That Fell Upward</span><span class="wc-meta">2026</span></p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="orb" role="button" tabindex="0" aria-label="View all works" data-od-id="hero-orb" data-i18n-aria="orb.aria">
+            <svg class="dali-eye" viewBox="0 0 176 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 26 C 54 12, 112 12, 138 26" stroke="var(--fg)" stroke-width="3.5" stroke-linecap="round"></path>
+          <g class="eye-blink">
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M24 52 C 22 40, 28 32, 40 30"></path>
+            <path d="M38 48 C 38 36, 48 30, 60 31"></path>
+            <path d="M54 45 C 56 34, 68 30, 80 33"></path>
+            <path d="M70 44 C 74 32, 88 32, 98 38"></path>
+            <path d="M86 45 C 92 34, 106 36, 114 42"></path>
+            <path d="M102 50 C 108 40, 120 42, 128 50"></path>
+          </g>
+          <path d="M16 68 C 38 34, 118 34, 142 68 C 118 102, 38 102, 16 68 Z" fill="var(--surface)" stroke="var(--fg)" stroke-width="3.5"></path>
+          <circle cx="79" cy="68" r="27" fill="oklch(86% 0.004 95)" stroke="var(--fg)" stroke-width="2.5"></circle>
+          <g fill="none" stroke="var(--fg)" stroke-linecap="round">
+            <circle cx="79" cy="68" r="22" stroke-width="1" opacity=".5"></circle>
+            <circle cx="79" cy="68" r="17" stroke-width="1" opacity=".32"></circle>
+            <circle cx="79" cy="68" r="13" stroke-width="1" opacity=".2"></circle>
+          </g>
+          <circle cx="79" cy="68" r="11" fill="var(--fg)"></circle>
+          <path d="M64 54 A 14 14 0 0 1 74 49" stroke="#fff" stroke-width="3" opacity=".6" stroke-linecap="round"></path>
+          <g stroke="var(--fg)" stroke-width="3" stroke-linecap="round">
+            <path d="M36 94 C 38 104, 44 108, 54 108"></path>
+            <path d="M52 94 C 54 103, 62 106, 68 103"></path>
+            <path d="M92 94 C 96 103, 104 104, 110 98"></path>
+            <path d="M104 94 C 108 102, 116 102, 122 96"></path>
+          </g>
+        </g>
+        </svg>
+  </div>
+
+  <footer class="site-footer" data-od-id="site-footer">
+    <div class="shell">
+      <span>© 2026 Andreas Krings</span>
+      <span data-i18n="footer.meta">Berlin · Germany</span>
+      <a class="to-top" href="#top" data-od-id="to-top" data-i18n="footer.top">
+        <svg class="to-top-eye" viewBox="0 0 48 30" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M5 15 C 13 4.5, 35 4.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M5 15 C 13 25.5, 35 25.5, 43 15" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          <path d="M15 8.5 C 16.5 5.5, 19 4, 22 3.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <path d="M26 8.5 C 28 5.5, 30 4.2, 33 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          <circle cx="24" cy="15" r="7.5" stroke="currentColor" stroke-width="2"></circle>
+          <circle cx="24" cy="15" r="3" fill="currentColor"></circle>
+        </svg>
+        Back to top<span class="to-top-arrow"> ↑</span>
+      </a>
+    </div>
+  </footer>
+
+<script>
+  const orb = document.querySelector('.orb');
+  const toTop = () => window.scrollTo({ top: 0 });
+  const goAllWorks = () => { window.location.href = 'all-works.html'; };
+  orb.addEventListener('click', goAllWorks);
+  orb.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goAllWorks(); }
+  });
+
+  document.querySelectorAll('a[href="#top"]').forEach((a) => {
+    a.addEventListener('click', (e) => { e.preventDefault(); toTop(); });
+  });
+
+  const menu = document.getElementById('menu');
+  const openBtn = document.querySelector('.nav-toggle');
+  const closeBtn = document.querySelector('.menu-close');
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    openBtn.setAttribute('aria-expanded', String(open));
+    openBtn.setAttribute('aria-controls', 'menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  openBtn.addEventListener('click', () => setMenu(true));
+  closeBtn.addEventListener('click', () => setMenu(false));
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+
+<script>
+  window.AK_I18N = {
+    de: {
+      'aw.kicker': 'Index — Alle Arbeiten',
+      'aw.title': 'Alle Arbeiten',
+      'aw.intro': 'Der vollständige Katalog — jedes Gemälde, 2017 bis 2026.',
+      'aw.count': '12 Gemälde'
+    }
+  };
+</script>
+
+  <script src="assets/i18n.js?v=3"></script>
+</body></html>

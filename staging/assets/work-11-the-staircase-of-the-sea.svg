@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="A marble staircase descending into a calm sea, its lower steps dissolving into waves, a fish swimming through the morning air">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+    <linearGradient id="morning" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a8c6d9"/>
+      <stop offset="0.55" stop-color="#d9cfa8"/>
+      <stop offset="1" stop-color="#f2e2b8"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a8aa0"/>
+      <stop offset="1" stop-color="#2e5468"/>
+    </linearGradient>
+    <linearGradient id="marble" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f2e4"/>
+      <stop offset="1" stop-color="#cfc2a4"/>
+    </linearGradient>
+    <linearGradient id="marbleSide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b3a687"/>
+      <stop offset="1" stop-color="#8f8268"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#morning)"/>
+
+  <!-- pale sun -->
+  <circle cx="400" cy="260" r="130" fill="#fff6d8" opacity="0.6" filter="url(#soft)"/>
+  <circle cx="400" cy="260" r="58" fill="#fff3c8" opacity="0.9"/>
+
+  <!-- thin clouds -->
+  <g fill="#ffffff" opacity="0.75">
+    <path d="M120 180 Q200 160 280 178 Q240 192 120 180 Z"/>
+    <path d="M500 140 Q580 122 660 138 Q620 152 500 140 Z"/>
+    <path d="M60 300 Q150 284 240 298 Q160 312 60 300 Z"/>
+  </g>
+
+  <!-- sea -->
+  <rect y="470" width="800" height="330" fill="url(#sea)"/>
+  <!-- horizon line -->
+  <line x1="0" y1="470" x2="800" y2="470" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <!-- calm wave lines -->
+  <g stroke="#ffffff" stroke-linecap="round" opacity="0.4">
+    <line x1="60" y1="520" x2="170" y2="520" stroke-width="2"/>
+    <line x1="640" y1="560" x2="760" y2="560" stroke-width="2"/>
+    <line x1="90" y1="610" x2="210" y2="610" stroke-width="1.6"/>
+    <line x1="580" y1="650" x2="700" y2="650" stroke-width="1.6"/>
+    <line x1="140" y1="700" x2="260" y2="700" stroke-width="1.4"/>
+  </g>
+
+  <!-- staircase descending into the sea -->
+  <g>
+    <!-- side wall -->
+    <path d="M210 100 L210 560 L520 560 L520 100 Z" fill="url(#marbleSide)"/>
+    <!-- steps (top to bottom) -->
+    <g>
+      <rect x="210" y="100" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="130" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="160" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="190" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="220" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="250" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="280" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="310" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="340" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="370" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="400" width="310" height="30" fill="url(#marble)"/>
+      <rect x="210" y="430" width="310" height="30" fill="url(#marble)"/>
+    </g>
+    <!-- step edges -->
+    <g stroke="#8f8268" stroke-width="1.6" opacity="0.8">
+      <line x1="210" y1="130" x2="520" y2="130"/>
+      <line x1="210" y1="160" x2="520" y2="160"/>
+      <line x1="210" y1="190" x2="520" y2="190"/>
+      <line x1="210" y1="220" x2="520" y2="220"/>
+      <line x1="210" y1="250" x2="520" y2="250"/>
+      <line x1="210" y1="280" x2="520" y2="280"/>
+      <line x1="210" y1="310" x2="520" y2="310"/>
+      <line x1="210" y1="340" x2="520" y2="340"/>
+      <line x1="210" y1="370" x2="520" y2="370"/>
+      <line x1="210" y1="400" x2="520" y2="400"/>
+      <line x1="210" y1="430" x2="520" y2="430"/>
+    </g>
+    <!-- dissolving lower steps: waves over them -->
+    <g fill="#2e5468" opacity="0.85">
+      <path d="M210 460 Q280 448 340 462 T470 458 T520 466 L520 470 L210 470 Z"/>
+      <path d="M210 490 Q300 478 380 492 T520 488 L520 500 L210 500 Z" opacity="0.7"/>
+    </g>
+    <!-- foam where steps meet water -->
+    <g fill="#ffffff" opacity="0.55">
+      <path d="M210 466 Q250 458 290 464 T370 462 T450 466 T520 464"/>
+    </g>
+    <!-- water reflection of the wall -->
+    <path d="M210 470 L520 470 L520 540 Q400 555 210 540 Z" fill="#4a7a90" opacity="0.45" filter="url(#soft2)"/>
+    <!-- balustrade -->
+    <g stroke="#cfc2a4" stroke-width="5" fill="none">
+      <path d="M200 90 L200 470"/>
+    </g>
+    <g fill="#b3a687">
+      <circle cx="200" cy="120" r="7"/>
+      <circle cx="200" cy="190" r="7"/>
+      <circle cx="200" cy="260" r="7"/>
+      <circle cx="200" cy="330" r="7"/>
+      <circle cx="200" cy="400" r="7"/>
+    </g>
+  </g>
+
+  <!-- fish swimming through the air -->
+  <g transform="translate(560 300) rotate(-18)">
+    <ellipse cx="0" cy="0" rx="34" ry="13" fill="#b03a2e"/>
+    <path d="M34 0 L52 -12 L52 12 Z" fill="#b03a2e"/>
+    <circle cx="-14" cy="-3" r="3" fill="#1c1108"/>
+    <path d="M-28 0 Q-20 -6 -10 -4" stroke="#8a2a20" stroke-width="1.5" fill="none"/>
+  </g>
+  <!-- a second, tiny fish -->
+  <g transform="translate(180 210) rotate(12) scale(0.5)">
+    <ellipse cx="0" cy="0" rx="34" ry="13" fill="#b98a3e"/>
+    <path d="M34 0 L52 -12 L52 12 Z" fill="#b98a3e"/>
+    <circle cx="-14" cy="-3" r="3" fill="#1c1108"/>
+  </g>
+
+  <rect width="800" height="800" fill="url(#grain)" pointer-events="none"/>
+</svg>
