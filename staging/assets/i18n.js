@@ -11,9 +11,11 @@
   var SHARED_DE = {
     // nav / menu
     'nav.works': 'Arbeiten',
+    'nav.schedule': 'Termine',
     'nav.about': 'Über',
     'nav.contact': 'Kontakt',
     'menu.works': 'Arbeiten',
+    'menu.schedule': 'Termine',
     'menu.about': 'Über',
     'menu.contact': 'Kontakt',
     'menu.close': 'Schließen',
@@ -43,7 +45,8 @@
 
 
 
-    // exhibition names
+    // exhibition names (used on schedule.html + index teaser)
+    'schedule.exh': 'Ausstellungen & Termine',
     'ex.1': 'Fotoshooting',
     'ex.2': 'Das Gewicht des Schwebens',
     'ex.3': 'Räume ohne Ecken',
