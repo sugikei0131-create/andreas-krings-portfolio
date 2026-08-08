@@ -504,6 +504,7 @@ def apply_data(data, dry_run=False, write_upload_files=True, output_dir=None):
     apply('about.html', update_ex_count, len(schedule))
     apply('about.html', update_portraits, photos)
     apply('assets/i18n.js', update_i18n, works)
+    apply('contact.html', lambda text: (text, False))  # copy as-is (static page)
 
     flush_pending()
 
