@@ -1937,6 +1937,7 @@
         renderWorks();
         renderSchedule();
         renderPhotos();
+        renderAnalytics();
         refreshCodegen();
         if (!silent) toast('Loaded from server (' + d.works.length + ' works)');
       }).catch(function(e){ if (!silent) toast('Failed to load: ' + e.message); }).then(function(){ resolve(); });
@@ -2255,24 +2256,35 @@ $('hdPublishBtn').addEventListener('click', doPublish);
   var initTimeout = setTimeout(function(){
     if (!serverLoaded) {
       serverLoaded = true;
-      checkConnection();
       renderWorks();
       renderSchedule();
       renderPhotos();
       renderAnalytics();
+      checkConnection();
       finishInit();
     }
-  }, 6000);
+  }, 12000);
   loadFromServer(true).then(function(){
     if (!serverLoaded) {
       serverLoaded = true;
       clearTimeout(initTimeout);
-      checkConnection();
       renderWorks();
       renderSchedule();
       renderPhotos();
       renderAnalytics();
       refreshCodegen();
+      checkConnection();
+      finishInit();
+    }
+  }).catch(function(){
+    if (!serverLoaded) {
+      serverLoaded = true;
+      clearTimeout(initTimeout);
+      renderWorks();
+      renderSchedule();
+      renderPhotos();
+      renderAnalytics();
+      checkConnection();
       finishInit();
     }
   });
