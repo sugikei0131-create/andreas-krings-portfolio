@@ -2214,10 +2214,10 @@
           var treeData = {base_tree:baseTree, tree:[{path:'.dashboard-state-staging.json', mode:'100644', type:'blob', sha:blob.sha}]};
           return fetch(BASE + '/git/trees', {method:'POST', headers:hdrs, body:JSON.stringify(treeData)}).then(function(r){ return r.json(); }).then(function(tree){
             /* create commit */
-            var commitData = {message:'Dashboard publish — ' + new Date().toISOString().slice(0,16).replace('T',' '), tree:tree.sha, parents:[baseSha]};
+            var commitData = {message:'Dashboard (staging) publish — ' + new Date().toISOString().slice(0,16).replace('T',' '), tree:tree.sha, parents:[baseSha]};
             return fetch(BASE + '/git/commits', {method:'POST', headers:hdrs, body:JSON.stringify(commitData)}).then(function(r){ return r.json(); }).then(function(newCommit){
               /* update ref */
-              return fetch(BASE + '/git/refs/heads/staging', {method:'PATCH', headers:hdrs, body:JSON.stringify({sha:newCommit.sha, force:false})}).then(function(r){
+              return fetch(BASE + '/git/refs/heads/main', {method:'PATCH', headers:hdrs, body:JSON.stringify({sha:newCommit.sha, force:false})}).then(function(r){
                 if (!r.ok) return r.json().then(function(e){ throw new Error('ref update: ' + (e.message || r.status)); });
                 return {ok:true, commit:newCommit.sha.slice(0,7), message:'State file published — GitHub Actions will rebuild the site.'};
               });

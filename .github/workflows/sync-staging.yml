@@ -3,7 +3,7 @@ name: Sync from Dashboard (Staging)
 on:
   push:
     branches:
-      - staging
+      - main
     paths:
       - '.dashboard-state-staging.json'
 
@@ -14,11 +14,14 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: staging
       
-      - name: Run sync script
-        run: python3 sync_from_dashboard.py .dashboard-state-staging.json --write-uploads
+      - name: Copy assets into staging
+        run: |
+          mkdir -p staging/assets
+          cp -r assets/* staging/assets/
+      
+      - name: Run sync script (staging)
+        run: python3 sync_from_dashboard.py .dashboard-state-staging.json --write-uploads --output-dir staging
       
       - name: Commit changes
         run: |
@@ -29,5 +32,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Dashboard (staging): sync works, schedule & photos"
-            git push origin staging
+            git push
           fi

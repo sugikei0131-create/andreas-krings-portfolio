@@ -392,7 +392,8 @@ def _remove_i18n_dashboard_entries(text):
 # ----------------------------------------------------------------------------
 
 
-def write_uploads(uploads, dry_run):
+def write_uploads(uploads, dry_run, root=None):
+    rdir = os.path.abspath(root) if root else ROOT
     written = []
     for key, data in (uploads or {}).items():
         if not isinstance(data, str) or not data.startswith('data:'):
@@ -401,8 +402,8 @@ def write_uploads(uploads, dry_run):
         if not m:
             continue
         rel = key.lstrip('/')
-        dst = os.path.normpath(os.path.join(ROOT, rel))
-        if not dst.startswith(ROOT):
+        dst = os.path.normpath(os.path.join(rdir, rel))
+        if not dst.startswith(rdir):
             print('  !! upload path escapes project root, skipped:', key)
             continue
         try:
@@ -423,7 +424,7 @@ def write_uploads(uploads, dry_run):
 # ----------------------------------------------------------------------------
 
 
-def apply_data(data, dry_run=False, write_upload_files=True):
+def apply_data(data, dry_run=False, write_upload_files=True, output_dir=None):
     """Apply dashboard state (works/schedule/photos/uploads) to the site files.
 
     Returns a JSON-serializable dict; never raises for content issues —
@@ -433,6 +434,10 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     schedule = data.get('schedule') or []
     photos = data.get('photos') or []
     uploads = data.get('uploads') or {}
+    # prefix all output paths (used for staging)
+    root = ROOT if not output_dir else os.path.join(ROOT, output_dir)
+    if output_dir:
+        os.makedirs(root, exist_ok=True)
 
     if not isinstance(works, list) or not works:
         return {'ok': False, 'error': 'JSON has no usable works array'}
@@ -451,11 +456,20 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     pending = {}  # rel -> text (batched operations for same file)
 
     def apply(rel, fn, *fn_args):
-        path = os.path.join(ROOT, rel)
+        path = os.path.join(root, rel)
+        source_path = os.path.join(ROOT, rel) if output_dir else path
         if not os.path.exists(path):
-            files.append({'file': rel, 'status': 'not found'})
-            return
-        text = pending.get(rel) or open(path, encoding='utf-8').read()
+            if not os.path.exists(source_path):
+                files.append({'file': rel, 'status': 'not found'})
+                return
+            # boostrap from source (first staging sync)
+            text = open(source_path, encoding='utf-8').read()
+            if not dry_run:
+                os.makedirs(os.path.dirname(path), exist_ok=True)
+                open(path, 'w', encoding='utf-8').write(text)
+            files.append({'file': rel, 'status': 'bootstrapped'})
+        else:
+            text = pending.get(rel) or open(path, encoding='utf-8').read()
         try:
             result = fn(text, *fn_args)
             if isinstance(result, tuple):
@@ -469,8 +483,8 @@ def apply_data(data, dry_run=False, write_upload_files=True):
 
     def flush_pending():
         for rel, text in pending.items():
-            path = os.path.join(ROOT, rel)
-            orig = open(path, encoding='utf-8').read()
+            path = os.path.join(root, rel)
+            orig = open(path, encoding='utf-8').read() if os.path.exists(path) else ''
             if text == orig:
                 files.append({'file': rel, 'status': 'no change'})
                 continue
@@ -497,20 +511,20 @@ def apply_data(data, dry_run=False, write_upload_files=True):
     backup = None
     if touched and not dry_run:
         bakdir = os.path.join(
-            ROOT, '.sync-backups', datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
+            root, '.sync-backups', datetime.datetime.now().strftime('%Y%m%d-%H%M%S'))
         os.makedirs(bakdir, exist_ok=True)
         for rel in touched:
-            shutil.copy2(os.path.join(ROOT, rel), os.path.join(bakdir, os.path.basename(rel)))
+            shutil.copy2(os.path.join(root, rel), os.path.join(bakdir, os.path.basename(rel)))
         backup = bakdir
 
-    uploads_written = write_uploads(uploads, dry_run) if write_upload_files else []
+    uploads_written = write_uploads(uploads, dry_run, root) if write_upload_files else []
 
     new_works = [w for w in works if int(w.get('n', 0)) > 12]
     missing = []
     for f in [w.get('file') for w in works] + [p.get('file') for p in photos]:
         if not f or f in uploads:
             continue
-        p = os.path.normpath(os.path.join(ROOT, f))
+        p = os.path.normpath(os.path.join(root, f))
         if not os.path.exists(p):
             missing.append(f)
 
@@ -541,12 +555,13 @@ def main():
     ap.add_argument('json', help='dashboard export JSON (Data tab → Download JSON)')
     ap.add_argument('--dry-run', action='store_true', help='preview only, write nothing')
     ap.add_argument('--write-uploads', action='store_true', help='also write uploaded images into assets/')
+    ap.add_argument('--output-dir', help='write all output files under this subdirectory (for staging)')
     args = ap.parse_args()
 
     with open(args.json, encoding='utf-8') as f:
         data = json.load(f)
 
-    res = apply_data(data, dry_run=args.dry_run, write_upload_files=args.write_uploads)
+    res = apply_data(data, dry_run=args.dry_run, write_upload_files=args.write_uploads, output_dir=args.output_dir)
     if not res.get('ok'):
         sys.exit('error: %s' % res.get('error', 'unknown'))
 
