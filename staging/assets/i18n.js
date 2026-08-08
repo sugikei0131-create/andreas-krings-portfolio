@@ -39,7 +39,7 @@
     'work.title.12': 'Der Spiegel des Ozeans',
 
     // work titles 13+ (added via dashboard)
-    'work.title.13': 'Der Spiegel des Ozeans',
+    'work.title.13': 'Der Regen, der nach oben fiel',
 
 
 
