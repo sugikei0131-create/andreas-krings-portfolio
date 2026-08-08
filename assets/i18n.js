@@ -18,6 +18,7 @@
     'menu.contact': 'Kontakt',
     'menu.close': 'Schließen',
     'menu.foot': 'Berlin, Deutschland · ',
+    'menu.foot.link': 'Nachricht senden',
     // footer
     'footer.top': 'Nach oben',
     'footer.meta': 'Berlin · Deutschland',
