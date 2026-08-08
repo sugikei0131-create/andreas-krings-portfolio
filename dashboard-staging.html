@@ -1927,8 +1927,9 @@
 
 
   function loadFromServer(silent){
-    var go = function(){
-      var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/.dashboard-state-staging.json?v=' + Date.now();
+    function doLoad(){
+      return new Promise(function(resolve){
+        var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/.dashboard-state-staging.json?v=' + Date.now();
       fetch(url).then(function(r){ return r.json(); }).then(function(d){
         localStorage.setItem(LS_KEY, JSON.stringify(d));
         state = load();
@@ -1938,11 +1939,15 @@
         renderPhotos();
         refreshCodegen();
         if (!silent) toast('Loaded from server (' + d.works.length + ' works)');
-      }).catch(function(e){ toast('Failed to load: ' + e.message); });
-    };
-    if (silent) { go(); return; }
-    confirmBox('Replace all data with the latest version from the server? Local changes will be lost.', 'Load from server').then(function(ok){
-      if (ok) go();
+      }).catch(function(e){ if (!silent) toast('Failed to load: ' + e.message); }).then(function(){ resolve(); });
+      });
+    }
+    if (silent) { return doLoad(); }
+    return new Promise(function(resolve){
+      confirmBox('Replace all data with the latest version from the server? Local changes will be lost.', 'Load from server').then(function(ok){
+        if (ok) { doLoad().then(resolve); }
+        else { resolve(); }
+      });
     });
   }
   $('loadServerBtn').addEventListener('click', function(){ loadFromServer(false); });
@@ -2245,19 +2250,41 @@ $('hdPublishBtn').addEventListener('click', doPublish);
     ghToken = sessionStorage.getItem('ak-gh-token') || localStorage.getItem('ak-gh-token');
     if (ghToken) { hideLogin(); pubStatus('Signed in — ready to publish.', 'ok'); setPublishEnabled(true); }
   } catch(e){}
-  loadFromServer(true);
-  checkConnection();
-  renderWorks();
-  renderSchedule();
-  renderPhotos();
-  renderAnalytics();
-  var savedTab = null;
-  try { savedTab = localStorage.getItem('ak-dash-tab'); } catch(e){}
-  if (savedTab && ['works','schedule','photos','analytics','data'].indexOf(savedTab) >= 0) {
-    var t = document.querySelector('.tab[data-tab="' + savedTab + '"]');
-    if (t) t.click();
+  /* wait for server data before rendering (timeout 6s then fallback to localStorage) */
+  var serverLoaded = false;
+  var initTimeout = setTimeout(function(){
+    if (!serverLoaded) {
+      serverLoaded = true;
+      checkConnection();
+      renderWorks();
+      renderSchedule();
+      renderPhotos();
+      renderAnalytics();
+      finishInit();
+    }
+  }, 6000);
+  loadFromServer(true).then(function(){
+    if (!serverLoaded) {
+      serverLoaded = true;
+      clearTimeout(initTimeout);
+      checkConnection();
+      renderWorks();
+      renderSchedule();
+      renderPhotos();
+      renderAnalytics();
+      refreshCodegen();
+      finishInit();
+    }
+  });
+  function finishInit(){
+    var savedTab = null;
+    try { savedTab = localStorage.getItem('ak-dash-tab'); } catch(e){}
+    if (savedTab && ['works','schedule','photos','analytics','data'].indexOf(savedTab) >= 0) {
+      var t = document.querySelector('.tab[data-tab="' + savedTab + '"]');
+      if (t) t.click();
+    }
+    save(true);
   }
-  save(true);
 })();
 </script>
 </body>
