@@ -41,7 +41,6 @@
 
 
 
-
     // exhibition names
     'ex.1': 'Das Gewicht des Schwebens',
     'ex.2': 'Räume ohne Ecken',
