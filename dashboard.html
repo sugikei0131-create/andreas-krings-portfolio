@@ -874,6 +874,7 @@
           <input type="file" id="importFile" accept=".json,application/json" hidden>
           <button class="btn" id="importBtn">Load JSON…</button>
           <button class="btn btn-danger" id="resetBtn">Reset to defaults</button>
+          <button class="btn" id="loadServerBtn">Load from server</button>
         </div>
       </div>
     </div>
@@ -1934,6 +1935,23 @@
       renderSchedule();
       renderPhotos();
       toast('Reset to defaults');
+    });
+  });
+
+  $('loadServerBtn').addEventListener('click', function(){
+    confirmBox('Replace all data with the latest version from the server? Local changes will be lost.', 'Load from server').then(function(ok){
+      if (!ok) return;
+      var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/.dashboard-state.json?v=' + Date.now();
+      fetch(url).then(function(r){ return r.json(); }).then(function(d){
+        localStorage.setItem(LS_KEY, JSON.stringify(d));
+        state = load();
+        save();
+        renderWorks();
+        renderSchedule();
+        renderPhotos();
+        refreshCodegen();
+        toast('Loaded from server (' + d.works.length + ' works)');
+      }).catch(function(e){ toast('Failed to load: ' + e.message); });
     });
   });
 
