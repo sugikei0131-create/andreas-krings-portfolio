@@ -44,11 +44,13 @@
 
 
     // exhibition names
-    'ex.1': 'Das Gewicht des Schwebens',
-    'ex.2': 'Räume ohne Ecken',
-    'ex.3': 'Was der Mond vergaß',
-    'ex.4': 'Der Garten, der fortzog',
-    'ex.5': 'Blaue Stunden'
+    'ex.1': 'Fotoshooting',
+    'ex.2': 'Das Gewicht des Schwebens',
+    'ex.3': 'Räume ohne Ecken',
+    'ex.4': 'Was der Mond vergaß',
+    'ex.5': 'Der Garten, der fortzog',
+
+    'ex.6': 'Blaue Stunden',
   };
 
   function getLang() {
