@@ -38,6 +38,9 @@
     'work.title.11': 'Die Treppe des Meeres',
     'work.title.12': 'Der Spiegel des Ozeans',
 
+    // work titles 13+ (added via dashboard)
+    'work.title.13': 'Testwerk 2026',
+
 
     // exhibition names
     'ex.1': 'Das Gewicht des Schwebens',
