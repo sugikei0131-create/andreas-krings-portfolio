@@ -16,8 +16,9 @@ The JSON is the file produced by the dashboard's Data tab → Download JSON
 Updates in place:
     work.html        WORKS array + COUNT            (all works)
     all-works.html   grid cards                     (all works)
-    index.html       works grid cards (first 8) + exhibitions list + portraits array
-    about.html       exhibitions list + ex-count + portraits array
+    index.html       works grid cards (first 8) + schedule teaser link + portraits array
+    schedule.html    exhibitions/events list + ex-count (dedicated Schedule page)
+    about.html       portraits array
     assets/i18n.js   German 'work.title.N' entries for works beyond No. 12
 
 Every touched file is copied to .sync-backups/<timestamp>/ first.
@@ -206,9 +207,10 @@ def gen_schedule_html(schedule):
         return '<!-- no schedule entries -->'
     out = []
     for i, it in enumerate(s):
+        period = ('<span class="ex-period">%s</span>' % esc(it.get('period', ''))) if (it.get('period') or '').strip() else ''
         out.append(
-            '<li><span class="ex-year">%s</span><span class="ex-name" data-i18n="ex.%d">%s</span><span class="ex-place">%s</span></li>'
-            % (esc(norm_year(it.get('year', ''))), i + 1, esc(it.get('title', '')), esc(it.get('place', '')))
+            '<li><span class="ex-year">%s</span>%s<span class="ex-name" data-i18n="ex.%d">%s</span><span class="ex-place">%s</span></li>'
+            % (esc(norm_year(it.get('year', ''))), period, i + 1, esc(it.get('title', '')), esc(it.get('place', '')))
         )
     return '\n'.join(out)
 
@@ -541,10 +543,10 @@ def apply_data(data, dry_run=False, write_upload_files=True, output_dir=None):
     top8 = [{**w, 'n': i + 1} for i, w in enumerate(works[:8])]
     apply('index.html', update_grid, top8, 'work-card')
     apply('index.html', update_index_works_meta, min(8, len(works)))
-    apply('index.html', update_exhibitions, schedule, 'about-exhibitions')
     apply('index.html', update_portraits, photos)
-    apply('about.html', update_exhibitions, schedule, 'exhibitions')
-    apply('about.html', update_ex_count, len(schedule))
+    apply('schedule.html', update_exhibitions, schedule, 'schedule-exhibitions')
+    apply('schedule.html', update_ex_count, len(schedule))
+    apply('index.html', update_exhibitions, schedule, 'home-exhibitions')
     apply('about.html', update_portraits, photos)
     apply('assets/i18n.js', update_i18n, works)
     apply('assets/i18n.js', update_i18n_exhibitions, schedule)

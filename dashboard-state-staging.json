@@ -116,7 +116,8 @@
       "titleDe": "Fotoshooting",
       "place": "Studio",
       "link": "",
-      "id": 1
+      "id": 1,
+      "period": "12 Aug"
     },
     {
       "id": 2,
@@ -124,7 +125,8 @@
       "title": "The Weight of Floating",
       "titleDe": "Das Gewicht des Schwebens",
       "place": "Kitsune Gallery · Berlin",
-      "link": ""
+      "link": "",
+      "period": "8–15 Aug"
     },
     {
       "id": 3,
@@ -132,7 +134,8 @@
       "title": "Rooms Without Corners",
       "titleDe": "Räume ohne Ecken",
       "place": "Freja Raum · Berlin",
-      "link": ""
+      "link": "",
+      "period": "2–30 Nov"
     },
     {
       "id": 4,
@@ -140,7 +143,8 @@
       "title": "Things the Moon Forgot",
       "titleDe": "Was der Mond vergaß",
       "place": "Kunsthalle Berlin",
-      "link": ""
+      "link": "",
+      "period": "12 May – 20 Jun"
     },
     {
       "id": 5,
@@ -148,7 +152,8 @@
       "title": "A Garden That Moved Away",
       "titleDe": "Der Garten, der fortzog",
       "place": "Galleria Vek · Milan",
-      "link": ""
+      "link": "",
+      "period": "4–27 Feb"
     },
     {
       "id": 6,
@@ -156,7 +161,8 @@
       "title": "Blue Hours",
       "titleDe": "Blaue Stunden",
       "place": "Fushimi Hall · Osaka",
-      "link": ""
+      "link": "",
+      "period": "3–28 Mar"
     }
   ],
   "photos": [

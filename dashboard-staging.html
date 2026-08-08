@@ -181,6 +181,7 @@
   /* ---------- schedule list ---------- */
   .list > li.sch-row{grid-template-columns:84px 1fr auto}
   .sch-year{font-family:var(--font-mono); font-size:13px; letter-spacing:.06em; color:var(--muted)}
+  .sch-period{font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; color:var(--muted); opacity:.85}
   .sch-main{min-width:0}
   .sch-title{font-family:var(--font-display); font-size:18px; line-height:1.3; margin:0}
   .sch-place{font-size:13px; color:var(--muted); margin-top:2px}
@@ -473,6 +474,7 @@
   /* ---------- schedule list ---------- */
   .list > li.sch-row{grid-template-columns:84px 1fr auto}
   .sch-year{font-family:var(--font-mono); font-size:13px; letter-spacing:.06em; color:var(--muted)}
+  .sch-period{font-family:var(--font-mono); font-size:12px; letter-spacing:.05em; color:var(--muted); opacity:.85}
   .sch-main{min-width:0}
   .sch-title{font-family:var(--font-display); font-size:18px; line-height:1.3; margin:0}
   .sch-place{font-size:13px; color:var(--muted); margin-top:2px}
@@ -919,7 +921,7 @@
       <div class="panel cg-block" style="margin-top:18px">
         <div class="cg-row">
           <div>
-            <h3>about.html — exhibitions list</h3>
+            <h3>schedule.html — exhibitions list</h3>
             <p>Replace the `<li>` items inside `<ul class="exhibitions">` (newest year first).</p>
           </div>
           <button class="btn btn-sm btn-primary" data-copy="cgSchedule">Copy</button>
@@ -1031,6 +1033,10 @@
     <div class="field">
       <label>Year</label>
       <input type="text" id="seYear" placeholder="2026">
+    </div>
+    <div class="field">
+      <label>Period / dates (optional)</label>
+      <input type="text" id="sePeriod" placeholder="8–15 Aug">
     </div>
     <div class="field">
       <label>Title (English)<span class="req">*</span></label>
@@ -1670,6 +1676,7 @@
       var title = it.title + (it.titleDe ? ' <span style="opacity:.6">/ ' + esc(it.titleDe) + '</span>' : '');
       li.innerHTML =
         '<span class="sch-year">' + esc(normYear(it.year) || '—') + '</span>' +
+        (it.period ? '<span class="sch-period">' + esc(it.period) + '</span>' : '') +
         '<span class="sch-main"><p class="sch-title">' + title + '</p><p class="sch-place">' + esc(it.place || '') + '</p></span>' +
         '<span class="row-meta"><span class="row-actions">' +
           '<span class="grip" aria-hidden="true" title="Drag to reorder">≡</span>' +
@@ -1752,6 +1759,7 @@
     var it = id ? state.schedule.find(function(x){ return x.id === id; }) : null;
     $('seTitle').textContent = it ? 'Edit entry' : 'New entry';
     $('seYear').value = it ? (it.year || '') : '';
+    $('sePeriod').value = it ? (it.period || '') : '';
     $('seTitleEn').value = it ? (it.title || '') : '';
     $('seTitleDe').value = it ? (it.titleDe || '') : '';
     $('sePlace').value = it ? (it.place || '') : '';
@@ -1764,6 +1772,7 @@
     if (!title) { toast('Title (English) is required'); $('seTitleEn').focus(); return; }
     var payload = {
       year: normYear($('seYear').value),
+      period: $('sePeriod').value.trim(),
       title: title,
       titleDe: $('seTitleDe').value.trim(),
       place: $('sePlace').value.trim(),
@@ -2067,7 +2076,8 @@
     var s = state.schedule.slice(); /* page order = dashboard drag & drop order */
     if (!s.length) return '<!-- no schedule entries -->';
     return s.map(function(it, i){
-      return '          <li><span class="ex-year">' + esc(normYear(it.year) || '') + '</span><span class="ex-name" data-i18n="ex.' + (i + 1) + '">' + esc(it.title || '') + '</span><span class="ex-place">' + esc(it.place || '') + '</span></li>';
+      var period = (it.period || '').trim() ? '<span class="ex-period">' + esc(it.period) + '</span>' : '';
+      return '          <li><span class="ex-year">' + esc(normYear(it.year) || '') + '</span>' + period + '<span class="ex-name" data-i18n="ex.' + (i + 1) + '">' + esc(it.title || '') + '</span><span class="ex-place">' + esc(it.place || '') + '</span></li>';
     }).join('\n');
   }
   function genPhotosJs(){

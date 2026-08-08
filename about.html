@@ -202,6 +202,7 @@
   .exhibitions{list-style:none; margin:0; padding:0; border-top:1px solid var(--border)}
   .exhibitions li{display:flex; gap:24px; align-items:baseline; border-bottom:1px solid var(--border); padding:15px 0; transition:color .3s var(--ease)}
   .exhibitions .ex-year{font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted); flex:0 0 64px}
+  .exhibitions .ex-period{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); flex:0 0 auto}
   .exhibitions .ex-name{font-family:var(--font-display); font-size:17px}
   .exhibitions .ex-place{margin-left:auto; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); text-align:right}
   .exhibitions li:hover .ex-name{color:var(--accent)}
@@ -298,6 +299,7 @@
       <a class="brand" href="index.html" data-od-id="brand">Andreas <em>Krings</em></a>
       <nav class="nav" aria-label="Primary">
         <a class="nav-link" href="index.html#works" data-od-id="nav-works" data-i18n="nav.works">Works</a>
+        <a class="nav-link" href="schedule.html" data-od-id="nav-schedule" data-i18n="nav.schedule">Schedule</a>
         <a class="nav-link" href="about.html" aria-current="page" data-od-id="nav-about" data-i18n="nav.about">About</a>
         <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
       </nav>
@@ -310,8 +312,9 @@
     <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
     <nav aria-label="Menu">
       <a class="menu-link" href="index.html#works" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
-      <a class="menu-link" href="about.html" aria-current="page" data-od-id="menu-about" data-i18n="menu.about">About <small>02</small></a>
-      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>03</small></a>
+      <a class="menu-link" href="schedule.html" data-od-id="menu-schedule" data-i18n="menu.schedule">Schedule <small>02</small></a>
+      <a class="menu-link" href="about.html" aria-current="page" data-od-id="menu-about" data-i18n="menu.about">About <small>03</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>04</small></a>
     </nav>
     <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
     <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="contact.html" data-od-id="menu-email" data-i18n="menu.foot.link">Send a message</a></p>
@@ -320,7 +323,7 @@
   <main>
     <section class="a-hero" data-od-id="about-hero" aria-labelledby="about-title">
       <div class="shell">
-        <p class="kicker" data-od-id="about-kicker" data-i18n="about.kicker">02 — About</p>
+        <p class="kicker" data-od-id="about-kicker" data-i18n="about.kicker">03 — About</p>
         <h1 class="a-title" id="about-title" data-od-id="about-title" style="font-size: 60px;" data-i18n="about.title">The painter.</h1>
         <p class="a-intro" data-od-id="about-intro" data-i18n="about.intro">Andreas Krings paints the ordinary set adrift — a chair, a suitcase, an hourglass — in a world where the rules of light, weight, and time no longer apply.</p>
         <p class="a-meta" data-od-id="about-meta"><span data-i18n="about.meta1">Berlin · b. 1986</span><span data-i18n="about.meta2">Exhibiting since 2012</span></p>
@@ -353,22 +356,7 @@
       </div>
     </section>
 
-    <section class="a-ex" data-od-id="about-exhibitions" aria-labelledby="ex-title">
-      <div class="shell">
-        <div class="ex-subhead-row reveal">
-          <h2 class="ex-subhead" id="ex-title" data-i18n="about.exh">Selected Exhibitions</h2>
-          <span class="ex-count" data-od-id="ex-count">05</span>
-        </div>
-        <ul class="exhibitions reveal" data-od-id="exhibitions">
-          <li><span class="ex-year">2025</span><span class="ex-name" data-i18n="ex.1">The Weight of Floating</span><span class="ex-place">Kitsune Gallery · Berlin</span></li>
-          <li><span class="ex-year">2024</span><span class="ex-name" data-i18n="ex.2">Rooms Without Corners</span><span class="ex-place">Freja Raum · Berlin</span></li>
-          <li><span class="ex-year">2023</span><span class="ex-name" data-i18n="ex.3">Things the Moon Forgot</span><span class="ex-place">Kunsthalle Berlin</span></li>
-          <li><span class="ex-year">2022</span><span class="ex-name" data-i18n="ex.4">A Garden That Moved Away</span><span class="ex-place">Galleria Vek · Milan</span></li>
-          <li><span class="ex-year">2021</span><span class="ex-name" data-i18n="ex.5">Blue Hours</span><span class="ex-place">Fushimi Hall · Osaka</span></li>
-        </ul>
-      </div>
-    </section>
-
+    
     <section class="a-cta" data-od-id="about-cta" aria-labelledby="cta-text">
       <div class="shell">
         <p id="cta-text" data-od-id="cta-text">Studio visits by appointment, commissions welcome.</p>
@@ -549,7 +537,7 @@
 <script>
   window.AK_I18N = {
     de: {
-      'about.kicker': '02 — Über',
+      'about.kicker': '03 — Über',
       'about.title': 'Der Maler.',
       'about.intro': 'Andreas Krings malt das Gewöhnliche, das fortgetrieben wird — einen Stuhl, einen Koffer, eine Sanduhr — in einer Welt, in der die Gesetze von Licht, Gewicht und Zeit nicht mehr gelten.',
       'about.meta1': 'Berlin · geb. 1986',

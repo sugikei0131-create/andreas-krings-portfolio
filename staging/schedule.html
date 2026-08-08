@@ -2,8 +2,8 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — Andreas Krings</title>
-<meta name="description" content="Contact Andreas Krings — surrealist painter based in Berlin. Commissions, exhibition proposals, and studio visits.">
+<title>Schedule — Andreas Krings</title>
+<meta name="description" content="Schedule of exhibitions and events by Andreas Krings — surrealist painter based in Berlin.">
 <script>document.documentElement.classList.add('js')</script>
 <style>
   :root{
@@ -108,14 +108,14 @@
   .menu-foot a{border-bottom:1px solid var(--border); padding-bottom:1px; transition:color .3s, border-color .3s}
   .menu-foot a:hover{color:var(--accent); border-color:var(--accent)}
 
-  /* ---------- Contact hero ---------- */
-  .c-hero{
+  /* ---------- About hero ---------- */
+  .a-hero{
     position:relative;
     padding-top:clamp(48px,6vh,72px);
     padding-bottom:clamp(70px,9vh,120px);
     border-top:none;
   }
-  .c-title{
+  .a-title{
     font-family:var(--font-display);
     font-weight:400;
     font-size:clamp(52px,10vw,124px);
@@ -124,86 +124,115 @@
     margin:26px 0 0;
     text-wrap:balance;
   }
-  .c-intro{
+  .a-intro{
     font-size:clamp(16px,1.6vw,19px);
     line-height:1.8;
     color:var(--muted);
-    max-width:52ch;
+    max-width:56ch;
     margin:clamp(26px,4vw,44px) 0 0;
   }
-  .c-email{
-    font-family:var(--font-display);
-    font-size:clamp(26px,4.4vw,52px);
-    letter-spacing:-.01em;
-    line-height:1.15;
-    display:inline-flex; align-items:center; gap:.35em;
-    position:relative;
-    padding-bottom:8px;
-    margin-top:clamp(36px,5vw,60px);
+  .a-meta{
+    display:flex; flex-wrap:wrap; align-items:baseline;
+    gap:12px 28px;
+    margin:clamp(36px,5vw,60px) 0 0;
+    padding-top:22px;
+    border-top:1px solid var(--border);
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted);
   }
-  .c-email::after{
-    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
-    background:var(--accent); transform:scaleX(0); transform-origin:left;
-    transition:transform .4s var(--ease);
-  }
-  .c-email:hover::after,.c-email:focus-visible::after{transform:scaleX(1)}
-  .c-email .arr{font-family:var(--font-mono); font-size:.5em; color:var(--accent); transform:translateY(-4px)}
 
-  /* ---------- Contact body ---------- */
-  .c-body{border-top:none; padding-top:0}
-  .c-grid{
+  /* ---------- About body ---------- */
+  .a-body{border-top:none; padding-top:0}
+  .a-grid{
     display:grid;
-    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
     gap:clamp(44px,6vw,96px);
     align-items:start;
     border-top:1px solid var(--border);
     padding-top:clamp(48px,6vh,72px);
   }
+  .about-media{position:relative; max-width:520px}
+  .about-media img{aspect-ratio:3/4; object-fit:cover; width:100%; border:1px solid var(--border); background:var(--surface); transition:opacity .4s ease, filter .4s ease}
+  .about-orb{
+    position:absolute; right:22px; bottom:22px;
+    width:46px; aspect-ratio:1; border-radius:50%;
+    background:var(--accent);
+    border:6px solid var(--surface);
+    box-shadow:0 14px 30px -12px rgba(27,21,13,.4);
+    animation:bob 8s ease-in-out infinite;
+    cursor:pointer; -webkit-user-select:none; user-select:none; touch-action:manipulation;
+  }
+  .about-orb:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
+  .about-caption{display:flex; justify-content:space-between; margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .about-body p{font-size:clamp(15px,1.5vw,17px); line-height:1.85; margin:0 0 18px}
+  .about-body p + p{margin-top:18px}
+  .practice{display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:30px; font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
+  .practice span::before{content:"·"; margin-right:22px; color:var(--muted)}
 
-  .form-title{font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0 0 clamp(26px,3.5vw,40px)}
-  .field{margin-bottom:clamp(22px,3vw,34px)}
-  .field label{
-    display:block;
-    font-family:var(--font-mono);
-    font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  /* ---------- Pull quote ---------- */
+  .a-quote blockquote{
+    font-family:var(--font-display); font-style:italic; font-weight:400;
+    font-size:clamp(28px,4.6vw,56px);
+    line-height:1.25;
+    letter-spacing:-.01em;
+    max-width:24ch;
+    margin:0;
+    text-wrap:balance;
+    position:relative;
+  }
+  .a-quote blockquote::before{
+    content:""; position:absolute; top:-clamp(24px,3vw,40px); left:0;
+    width:56px; height:2px; background:var(--accent);
+  }
+  .a-quote cite{
+    display:block; margin-top:26px;
+    font-family:var(--font-mono); font-style:normal;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
     color:var(--muted);
-    margin-bottom:9px;
   }
-  .field input,.field textarea{
-    width:100%; display:block;
-    background:transparent; color:var(--fg);
-    border:0; border-bottom:1px solid var(--border); border-radius:0;
-    font-family:var(--font-body); font-size:17px; line-height:1.5;
-    padding:10px 2px;
-    transition:border-color .3s var(--ease);
-  }
-  .field textarea{resize:vertical; min-height:120px}
-  .field input::placeholder,.field textarea::placeholder{color:color-mix(in oklch, var(--muted) 65%, transparent)}
-  .field input:focus,.field textarea:focus{outline:none; border-color:var(--accent)}
-  .field input:focus-visible,.field textarea:focus-visible{outline:2px solid var(--accent); outline-offset:4px}
 
-  .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    background:var(--accent); color:var(--surface);
-    border:1px solid var(--accent);
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-    padding:16px 28px; cursor:pointer; min-height:44px;
-    transition:background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
+  /* ---------- Exhibitions ---------- */
+  .ex-subhead-row{
+    display:flex; justify-content:space-between; align-items:baseline; gap:24px;
+    margin-bottom:clamp(26px,3.5vw,40px);
   }
-  .btn:hover{background:oklch(44% 0.10 28); border-color:oklch(44% 0.10 28); transform:translateY(-1px); box-shadow:0 12px 26px -14px oklch(40% 0.10 28 / .55)}
-  .btn:active{transform:none}
-  .form-note{margin:16px 0 0; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--muted)}
-  .form-status{margin:14px 0 0; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--muted)}
-  .form-status.ok{color:oklch(45% 0.09 150)}
-  .form-status.err{color:var(--accent)}
+  .ex-subhead{font-family:var(--font-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin:0}
+  .ex-count{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; color:var(--muted)}
+  .exhibitions{list-style:none; margin:0; padding:0; border-top:1px solid var(--border)}
+  .exhibitions li{display:flex; gap:24px; align-items:baseline; border-bottom:1px solid var(--border); padding:15px 0; transition:color .3s var(--ease)}
+  .exhibitions .ex-year{font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted); flex:0 0 64px}
+  .exhibitions .ex-period{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); flex:0 0 150px}
+  .exhibitions .ex-name{font-family:var(--font-display); font-size:17px}
+  .exhibitions .ex-place{margin-left:auto; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); text-align:right}
+  .exhibitions li:hover .ex-name{color:var(--accent)}
 
-  .c-info{display:grid}
-  .c-col{padding-top:20px}
-  .c-col + .c-col{border-top:1px solid var(--border); padding-top:22px; margin-top:0}
-  .c-label{display:block; font-family:var(--font-mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin-bottom:12px}
-  .c-body{font-family:var(--font-mono); font-size:13px; letter-spacing:.04em; line-height:2; margin:0}
-  .c-body a{border-bottom:1px solid var(--border); padding-bottom:1px; transition:color .3s, border-color .3s}
-  .c-body a:hover{color:var(--accent); border-color:var(--accent)}
+  /* ---------- Closing CTA ---------- */
+  .a-cta .shell{display:flex; justify-content:space-between; align-items:baseline; gap:clamp(24px,4vw,64px); flex-wrap:wrap}
+  .a-cta p{
+    font-family:var(--font-display);
+    font-size:clamp(26px,3.6vw,44px);
+    line-height:1.2;
+    letter-spacing:-.01em;
+    max-width:18ch;
+    margin:0;
+    text-wrap:balance;
+  }
+  .a-cta-link{
+    font-family:var(--font-display);
+    font-size:clamp(22px,3vw,34px);
+    letter-spacing:-.01em;
+    display:inline-flex; align-items:center; gap:.35em;
+    position:relative;
+    padding-bottom:6px;
+  }
+  .a-cta-link::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:var(--accent); transform:scaleX(0); transform-origin:left;
+    transition:transform .4s var(--ease);
+  }
+  .a-cta-link:hover::after,.a-cta-link:focus-visible::after{transform:scaleX(1)}
+  .a-cta-link .arr{font-family:var(--font-mono); font-size:.5em; color:var(--accent); transform:translateY(-3px)}
 
   /* ---------- Floating eye (back to top) ---------- */
   .orb{
@@ -239,26 +268,22 @@
   /* ---------- Responsive ---------- */
   @media (max-width:1120px){
     .orb{right:clamp(10px,1.2vw,22px)}
+    .about-media{max-width:min(360px,80vw); margin-inline:auto}
   }
   @media (max-width:900px){
     .orb{width:clamp(48px,12vw,60px)}
     .to-top-eye{display:inline-block; margin-right:9px; vertical-align:-3px}
     .to-top-arrow{display:none}
-    .c-grid{grid-template-columns:1fr}
-    .c-info{grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); border-top:1px solid var(--border); padding-top:22px}
-    .c-info .c-col{padding-top:0}
-    .c-info .c-col + .c-col{border-top:0; padding-top:0}
+    .a-grid{grid-template-columns:1fr; gap:clamp(28px,4vw,48px)}
+    .about-media{max-width:min(360px,80vw); margin-inline:auto}
   }
   @media (max-width:760px){
     .nav{display:none}
     .site-header .lang-toggle{display:none}
     .nav-toggle{display:inline-block}
     .site-footer .shell{flex-wrap:wrap; row-gap:10px; justify-content:center}
-    .c-info{grid-template-columns:1fr; gap:0; border-top:0; padding-top:0}
-    .c-info .c-col + .c-col{border-top:1px solid var(--border); padding-top:22px}
-  }
-  @media (max-width:520px){
-    .c-email{font-size:clamp(22px,7vw,30px)}
+    .exhibitions li{flex-wrap:wrap; gap:4px 24px}
+    .exhibitions .ex-place{margin-left:0; width:100%; text-align:left}
   }
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important; transition:none!important}
@@ -274,9 +299,9 @@
       <a class="brand" href="index.html" data-od-id="brand">Andreas <em>Krings</em></a>
       <nav class="nav" aria-label="Primary">
         <a class="nav-link" href="index.html#works" data-od-id="nav-works" data-i18n="nav.works">Works</a>
-        <a class="nav-link" href="schedule.html" data-od-id="nav-schedule" data-i18n="nav.schedule">Schedule</a>
+        <a class="nav-link" href="schedule.html" aria-current="page" data-od-id="nav-schedule" data-i18n="nav.schedule">Schedule</a>
         <a class="nav-link" href="about.html" data-od-id="nav-about" data-i18n="nav.about">About</a>
-        <a class="nav-link" href="contact.html" aria-current="page" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
+        <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language" data-od-id="lang-toggle"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" data-od-id="menu-open">Menu</button>
@@ -287,61 +312,47 @@
     <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
     <nav aria-label="Menu">
       <a class="menu-link" href="index.html#works" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
-      <a class="menu-link" href="schedule.html" data-od-id="menu-schedule" data-i18n="menu.schedule">Schedule <small>02</small></a>
+      <a class="menu-link" href="schedule.html" aria-current="page" data-od-id="menu-schedule" data-i18n="menu.schedule">Schedule <small>02</small></a>
       <a class="menu-link" href="about.html" data-od-id="menu-about" data-i18n="menu.about">About <small>03</small></a>
-      <a class="menu-link" href="contact.html" aria-current="page" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>04</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>04</small></a>
     </nav>
     <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
-    <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="#contact-form" data-od-id="menu-email" data-i18n="menu.foot.link">Send a message</a></p>
+    <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="contact.html" data-od-id="menu-email" data-i18n="menu.foot.link">Send a message</a></p>
   </div>
 
   <main>
-    <section class="c-hero" data-od-id="contact-hero" aria-labelledby="contact-title">
+    <section class="a-hero" data-od-id="schedule-hero" aria-labelledby="schedule-title">
       <div class="shell">
-        <p class="kicker" data-od-id="contact-kicker" data-i18n="contact.kicker">04 — Contact</p>
-        <h1 class="c-title" id="contact-title" data-od-id="contact-title" style="font-size: 40px;" data-i18n="contact.title">Say hello.</h1>
-        <p class="c-intro" data-od-id="contact-intro" data-i18n="contact.intro">Commissions, exhibition proposals, or questions about a painting — the studio reads every message.</p>
-        
+        <p class="kicker" data-od-id="about-kicker" data-i18n="schedule.kicker">02 — Schedule</p>
+        <h1 class="a-title" id="schedule-title" data-od-id="schedule-title" data-i18n="schedule.title">Schedule</h1>
+        <p class="a-intro" data-od-id="about-intro" data-i18n="schedule.intro">Exhibitions, studio visits and events — past and present. Dates and venues are kept current from the studio in Berlin.</p>
+        <p class="a-meta" data-od-id="about-meta"><span data-i18n="schedule.meta1">Exhibitions &amp; events</span><span data-i18n="schedule.meta2">2012 — 2026</span></p>
       </div>
     </section>
 
-    <section class="c-body" data-od-id="contact-body" aria-labelledby="form-title">
-      <div class="shell c-grid">
-        <form class="form" id="contact-form" data-od-id="contact-form" novalidate="">
-          <h2 class="form-title" id="form-title" data-i18n="contact.formtitle">Send a message</h2>
+    
+    
+    <section class="a-ex" data-od-id="schedule-exhibitions" aria-labelledby="ex-title">
+      <div class="shell">
+        <div class="ex-subhead-row reveal">
+          <h2 class="ex-subhead" id="ex-title" data-i18n="schedule.exh">Exhibitions &amp; Events</h2>
+          <span class="ex-count" data-od-id="ex-count">06</span>
+        </div>
+        <ul class="exhibitions reveal" data-od-id="schedule-exhibitions">
+          <li><span class="ex-year">2026</span><span class="ex-period">12 Aug</span><span class="ex-name" data-i18n="ex.1">Photoshooting</span><span class="ex-place">Studio</span></li>
+          <li><span class="ex-year">2025</span><span class="ex-period">8–15 Aug</span><span class="ex-name" data-i18n="ex.2">The Weight of Floating</span><span class="ex-place">Kitsune Gallery · Berlin</span></li>
+          <li><span class="ex-year">2024</span><span class="ex-period">2–30 Nov</span><span class="ex-name" data-i18n="ex.3">Rooms Without Corners</span><span class="ex-place">Freja Raum · Berlin</span></li>
+          <li><span class="ex-year">2023</span><span class="ex-period">12 May – 20 Jun</span><span class="ex-name" data-i18n="ex.4">Things the Moon Forgot</span><span class="ex-place">Kunsthalle Berlin</span></li>
+          <li><span class="ex-year">2022</span><span class="ex-period">4–27 Feb</span><span class="ex-name" data-i18n="ex.5">A Garden That Moved Away</span><span class="ex-place">Galleria Vek · Milan</span></li>
+          <li><span class="ex-year">2021</span><span class="ex-period">3–28 Mar</span><span class="ex-name" data-i18n="ex.6">Blue Hours</span><span class="ex-place">Fushimi Hall · Osaka</span></li>
+        </ul>
+      </div>
+    </section>
 
-          <div class="field">
-            <label for="cf-name" data-i18n="contact.name">Name</label>
-            <input id="cf-name" name="name" type="text" required="" autocomplete="name" placeholder="Your name" data-i18n-ph="contact.name.ph">
-          </div>
-          <div class="field">
-            <label for="cf-email" data-i18n="contact.email">Email</label>
-            <input id="cf-email" name="email" type="email" required="" autocomplete="email" placeholder="you@example.com" data-i18n-ph="contact.email.ph">
-          </div>
-          <div class="field">
-            <label for="cf-message" data-i18n="contact.message">Message</label>
-            <textarea id="cf-message" name="message" rows="5" required="" placeholder="Tell me about the commission or question…" data-i18n-ph="contact.message.ph"></textarea>
-          </div>
-
-          <button class="btn" type="submit" data-od-id="form-submit" data-i18n-html="contact.submit">Send message <span aria-hidden="true">↗</span></button>
-          <p class="form-note" data-od-id="form-note" data-i18n="contact.note">Sent directly from this page — no mail app, your address stays private.</p>
-          <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
-        </form>
-
-        <aside class="c-info" data-od-id="contact-info" aria-label="Contact details">
-          <div class="c-col" data-od-id="c-studio">
-            <span class="c-label" data-i18n="col.studio">Studio</span>
-            <p class="c-body" data-i18n-html="col.studio.body">Lichtenberg, Berlin<br>Visits by appointment</p>
-          </div>
-          <div class="c-col" data-od-id="c-representation">
-            <span class="c-label" data-i18n="col.rep">Representation</span>
-            <p class="c-body" data-i18n-html="col.rep.body">Kitsune Gallery, Berlin<br>kitsunegallery.jp ↗</p>
-          </div>
-          <div class="c-col" data-od-id="c-socials">
-            <span class="c-label" data-i18n="col.socials">Socials</span>
-            <p class="c-body"><a href="https://www.instagram.com/andykrings/" target="_blank" rel="noopener" data-od-id="contact-instagram">Instagram ↗</a><br><a href="#" data-od-id="contact-artsy">Artsy ↗</a><br><a href="#" data-od-id="contact-pinterest">Pinterest ↗</a></p>
-          </div>
-        </aside>
+    <section class="a-cta" data-od-id="schedule-cta" aria-labelledby="cta-text">
+      <div class="shell">
+        <p id="cta-text" data-od-id="cta-text">Studio visits by appointment, commissions welcome.</p>
+        <a class="a-cta-link" href="contact.html" data-od-id="cta-contact">Say hello <span class="arr" aria-hidden="true">↗</span></a>
       </div>
     </section>
   </main>
@@ -492,72 +503,17 @@
   closeBtn.addEventListener('click', () => setMenu(false));
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-
-  // Send the form directly via Web3Forms — no mail app, no stored address.
-  const form = document.querySelector('.form');
-  const status = document.getElementById('form-status');
-  const st = (en, de) => { try { return localStorage.getItem('ak-lang') === 'de' ? de : en; } catch (e) { return en; } };
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
-    if (!name || !email || !message) return;
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    status.hidden = false;
-    status.className = 'form-status';
-    status.textContent = st('Sending…', 'Wird gesendet…');
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: 'f347a4f6-a8e9-462f-9f08-8c4b4790f13b',
-          subject: 'Commission inquiry — ' + name,
-          name: name,
-          email: email,
-          message: message,
-          replyto: email
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        status.className = 'form-status ok';
-        status.textContent = st('Thank you — your message has been sent.', 'Vielen Dank — Ihre Nachricht wurde gesendet.');
-        form.reset();
-      } else {
-        throw new Error(data.message || 'send failed');
-      }
-    } catch (err) {
-      status.className = 'form-status err';
-      status.textContent = st('Something went wrong — please try again or write an email directly.', 'Etwas ist schiefgelaufen — bitte versuchen Sie es erneut oder schreiben Sie direkt eine E-Mail.');
-    } finally {
-      btn.disabled = false;
-    }
-  });
 </script>
 
 <script>
   window.AK_I18N = {
     de: {
-      'contact.kicker': '04 — Kontakt',
-      'contact.title': 'Sag hallo.',
-      'contact.intro': 'Aufträge, Ausstellungsvorschläge oder Fragen zu einem Gemälde — das Atelier liest jede Nachricht.',
-      'contact.formtitle': 'Nachricht senden',
-      'contact.name': 'Name',
-      'contact.name.ph': 'Ihr Name',
-      'contact.email': 'E-Mail',
-      'contact.email.ph': 'sie@beispiel.de',
-      'contact.message': 'Nachricht',
-      'contact.message.ph': 'Erzählen Sie von Ihrem Auftrag oder Ihrer Frage…',
-      'contact.submit': 'Nachricht senden <span aria-hidden="true">↗</span>',
-      'contact.note': 'Direkt von dieser Seite gesendet — keine Mail-App, Ihre Adresse bleibt privat.',
-      'col.studio': 'Atelier',
-      'col.rep': 'Galerie',
-      'col.socials': 'Social Media',
-      'col.studio.body': 'Lichtenberg, Berlin<br>Besuch nach Vereinbarung',
-      'col.rep.body': 'Kitsune Gallery, Berlin<br>kitsunegallery.jp ↗'
+      'schedule.kicker': '02 — Termine',
+      'schedule.title': 'Termine',
+      'schedule.intro': 'Ausstellungen, Atelierbesuche und Veranstaltungen — vergangene und kommende. Daten und Orte werden vom Atelier in Berlin aktuell gehalten.',
+      'schedule.meta1': 'Ausstellungen & Veranstaltungen',
+      'schedule.meta2': '2012 — 2026',
+      'schedule.exh': 'Ausstellungen & Termine'
     }
   };
 </script>

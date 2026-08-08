@@ -288,6 +288,7 @@
   .exhibitions{list-style:none; margin:0; padding:0; border-top:1px solid var(--border)}
   .exhibitions li{display:flex; gap:24px; align-items:baseline; border-bottom:1px solid var(--border); padding:13px 0}
   .exhibitions .ex-year{font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted); flex:0 0 58px}
+  .exhibitions .ex-period{font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); flex:0 0 150px}
   .exhibitions .ex-name{font-family:var(--font-display); font-size:16px}
   .exhibitions .ex-place{margin-left:auto; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; color:var(--muted); text-align:right}
   .practice{display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:26px; font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; color:var(--muted)}
@@ -402,6 +403,7 @@
       <a class="brand" href="#top" data-od-id="brand">Andreas <em>Krings</em></a>
       <nav class="nav" aria-label="Primary">
         <a class="nav-link" href="#works" data-od-id="nav-works" data-i18n="nav.works">Works</a>
+        <a class="nav-link" href="schedule.html" data-od-id="nav-schedule" data-i18n="nav.schedule">Schedule</a>
         <a class="nav-link" href="about.html" data-od-id="nav-about" data-i18n="nav.about">About</a>
         <a class="nav-link" href="contact.html" data-od-id="nav-contact" data-i18n="nav.contact">Contact</a>
       </nav>
@@ -414,8 +416,9 @@
     <button class="menu-close" type="button" data-od-id="menu-close" aria-label="Close menu" data-i18n="menu.close">Close</button>
     <nav aria-label="Menu">
       <a class="menu-link" href="#works" data-od-id="menu-works" data-i18n="menu.works">Works <small>01</small></a>
-      <a class="menu-link" href="about.html" data-od-id="menu-about" data-i18n="menu.about">About <small>02</small></a>
-      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>03</small></a>
+      <a class="menu-link" href="schedule.html" data-od-id="menu-schedule" data-i18n="menu.schedule">Schedule <small>02</small></a>
+      <a class="menu-link" href="about.html" data-od-id="menu-about" data-i18n="menu.about">About <small>03</small></a>
+      <a class="menu-link" href="contact.html" data-od-id="menu-contact" data-i18n="menu.contact">Contact <small>04</small></a>
     </nav>
     <button class="lang-toggle" type="button" aria-pressed="false" aria-label="Switch language"><span class="lang-toggle__cur">EN</span> / <span class="lang-toggle__alt">DE</span></button>
     <p class="menu-foot" data-i18n="menu.foot">Berlin, Germany · <a href="contact.html" data-od-id="menu-email" data-i18n="menu.foot.link">Send a message</a></p>
@@ -611,25 +614,27 @@
 
             <blockquote class="pull-quote reveal" data-od-id="about-quote" style="margin-bottom: 60px; margin-top: 60px;" data-i18n="about.quote">“I don't paint impossible things. I paint things remembering that they are possible.”</blockquote>
 
-            <h3 class="about-subhead reveal" data-od-id="about-exhibitions-heading" data-i18n="about.exh">Selected Exhibitions</h3>
-            <ul class="exhibitions reveal" data-od-id="about-exhibitions">
-              <li><span class="ex-year">2026</span><span class="ex-name" data-i18n="ex.1">Photoshooting</span><span class="ex-place">Studio</span></li>
-              <li><span class="ex-year">2025</span><span class="ex-name" data-i18n="ex.2">The Weight of Floating</span><span class="ex-place">Kitsune Gallery · Berlin</span></li>
-              <li><span class="ex-year">2024</span><span class="ex-name" data-i18n="ex.3">Rooms Without Corners</span><span class="ex-place">Freja Raum · Berlin</span></li>
-              <li><span class="ex-year">2023</span><span class="ex-name" data-i18n="ex.4">Things the Moon Forgot</span><span class="ex-place">Kunsthalle Berlin</span></li>
-              <li><span class="ex-year">2022</span><span class="ex-name" data-i18n="ex.5">A Garden That Moved Away</span><span class="ex-place">Galleria Vek · Milan</span></li>
-              <li><span class="ex-year">2021</span><span class="ex-name" data-i18n="ex.6">Blue Hours</span><span class="ex-place">Fushimi Hall · Osaka</span></li>
-            </ul>
-
             <p class="practice reveal" data-od-id="about-practice" style="transform: translate(-1px, 26px);"><span data-i18n="practice.1">Oil on canvas</span><span data-i18n="practice.2">Charcoal on paper</span><span data-i18n="practice.3">Ink on paper</span></p>
           </div>
         </div>
+
+        <div class="home-ex-head reveal" data-od-id="home-ex-head">
+          <h3 class="about-subhead" data-od-id="about-schedule-heading" data-i18n="schedule.exh"><a href="schedule.html" data-od-id="about-schedule-link">Exhibitions &amp; Events <span class="arr" aria-hidden="true">↗</span></a></h3>
+        </div>
+        <ul class="exhibitions reveal" data-od-id="home-exhibitions">
+          <li><span class="ex-year">2026</span><span class="ex-period">12 Aug</span><span class="ex-name" data-i18n="ex.1">Photoshooting</span><span class="ex-place">Studio</span></li>
+          <li><span class="ex-year">2025</span><span class="ex-period">8–15 Aug</span><span class="ex-name" data-i18n="ex.2">The Weight of Floating</span><span class="ex-place">Kitsune Gallery · Berlin</span></li>
+          <li><span class="ex-year">2024</span><span class="ex-period">2–30 Nov</span><span class="ex-name" data-i18n="ex.3">Rooms Without Corners</span><span class="ex-place">Freja Raum · Berlin</span></li>
+          <li><span class="ex-year">2023</span><span class="ex-period">12 May – 20 Jun</span><span class="ex-name" data-i18n="ex.4">Things the Moon Forgot</span><span class="ex-place">Kunsthalle Berlin</span></li>
+          <li><span class="ex-year">2022</span><span class="ex-period">4–27 Feb</span><span class="ex-name" data-i18n="ex.5">A Garden That Moved Away</span><span class="ex-place">Galleria Vek · Milan</span></li>
+          <li><span class="ex-year">2021</span><span class="ex-period">3–28 Mar</span><span class="ex-name" data-i18n="ex.6">Blue Hours</span><span class="ex-place">Fushimi Hall · Osaka</span></li>
+        </ul>
       </div>
     </section>
 
     <section id="contact" data-od-id="section-contact" aria-labelledby="contact-title" style="transform: translate(0px, 43px);">
       <div class="shell">
-        <p class="kicker" style="transform: translate(6px, 50px);" data-i18n="contact.kicker">03 — Contact</p>
+        <p class="kicker" style="transform: translate(6px, 50px);" data-i18n="contact.kicker">04 — Contact</p>
         <h2 class="contact-title" id="contact-title" data-od-id="contact-title" style="font-size: 90px;"><a class="contact-title-link" href="contact.html" data-od-id="contact-title-link" style="font-size: 30px; transform: translate(7px, 16px); display: inline-block;" data-i18n="contact.title">Say hello.</a></h2>
         
 
@@ -835,11 +840,11 @@
       'about.bio1': 'Andreas Krings ist ein surrealistischer Maler in Berlin. Seine Leinwände nehmen das Gewöhnliche — einen Stuhl, einen Koffer, eine Sanduhr — und setzen es in einer Welt aus, in der die Gesetze von Licht, Gewicht und Zeit nicht mehr gelten. Jedes Gemälde beginnt als kleine Tuschezeichnung und wächst langsam, über Monate, in dünnen Ölschichten.',
       'about.bio2': 'Seit 2012 stellt er in Asien und Europa aus. Seine Werke befinden sich in Sammlungen in Berlin, Osaka, London und New York.',
       'about.quote': '„Ich male keine unmöglichen Dinge. Ich male Dinge, die sich daran erinnern, dass sie möglich sind.“',
-      'about.exh': 'Ausgewählte Ausstellungen',
+      'schedule.exh': 'Ausstellungen & Termine',
       'practice.1': 'Öl auf Leinwand',
       'practice.2': 'Kohle auf Papier',
       'practice.3': 'Tusche auf Papier',
-      'contact.kicker': '03 — Kontakt',
+      'contact.kicker': '04 — Kontakt',
       'contact.title': 'Sag hallo.',
       'col.studio': 'Atelier',
       'col.socials': 'Social Media',
