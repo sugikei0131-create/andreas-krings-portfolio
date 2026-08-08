@@ -2283,7 +2283,9 @@ $('hdPublishBtn').addEventListener('click', doPublish);
     if (ghToken) { hideLogin(); pubStatus('Signed in — ready to publish.', 'ok'); setPublishEnabled(true); }
   } catch(e){}
   /* wait for server data before rendering (timeout 6s then fallback to localStorage) */
+  /* show loading state until server data arrives */
   var serverLoaded = false;
+  /* 8s timeout — only if server is unreachable, fall back to localStorage */
   var initTimeout = setTimeout(function(){
     if (!serverLoaded) {
       serverLoaded = true;
@@ -2294,11 +2296,12 @@ $('hdPublishBtn').addEventListener('click', doPublish);
       checkConnection();
       finishInit();
     }
-  }, 12000);
+  }, 8000);
   loadFromServer(true).then(function(){
     if (!serverLoaded) {
       serverLoaded = true;
       clearTimeout(initTimeout);
+      /* data loaded from server — render everything fresh */
       renderWorks();
       renderSchedule();
       renderPhotos();
