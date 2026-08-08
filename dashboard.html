@@ -1929,7 +1929,7 @@
   function loadFromServer(silent){
     function doLoad(){
       return new Promise(function(resolve){
-        var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/.dashboard-state.json?v=' + Date.now();
+        var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/dashboard-state.json?v=' + Date.now();
       fetch(url).then(function(r){ return r.json(); }).then(function(d){
         localStorage.setItem(LS_KEY, JSON.stringify(d));
         state = load();
@@ -2241,7 +2241,7 @@
     }).then(function(){ setPublishBusy(false); });
   }
 
-  /* publish via GitHub API — write .dashboard-state.json, GitHub Actions rebuilds the site */
+  /* publish via GitHub API — write dashboard-state.json, GitHub Actions rebuilds the site */
   function publishViaGitHub(){
     var REPO = 'sugikei0131-create/andreas-krings-portfolio';
     var BASE = 'https://api.github.com/repos/' + REPO;
@@ -2255,10 +2255,10 @@
       /* get base tree sha */
       return fetch(BASE + '/git/commits/' + baseSha, {headers:hdrs}).then(function(r){ return r.json(); }).then(function(commit){
         var baseTree = commit.tree.sha;
-        /* create blob for .dashboard-state.json */
+        /* create blob for dashboard-state.json */
         return fetch(BASE + '/git/blobs', {method:'POST', headers:hdrs, body:JSON.stringify({content:payload, encoding:'utf-8'})}).then(function(r){ return r.json(); }).then(function(blob){
           /* create tree with the new blob */
-          var treeData = {base_tree:baseTree, tree:[{path:'.dashboard-state.json', mode:'100644', type:'blob', sha:blob.sha}]};
+          var treeData = {base_tree:baseTree, tree:[{path:'dashboard-state.json', mode:'100644', type:'blob', sha:blob.sha}]};
           return fetch(BASE + '/git/trees', {method:'POST', headers:hdrs, body:JSON.stringify(treeData)}).then(function(r){ return r.json(); }).then(function(tree){
             /* create commit */
             var commitData = {message:'Dashboard publish — ' + new Date().toISOString().slice(0,16).replace('T',' '), tree:tree.sha, parents:[baseSha]};

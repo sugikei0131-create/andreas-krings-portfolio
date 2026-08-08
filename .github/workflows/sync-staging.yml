@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '.dashboard-state-staging.json'
+      - 'dashboard-state-staging.json'
 
 jobs:
   sync:
@@ -21,7 +21,7 @@ jobs:
           cp -r assets/* staging/assets/
       
       - name: Run sync script (staging)
-        run: python3 sync_from_dashboard.py .dashboard-state-staging.json --write-uploads --output-dir staging
+        run: python3 sync_from_dashboard.py dashboard-state-staging.json --write-uploads --output-dir staging
       
       - name: Commit changes
         run: |
