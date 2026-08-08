@@ -193,9 +193,6 @@
   .btn:hover{background:oklch(44% 0.10 28); border-color:oklch(44% 0.10 28); transform:translateY(-1px); box-shadow:0 12px 26px -14px oklch(40% 0.10 28 / .55)}
   .btn:active{transform:none}
   .form-note{margin:16px 0 0; font-family:var(--font-mono); font-size:11px; letter-spacing:.04em; color:var(--muted)}
-  .form-status{margin:18px 0 0; font-family:var(--font-mono); font-size:12px; letter-spacing:.04em; line-height:1.7}
-  .form-status.ok{color:var(--accent)}
-  .form-status.err{color:oklch(45% 0.13 28)}
 
   .c-info{display:grid}
   .c-col{padding-top:20px}
@@ -317,8 +314,7 @@
           </div>
 
           <button class="btn" type="submit" data-od-id="form-submit" data-i18n-html="contact.submit">Send message <span aria-hidden="true">↗</span></button>
-          <p class="form-note" data-od-id="form-note" data-i18n="contact.note">Sent directly from this page — no mail app, your address stays private.</p>
-          <p class="form-status" data-od-id="form-status" role="status" aria-live="polite" hidden=""></p>
+          <p class="form-note" data-od-id="form-note" data-i18n="contact.note">Opens your mail app — nothing is stored on this site.</p>
         </form>
 
         <aside class="c-info" data-od-id="contact-info" aria-label="Contact details">
@@ -425,57 +421,17 @@
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
 
-  // Send the form directly via Web3Forms — no mail app, the address stays private.
-  const ACCESS_KEY = 'f347a4f6-a8e9-462f-9f08-8c4b4790f13b';
+  // Compose a mailto: message from the form — no backend, nothing stored.
   const form = document.querySelector('.form');
-  const formStatus = document.querySelector('.form-status');
-  const MSG = {
-    sending: { en: 'Sending…', de: 'Wird gesendet…' },
-    sent: { en: 'Message sent — the studio will reply soon.', de: 'Nachricht gesendet — das Atelier antwortet bald.' },
-    err: { en: 'Something went wrong — please try again.', de: 'Etwas ist schiefgelaufen — bitte versuchen Sie es erneut.' }
-  };
-  const t = (m) => {
-    const de = (window.AK_I18N_CURRENT && window.AK_I18N_CURRENT()) === 'de';
-    return MSG[m][de ? 'de' : 'en'];
-  };
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = form.name.value.trim();
     const email = form.email.value.trim();
     const message = form.message.value.trim();
     if (!name || !email || !message) return;
-    const btn = form.querySelector('.btn');
-    btn.disabled = true;
-    formStatus.hidden = false;
-    formStatus.className = 'form-status';
-    formStatus.textContent = t('sending');
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: 'Portfolio inquiry — ' + name,
-          name: name,
-          email: email,
-          message: message,
-          botcheck: form.botcheck ? form.botcheck.value : ''
-        })
-      });
-      const data = await res.json();
-      if (data && data.success) {
-        formStatus.className = 'form-status ok';
-        formStatus.textContent = t('sent');
-        form.reset();
-      } else {
-        throw new Error((data && data.message) || 'send failed');
-      }
-    } catch (err) {
-      formStatus.className = 'form-status err';
-      formStatus.textContent = t('err');
-    } finally {
-      btn.disabled = false;
-    }
+    const subject = encodeURIComponent(`Commission inquiry — ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    window.location.href = `mailto:sugikei0131@gmail.com?subject=${subject}&body=${body}`;
   });
 </script>
 
@@ -493,7 +449,7 @@
       'contact.message': 'Nachricht',
       'contact.message.ph': 'Erzählen Sie von Ihrem Auftrag oder Ihrer Frage…',
       'contact.submit': 'Nachricht senden <span aria-hidden="true">↗</span>',
-      'contact.note': 'Direkt von dieser Seite gesendet — keine Mail-App, Ihre Adresse bleibt privat.',
+      'contact.note': 'Öffnet Ihre Mail-App — auf dieser Website wird nichts gespeichert.',
       'col.studio': 'Atelier',
       'col.rep': 'Galerie',
       'col.socials': 'Social Media',
