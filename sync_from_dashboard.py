@@ -132,7 +132,7 @@ def merged_alt(w, alt_map, source):
                 return alt, None
         else:
             od_id, title, year, alt = ex
-            if title == esc(w.get('title', '')) and year == esc(w.get('year', '')):
+            if title == esc(w.get('title', '')) and year == esc(norm_year(w.get('year', ''))):
                 return alt, od_id
     return alt_for(w), None
 
@@ -142,7 +142,7 @@ def work_line(w, alt):
         "n: %d" % int(w['n']),
         "file: '%s'" % q1(w.get('file', '')),
         "title: '%s'" % q1(w.get('title', '')),
-        "year: '%s'" % q1(w.get('year', '')),
+        "year: '%s'" % q1(norm_year(w.get('year', ''))),
         "alt: '%s'" % q1(alt),
         "desc: '%s'" % q1(w.get('desc', '')),
         "titleDe: '%s'" % q1(w.get('titleDe', '')),
@@ -173,7 +173,7 @@ def gen_cards_html(works, prefix, alt_map):
         alt, od_id = merged_alt(w, alt_map, 'cards')
         sid = od_id or (prefix + '-' + slug_id(w.get('file', ''), n))
         title = esc(w.get('title', ''))
-        year = esc(w.get('year', ''))
+        year = esc(norm_year(w.get('year', '')))
         file_ = esc(w.get('file', ''))
         out.append(
             '<li>\n'
@@ -194,9 +194,14 @@ def gen_cards_html(works, prefix, alt_map):
     return '\n'.join(out)
 
 
+def norm_year(v):
+    m = re.search(r'\d{4}', str(v or ''))
+    return m.group(0) if m else str(v or '').strip()
+
+
 def gen_schedule_html(schedule):
     def year_key(it):
-        y = str(it.get('year') or '0')
+        y = norm_year(it.get('year'))
         return (-int(y) if y.isdigit() else 0, it.get('id', 0))
     s = sorted(schedule, key=year_key)
     if not s:
@@ -205,7 +210,7 @@ def gen_schedule_html(schedule):
     for i, it in enumerate(s):
         out.append(
             '<li><span class="ex-year">%s</span><span class="ex-name" data-i18n="ex.%d">%s</span><span class="ex-place">%s</span></li>'
-            % (esc(it.get('year', '')), i + 1, esc(it.get('title', '')), esc(it.get('place', '')))
+            % (esc(norm_year(it.get('year', ''))), i + 1, esc(it.get('title', '')), esc(it.get('place', '')))
         )
     return '\n'.join(out)
 

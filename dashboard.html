@@ -1239,6 +1239,14 @@
   function $(id){ return document.getElementById(id); }
   function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function q1(s){ return String(s == null ? '' : s).replace(/'/g,"\\'").replace(/[\r\n]+/g,' '); }
+  function normYear(v){
+    var m = String(v == null ? '' : v).match(/\d{4}/);
+    return m ? m[0] : String(v == null ? '' : v).trim();
+  }
+  function yrNum(v){
+    var m = String(v == null ? '' : v).match(/\d{4}/);
+    return m ? +m[0] : 0;
+  }
   var toastTimer;
   function toast(msg){
     var t = $('toast');
@@ -1314,8 +1322,8 @@
 
   function sortedWorks(){
     var arr = state.works.slice();
-    if (sortMode === 'yearDesc') arr.sort(function(a,b){ return (b.year||'0').localeCompare(a.year||'0') || a.n - b.n; });
-    else if (sortMode === 'yearAsc') arr.sort(function(a,b){ return (a.year||'0').localeCompare(b.year||'0') || a.n - b.n; });
+    if (sortMode === 'yearDesc') arr.sort(function(a,b){ return yrNum(b.year) - yrNum(a.year) || a.n - b.n; });
+    else if (sortMode === 'yearAsc') arr.sort(function(a,b){ return yrNum(a.year) - yrNum(b.year) || a.n - b.n; });
     else arr.sort(function(a,b){ return a.n - b.n; });
     return arr;
   }
@@ -1627,7 +1635,7 @@
     var payload = {
       n: n, title: title,
       titleDe: $('weTitleDe').value.trim(),
-      year: $('weYear').value.trim(),
+      year: normYear($('weYear').value),
       desc: $('weDescEn').value.trim(),
       descDe: $('weDescDe').value.trim(),
       file: file,
@@ -1649,7 +1657,7 @@
   function renderSchedule(){
     var list = $('schList');
     list.innerHTML = '';
-    var s = state.schedule.slice().sort(function(a,b){ return (b.year||'0').localeCompare(a.year||'0') || a.id - b.id; });
+    var s = state.schedule.slice().sort(function(a,b){ return yrNum(b.year) - yrNum(a.year) || a.id - b.id; });
     $('schKicker').textContent = 'Schedule — ' + state.schedule.length + ' items';
     $('schEmpty').hidden = s.length > 0;
     s.forEach(function(it){
@@ -1658,7 +1666,7 @@
       li.dataset.id = it.id;
       var title = it.title + (it.titleDe ? ' <span style="opacity:.6">/ ' + esc(it.titleDe) + '</span>' : '');
       li.innerHTML =
-        '<span class="sch-year">' + esc(it.year || '—') + '</span>' +
+        '<span class="sch-year">' + esc(normYear(it.year) || '—') + '</span>' +
         '<span class="sch-main"><p class="sch-title">' + title + '</p><p class="sch-place">' + esc(it.place || '') + '</p></span>' +
         '<span class="row-meta"><span class="row-actions">' +
           '<button class="icon-btn" data-act="edit" title="Edit" aria-label="Edit">✎</button>' +
@@ -1698,7 +1706,7 @@
     var title = $('seTitleEn').value.trim();
     if (!title) { toast('Title (English) is required'); $('seTitleEn').focus(); return; }
     var payload = {
-      year: $('seYear').value.trim(),
+      year: normYear($('seYear').value),
       title: title,
       titleDe: $('seTitleDe').value.trim(),
       place: $('sePlace').value.trim(),
@@ -1999,10 +2007,10 @@
     }).join('\n');
   }
   function genScheduleHtml(){
-    var s = state.schedule.slice().sort(function(a,b){ return (b.year||'0').localeCompare(a.year||'0') || a.id - b.id; });
+    var s = state.schedule.slice().sort(function(a,b){ return yrNum(b.year) - yrNum(a.year) || a.id - b.id; });
     if (!s.length) return '<!-- no schedule entries -->';
     return s.map(function(it, i){
-      return '          <li><span class="ex-year">' + esc(it.year || '') + '</span><span class="ex-name" data-i18n="ex.' + (i + 1) + '">' + esc(it.title || '') + '</span><span class="ex-place">' + esc(it.place || '') + '</span></li>';
+      return '          <li><span class="ex-year">' + esc(normYear(it.year) || '') + '</span><span class="ex-name" data-i18n="ex.' + (i + 1) + '">' + esc(it.title || '') + '</span><span class="ex-place">' + esc(it.place || '') + '</span></li>';
     }).join('\n');
   }
   function genPhotosJs(){
