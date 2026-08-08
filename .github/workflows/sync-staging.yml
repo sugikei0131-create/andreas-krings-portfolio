@@ -7,6 +7,10 @@ on:
     paths:
       - 'dashboard-state-staging.json'
 
+concurrency:
+  group: dashboard-sync
+  cancel-in-progress: false
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -32,5 +36,5 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Dashboard (staging): sync works, schedule & photos"
-            git push
+            git pull --rebase origin main && git push
           fi
