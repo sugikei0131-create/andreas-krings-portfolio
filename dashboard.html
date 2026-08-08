@@ -873,7 +873,6 @@
         <div class="p-actions">
           <input type="file" id="importFile" accept=".json,application/json" hidden>
           <button class="btn" id="importBtn">Load JSON…</button>
-          <button class="btn btn-danger" id="resetBtn">Reset to defaults</button>
           <button class="btn" id="loadServerBtn">Load from server</button>
         </div>
       </div>
@@ -1925,22 +1924,10 @@
     reader.readAsText(file);
     e.target.value = '';
   });
-  $('resetBtn').addEventListener('click', function(){
-    confirmBox('Reset all data to the defaults (12 works, 5 schedule entries, 4 photos)?', 'Reset').then(function(ok){
-      if (!ok) return;
-      localStorage.removeItem(LS_KEY);
-      state = load();
-      save();
-      renderWorks();
-      renderSchedule();
-      renderPhotos();
-      toast('Reset to defaults');
-    });
-  });
 
-  $('loadServerBtn').addEventListener('click', function(){
-    confirmBox('Replace all data with the latest version from the server? Local changes will be lost.', 'Load from server').then(function(ok){
-      if (!ok) return;
+
+  function loadFromServer(silent){
+    var go = function(){
       var url = 'https://sugikei0131-create.github.io/andreas-krings-portfolio/.dashboard-state.json?v=' + Date.now();
       fetch(url).then(function(r){ return r.json(); }).then(function(d){
         localStorage.setItem(LS_KEY, JSON.stringify(d));
@@ -1950,10 +1937,15 @@
         renderSchedule();
         renderPhotos();
         refreshCodegen();
-        toast('Loaded from server (' + d.works.length + ' works)');
+        if (!silent) toast('Loaded from server (' + d.works.length + ' works)');
       }).catch(function(e){ toast('Failed to load: ' + e.message); });
+    };
+    if (silent) { go(); return; }
+    confirmBox('Replace all data with the latest version from the server? Local changes will be lost.', 'Load from server').then(function(ok){
+      if (ok) go();
     });
-  });
+  }
+  $('loadServerBtn').addEventListener('click', function(){ loadFromServer(false); });
 
   /* ---------- codegen ---------- */
   function refreshCodegen(){
@@ -2284,6 +2276,7 @@ $('hdPublishBtn').addEventListener('click', doPublish);
     ghToken = sessionStorage.getItem('ak-gh-token') || localStorage.getItem('ak-gh-token');
     if (ghToken) { hideLogin(); pubStatus('Signed in — ready to publish.', 'ok'); setPublishEnabled(true); }
   } catch(e){}
+  loadFromServer(true);
   checkConnection();
   renderWorks();
   renderSchedule();
