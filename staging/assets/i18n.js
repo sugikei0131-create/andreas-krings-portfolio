@@ -39,7 +39,6 @@
     'work.title.12': 'Der Spiegel des Ozeans',
 
 
-
     // exhibition names
     'ex.1': 'Das Gewicht des Schwebens',
     'ex.2': 'Räume ohne Ecken',
