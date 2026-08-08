@@ -767,7 +767,7 @@
       <div class="view-actions">
         <label class="sort">Sort
           <select id="workSort" data-od-id="work-sort">
-            <option value="no">By No.</option>
+            <option value="no">Page order</option>
             <option value="yearDesc">Newest first</option>
             <option value="yearAsc">Oldest first</option>
           </select>
@@ -786,6 +786,7 @@
       <p class="kicker" id="schKicker">Schedule — 0 items</p>
       <h1 class="view-title">Schedule</h1>
       <div class="view-actions">
+        <span class="dnd-hint" id="schDndHint">Drag rows to reorder</span>
         <button class="btn btn-primary" id="addSchBtn" data-od-id="add-schedule">+ New entry</button>
       </div>
     </div>
@@ -1191,11 +1192,11 @@
     { n: 12, file: 'assets/work-12-the-mirror-of-the-ocean.svg', title: 'The Mirror of the Ocean', year: '2019', desc: 'A mirror with a melting frame reflects a storm the sea has forgotten how to have; a rose lies on the wet sand.', titleDe: 'Der Spiegel des Ozeans', descDe: 'Ein Spiegel mit schmelzendem Rahmen spiegelt einen Sturm, den das Meer vergessen hat; eine Rose liegt im nassen Sand.' }
   ];
   var SEED_SCHEDULE = [
-    { id: 1, year: '2025', title: 'The Weight of Floating', titleDe: '', place: 'Kitsune Gallery · Berlin', link: '' },
-    { id: 2, year: '2024', title: 'Rooms Without Corners', titleDe: '', place: 'Freja Raum · Berlin', link: '' },
-    { id: 3, year: '2023', title: 'Things the Moon Forgot', titleDe: '', place: 'Kunsthalle Berlin', link: '' },
-    { id: 4, year: '2022', title: 'A Garden That Moved Away', titleDe: '', place: 'Galleria Vek · Milan', link: '' },
-    { id: 5, year: '2021', title: 'Blue Hours', titleDe: '', place: 'Fushimi Hall · Osaka', link: '' }
+    { id: 1, year: '2025', title: 'The Weight of Floating', titleDe: 'Das Gewicht des Schwebens', place: 'Kitsune Gallery · Berlin', link: '' },
+    { id: 2, year: '2024', title: 'Rooms Without Corners', titleDe: 'Räume ohne Ecken', place: 'Freja Raum · Berlin', link: '' },
+    { id: 3, year: '2023', title: 'Things the Moon Forgot', titleDe: 'Was der Mond vergaß', place: 'Kunsthalle Berlin', link: '' },
+    { id: 4, year: '2022', title: 'A Garden That Moved Away', titleDe: 'Der Garten, der fortzog', place: 'Galleria Vek · Milan', link: '' },
+    { id: 5, year: '2021', title: 'Blue Hours', titleDe: 'Blaue Stunden', place: 'Fushimi Hall · Osaka', link: '' }
   ];
   var SEED_PHOTOS = [
     { id: 1, file: 'assets/portrait-andreas-2.png' },
@@ -1657,18 +1658,21 @@
   function renderSchedule(){
     var list = $('schList');
     list.innerHTML = '';
-    var s = state.schedule.slice().sort(function(a,b){ return yrNum(b.year) - yrNum(a.year) || a.id - b.id; });
+    var s = state.schedule.slice(); /* page order = dashboard drag & drop order */
     $('schKicker').textContent = 'Schedule — ' + state.schedule.length + ' items';
     $('schEmpty').hidden = s.length > 0;
+    $('schDndHint').hidden = false;
     s.forEach(function(it){
       var li = document.createElement('li');
       li.className = 'sch-row';
       li.dataset.id = it.id;
+      li.draggable = true;
       var title = it.title + (it.titleDe ? ' <span style="opacity:.6">/ ' + esc(it.titleDe) + '</span>' : '');
       li.innerHTML =
         '<span class="sch-year">' + esc(normYear(it.year) || '—') + '</span>' +
         '<span class="sch-main"><p class="sch-title">' + title + '</p><p class="sch-place">' + esc(it.place || '') + '</p></span>' +
         '<span class="row-meta"><span class="row-actions">' +
+          '<span class="grip" aria-hidden="true" title="Drag to reorder">≡</span>' +
           '<button class="icon-btn" data-act="edit" title="Edit" aria-label="Edit">✎</button>' +
           '<button class="icon-btn" data-act="del" title="Delete" aria-label="Delete" style="color:var(--accent)">✕</button>' +
         '</span></span>';
@@ -1687,6 +1691,59 @@
       save();
       renderSchedule();
     });
+  });
+
+  /* ---------- drag & drop reorder (schedule, page order) ---------- */
+  var schDragId = null;
+  function clearSchDnd(){
+    var ls = $('schList').querySelectorAll('.is-dragging,.is-over-top,.is-over-bottom');
+    for (var i = 0; i < ls.length; i++) ls[i].classList.remove('is-dragging','is-over-top','is-over-bottom');
+  }
+  $('schList').addEventListener('dragstart', function(e){
+    var li = e.target.closest('li');
+    if (!li || !li.draggable) return;
+    schDragId = parseInt(li.dataset.id, 10);
+    e.dataTransfer.setData('text/plain', String(schDragId));
+    e.dataTransfer.effectAllowed = 'move';
+    li.classList.add('is-dragging');
+  });
+  $('schList').addEventListener('dragover', function(e){
+    var li = e.target.closest('li');
+    if (!li || schDragId == null) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    var over = li.querySelectorAll('.is-over-top,.is-over-bottom');
+    for (var i = 0; i < over.length; i++) over[i].classList.remove('is-over-top','is-over-bottom');
+    var rect = li.getBoundingClientRect();
+    li.classList.add(e.clientY < rect.top + rect.height / 2 ? 'is-over-top' : 'is-over-bottom');
+  });
+  $('schList').addEventListener('dragleave', function(e){
+    var li = e.target.closest('li');
+    if (li) li.classList.remove('is-over-top','is-over-bottom');
+  });
+  $('schList').addEventListener('drop', function(e){
+    var li = e.target.closest('li');
+    if (!li || schDragId == null) return;
+    e.preventDefault();
+    var from = schDragId, to = parseInt(li.dataset.id, 10);
+    if (from !== to) {
+      var rect = li.getBoundingClientRect();
+      var before = e.clientY < rect.top + rect.height / 2;
+      var arr = state.schedule;
+      var ia = arr.findIndex(function(x){ return x.id === from; });
+      var ib = arr.findIndex(function(x){ return x.id === to; });
+      if (ia !== -1 && ib !== -1) {
+        var item = arr.splice(ia, 1)[0];
+        var target = ia < ib ? ib - 1 : ib;
+        if (!before) target += 1;
+        if (target < 0) target = 0;
+        if (target > arr.length) target = arr.length;
+        arr.splice(target, 0, item);
+        save();
+        renderSchedule();
+      }
+    }
+    clearSchDnd();
   });
 
   var editingSch = null;
@@ -2007,7 +2064,7 @@
     }).join('\n');
   }
   function genScheduleHtml(){
-    var s = state.schedule.slice().sort(function(a,b){ return yrNum(b.year) - yrNum(a.year) || a.id - b.id; });
+    var s = state.schedule.slice(); /* page order = dashboard drag & drop order */
     if (!s.length) return '<!-- no schedule entries -->';
     return s.map(function(it, i){
       return '          <li><span class="ex-year">' + esc(normYear(it.year) || '') + '</span><span class="ex-name" data-i18n="ex.' + (i + 1) + '">' + esc(it.title || '') + '</span><span class="ex-place">' + esc(it.place || '') + '</span></li>';

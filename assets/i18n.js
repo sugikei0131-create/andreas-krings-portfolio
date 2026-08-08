@@ -48,7 +48,7 @@
     'ex.2': 'Räume ohne Ecken',
     'ex.3': 'Was der Mond vergaß',
     'ex.4': 'Der Garten, der fortzog',
-    'ex.5': 'Blaue Stunden'
+    'ex.5': 'Blaue Stunden',
   };
 
   function getLang() {

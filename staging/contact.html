@@ -212,15 +212,20 @@
     right:clamp(10px,1.2vw,22px);
     width:clamp(54px,6.8vw,84px);
     display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
+    cursor:grab;
+    touch-action:none;
+    -webkit-user-select:none; user-select:none;
     animation:bob 7s ease-in-out infinite;
     filter:drop-shadow(0 14px 24px rgba(27,21,13,.18));
   }
+  .orb.dragging{animation:none; cursor:grabbing; z-index:60}
+  .orb.dragging svg{transform:scale(.96); transition:none}
   .orb svg{display:block; width:100%; height:auto; transition:transform .35s var(--ease)}
   .orb .eye-blink{transform-box:fill-box; transform-origin:center; animation:blink 8s ease-in-out infinite}
   @keyframes blink{0%,90%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%,100%{transform:scaleY(1)}}
   .orb:hover svg{transform:scale(1.07)}
   .orb:focus-visible{outline:2px solid var(--accent); outline-offset:6px; border-radius:50%}
+  .orb.dragging .eye-blink{animation:none}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
 
   /* ---------- Footer ---------- */
@@ -236,7 +241,7 @@
     .orb{right:clamp(10px,1.2vw,22px)}
   }
   @media (max-width:900px){
-    .orb{display:none}
+    .orb{width:clamp(48px,12vw,60px)}
     .to-top-eye{display:inline-block; margin-right:9px; vertical-align:-3px}
     .to-top-arrow{display:none}
     .c-grid{grid-template-columns:1fr}
@@ -399,7 +404,68 @@
   const orb = document.querySelector('.orb');
   const toTop = () => window.scrollTo({ top: 0 });
   const goAllWorks = () => { window.location.href = 'all-works.html'; };
-  orb.addEventListener('click', goAllWorks);
+  // Drag to move the eye (mouse + touch). Position is remembered across pages.
+  (function(){
+    if (!orb) return;
+    const KEY = 'akOrbPos';
+    let dragging = false, moved = false, sx = 0, sy = 0, ox = 0, oy = 0;
+    const clamp = (v, mn, mx) => Math.max(mn, Math.min(v, mx));
+    function apply(x, y){
+      const r = orb.getBoundingClientRect();
+      x = clamp(x, 8, window.innerWidth - r.width - 8);
+      y = clamp(y, 8, window.innerHeight - r.height - 8);
+      orb.style.left = x + 'px';
+      orb.style.top = y + 'px';
+      orb.style.right = 'auto';
+      orb.style.bottom = 'auto';
+    }
+    orb.addEventListener('pointerdown', (e) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      const r = orb.getBoundingClientRect();
+      sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top;
+      dragging = true; moved = false;
+      orb.classList.add('dragging');
+      try { orb.setPointerCapture(e.pointerId); } catch (_) {}
+      e.preventDefault();
+    });
+    orb.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+      apply(ox + dx, oy + dy);
+    });
+    function end(e){
+      if (!dragging) return;
+      dragging = false;
+      orb.classList.remove('dragging');
+      try { orb.releasePointerCapture(e.pointerId); } catch (_) {}
+      if (moved) {
+        try { localStorage.setItem(KEY, JSON.stringify({
+          x: parseFloat(orb.style.left) || 0, y: parseFloat(orb.style.top) || 0
+        })); } catch (_) {}
+        e.preventDefault();
+        e.stopPropagation();
+        orb.dataset.justDragged = '1';
+      }
+    }
+    orb.addEventListener('pointerup', end);
+    orb.addEventListener('pointercancel', end);
+    orb.addEventListener('click', (e) => {
+      if (orb.dataset.justDragged === '1') { delete orb.dataset.justDragged; e.preventDefault(); e.stopPropagation(); return; }
+      goAllWorks();
+    });
+    try {
+      const p = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (p && typeof p.x === 'number' && typeof p.y === 'number') apply(p.x, p.y);
+    } catch (_) {}
+    window.addEventListener('resize', () => {
+      if (!orb.style.left) return;
+      try {
+        const p = JSON.parse(localStorage.getItem(KEY) || 'null');
+        if (p) apply(p.x, p.y);
+      } catch (_) {}
+    });
+  })();
   orb.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goAllWorks(); }
   });

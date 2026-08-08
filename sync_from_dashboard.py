@@ -200,10 +200,8 @@ def norm_year(v):
 
 
 def gen_schedule_html(schedule):
-    def year_key(it):
-        y = norm_year(it.get('year'))
-        return (-int(y) if y.isdigit() else 0, it.get('id', 0))
-    s = sorted(schedule, key=year_key)
+    # page order = dashboard drag & drop order (array order); year is display only
+    s = list(schedule)
     if not s:
         return '<!-- no schedule entries -->'
     out = []
@@ -374,6 +372,46 @@ def update_i18n(text, works):
     return '\n'.join(lines), True
 
 
+def update_i18n_exhibitions(text, schedule):
+    """Rebuild the 'ex.N' German dictionary lines from schedule order
+    (page order = dashboard drag & drop order)."""
+    de_by_pos = {}
+    for i, it in enumerate(schedule):
+        de = (it.get('titleDe') or '').strip()
+        if de:
+            de_by_pos[str(i + 1)] = q1(de)
+    lines = text.split('\n')
+    changed = False
+    i = 0
+    while i < len(lines):
+        m = re.match(r"(\s*)('ex\.(\d+)':\s*)'.*',?", lines[i])
+        if m:
+            key = m.group(3)
+            if key in de_by_pos:
+                new_ln = m.group(1) + m.group(2) + "'%s'," % de_by_pos.pop(key)
+                if lines[i] != new_ln:
+                    lines[i] = new_ln
+                    changed = True
+            else:
+                del lines[i]
+                changed = True
+                continue
+        i += 1
+    if de_by_pos:
+        idx = None
+        for j, ln in enumerate(lines):
+            if re.match(r"\s*'ex\.\d+':", ln):
+                idx = j
+        if idx is None:
+            raise RuntimeError('i18n.js: no ex.N lines found')
+        rows = ["    'ex.%s': '%s'," % (k, de_by_pos[k]) for k in sorted(de_by_pos, key=lambda k: int(k))]
+        lines.insert(idx + 1, '\n' + '\n'.join(rows))
+        changed = True
+    if not changed:
+        return text, False
+    return '\n'.join(lines), True
+
+
 def _remove_i18n_dashboard_entries(text):
     """Remove all dashboard-added i18n entries when works <= 12."""
     lines = text.split('\n')
@@ -509,6 +547,7 @@ def apply_data(data, dry_run=False, write_upload_files=True, output_dir=None):
     apply('about.html', update_ex_count, len(schedule))
     apply('about.html', update_portraits, photos)
     apply('assets/i18n.js', update_i18n, works)
+    apply('assets/i18n.js', update_i18n_exhibitions, schedule)
     apply('contact.html', lambda text: (text, False))  # copy as-is (static page)
 
     flush_pending()
